@@ -1,4 +1,4 @@
-package com.example.films_mob_app
+package com.example.myapplication
 
 import org.junit.Test
 

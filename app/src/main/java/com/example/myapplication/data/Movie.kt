@@ -11,5 +11,5 @@ data class Movie(
     val rating: String,
     val length: Int,
     val description: String,
-    @PrimaryKey val filmId: Int? = null
+    @PrimaryKey val movieId: Int? = null
 )

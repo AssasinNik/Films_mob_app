@@ -6,10 +6,10 @@ sealed class MainScreenEvent {
 
     data class OnMovieClick(val movie: Movie): MainScreenEvent()
 
-    object OnMovieSelectionButtonClick: MainScreenEvent()
+    data object OnMovieSelectionButtonClick: MainScreenEvent()
 
-    object OnAvatarClick: MainScreenEvent()
+    data object OnAvatarClick: MainScreenEvent()
 
-    object OnPopularMoviesClick: MainScreenEvent()
+    data object OnPopularMoviesClick: MainScreenEvent()
 
 }

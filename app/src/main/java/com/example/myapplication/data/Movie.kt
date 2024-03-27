@@ -5,15 +5,15 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Movie(
-    val title: String? = null,
-    val titleEn: String? = null,
+    val title: String?,
+    val titleEn: String?,
     val genres: List<String>,
     val posterURL: String,
     val rating: String,
     val length: Int,
-    val description: String? = null,
+    val description: String?,
     val releaseDate: String,
-    val ageLimit: String? = null,
-    val trailerLink: String? = null,
+    val ageLimit: String?,
+    val trailerLink: String?,
     @PrimaryKey val movieId: Int? = null
 )

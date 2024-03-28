@@ -2,6 +2,9 @@ package com.example.myapplication.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
+import com.example.myapplication.util.Converters
 
 @Entity
 data class Movie(

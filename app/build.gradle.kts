@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id ("kotlin-kapt")
+    id("com.google.devtools.ksp")
     id ("dagger.hilt.android.plugin")
 }
 
@@ -43,7 +43,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.0"
     }
     packaging {
         resources {
@@ -75,16 +75,20 @@ dependencies {
     implementation (libs.androidx.navigation.compose)
 
     //Dagger - Hilt
-    implementation (libs.hilt.android)
-    kapt (libs.hilt.android.compiler)
+    ksp("com.google.dagger:hilt-compiler:2.48")
+    implementation("com.google.dagger:hilt-android:2.48")
     implementation (libs.androidx.hilt.lifecycle.viewmodel)
-    kapt (libs.androidx.hilt.compiler)
+    //kapt (libs.androidx.hilt.compiler)
     implementation (libs.androidx.hilt.navigation.compose)
 
     // Room
-    implementation (libs.androidx.room.runtime)
-    kapt (libs.androidx.room.compiler)
+    implementation("androidx.room:room-runtime:2.5.2")
+    implementation("androidx.room:room-ktx:2.5.2")
+    ksp("androidx.room:room-compiler:2.5.2")
 
     // Kotlin Extensions and Coroutines support for Room
     implementation (libs.androidx.room.ktx)
+    
+    //Gson
+    implementation("com.google.code.gson:gson:2.10.1")
 }

@@ -1,6 +1,8 @@
 [versions]
 agp = "8.3.1"
 gradle = "7.0.4"
+gson = "1.1.1')"
+gsonVersion = "2.10.1"
 hiltAndroid = "2.38.1"
 hiltAndroidCompiler = "2.37"
 hiltCompiler = "1.0.0"
@@ -18,6 +20,7 @@ composeBom = "2023.08.00"
 lifecycleViewmodelCompose = "2.4.0"
 navigationCompose = "2.4.0-rc01"
 roomCompiler = "2.3.0"
+roomCompilerVersion = "2.6.1"
 roomRuntime = "2.3.0"
 
 [libraries]
@@ -28,9 +31,12 @@ androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-com
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
+androidx-room-compiler-v261 = { module = "androidx.room:room-compiler", version.ref = "roomCompilerVersion" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomCompiler" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+gson-v2101 = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltAndroid" }

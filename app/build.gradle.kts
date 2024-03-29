@@ -77,7 +77,7 @@ dependencies {
     //Dagger - Hilt
     ksp("com.google.dagger:hilt-compiler:2.48")
     implementation("com.google.dagger:hilt-android:2.48")
-    implementation (libs.androidx.hilt.lifecycle.viewmodel)
+    //implementation (libs.androidx.hilt.lifecycle.viewmodel)
     //kapt (libs.androidx.hilt.compiler)
     implementation (libs.androidx.hilt.navigation.compose)
 

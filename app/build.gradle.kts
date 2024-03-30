@@ -73,6 +73,7 @@ dependencies {
     // Compose dependencies
     implementation (libs.androidx.lifecycle.viewmodel.compose)
     implementation (libs.androidx.navigation.compose)
+    implementation("io.coil-kt:coil-compose:1.3.1")
 
     //Dagger - Hilt
     ksp("com.google.dagger:hilt-compiler:2.48")
@@ -86,7 +87,6 @@ dependencies {
     implementation("androidx.room:room-ktx:2.5.2")
     ksp("androidx.room:room-compiler:2.5.2")
 
-    implementation("io.coil-kt:coil-compose:1.3.1")
     // Kotlin Extensions and Coroutines support for Room
     implementation (libs.androidx.room.ktx)
     

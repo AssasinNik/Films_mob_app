@@ -12,11 +12,10 @@ data class Movie(
     val titleEn: String?,
     val genres: List<String>,
     val posterURL: String,
-    val rating: String,
+    val rating: Float,
     val length: Int,
     val description: String?,
-    val releaseDate: String,
-    val ageLimit: String?,
-    val trailerLink: String?,
+    val releaseYear: String,
+    val ageLimit: Int,
     @PrimaryKey val movieId: Int? = null
 )

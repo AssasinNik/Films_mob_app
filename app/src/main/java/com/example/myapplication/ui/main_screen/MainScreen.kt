@@ -29,9 +29,12 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.rememberImagePainter
 import com.example.myapplication.R
 import com.example.myapplication.ui.reusable_composeables.RoundImage
 
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun MainScreen(
     /*onNavigate: (UiEvent.Navigate) -> Unit,
@@ -44,7 +47,7 @@ fun MainScreen(
     ){
         Greeting(
             userName = "Гигачадыч",
-            userPhoto = painterResource(id = R.drawable.test_user_picture)
+            userPhoto = rememberImagePainter("https://i.postimg.cc/wM50wWJ3/2024-03-30-131955798.png")
         )
 
         MovieForMood()

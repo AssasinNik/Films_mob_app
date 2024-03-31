@@ -22,7 +22,7 @@ object AppModule {
             app,
             MovieDatabase::class.java,
             "movie_db"
-        ).build()
+        ).createFromAsset("database/movie.db").build()
     }
 
     @Provides

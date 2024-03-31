@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MovieDao {
 
-    @Query("SELECT * FROM movie WHERE movieId = :id")
+    @Query("SELECT * FROM movies WHERE movieId = :id")
     suspend fun getMovieById(id: Int) : Movie?
 
-    @Query("SELECT * FROM movie")
+    @Query("SELECT * FROM movies")
     fun getMovies(): Flow<List<Movie>>
 }

@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.myapplication.R
+import com.example.myapplication.ui.reusable_composeables.BottomNavBar
 import com.example.myapplication.ui.reusable_composeables.RoundImage
 
 @OptIn(ExperimentalCoilApi::class)
@@ -49,10 +50,9 @@ fun MainScreen(
             userName = "Гигачадыч",
             userPhoto = rememberImagePainter("https://i.postimg.cc/wM50wWJ3/2024-03-30-131955798.png")
         )
-
         MovieForMood()
-
         HorizontalListOfNewMovies()
+        BottomNavBar()
     }
 }
 
@@ -77,6 +77,7 @@ fun HorizontalListOfNewMovies(
         ) {
             items(count = 10) {
                 MovieListItem()
+                Spacer(modifier = Modifier.width(20.dp))
             }
         }
     }

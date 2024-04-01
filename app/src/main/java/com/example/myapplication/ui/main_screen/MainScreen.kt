@@ -1,6 +1,5 @@
 package com.example.myapplication.ui.main_screen
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
@@ -19,28 +19,41 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import com.example.myapplication.R
 import com.example.myapplication.ui.reusable_composeables.BottomNavBar
 import com.example.myapplication.ui.reusable_composeables.RoundImage
+import com.example.myapplication.util.UiEvent
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun MainScreen(
-    /*onNavigate: (UiEvent.Navigate) -> Unit,
-    viewModel: MainScreenViewModel = hiltViewModel()*/
+    onNavigate: (UiEvent.Navigate) -> Unit,
+    viewModel: MainScreenViewModel = hiltViewModel()
 ){
+    val movies = viewModel.movies.collectAsState(initial = emptyList())
+    
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect{event ->
+            when(event){
+                is UiEvent.Navigate -> onNavigate(event)
+                else -> Unit
+            }
+
+        }
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -50,36 +63,32 @@ fun MainScreen(
             userName = "Гигачадыч",
             userPhoto = rememberImagePainter("https://i.postimg.cc/wM50wWJ3/2024-03-30-131955798.png")
         )
+
         MovieForMood()
-        HorizontalListOfNewMovies()
-        BottomNavBar()
-    }
-}
 
-@Composable
-fun HorizontalListOfNewMovies(
-    modifier: Modifier = Modifier
-){
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-    ) {
-        Text(
-            modifier = Modifier.padding(horizontal = 20.dp),
-            text = "Новинки",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Spacer(modifier = Modifier.height(30.dp))
-
-        LazyRow(
-            modifier = Modifier.fillMaxWidth()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
         ) {
-            items(count = 10) {
-                MovieListItem()
-                Spacer(modifier = Modifier.width(20.dp))
+            Text(
+                modifier = Modifier.padding(horizontal = 20.dp),
+                text = "Новинки",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(modifier = Modifier.height(30.dp))
+
+            LazyRow(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items(movies.value) { movie ->
+                    MovieListItem(movie = movie, onEvent = viewModel::onEvent )
+                    Spacer(modifier = Modifier.width(20.dp))
+                }
             }
         }
+
+        BottomNavBar()
     }
 }
 

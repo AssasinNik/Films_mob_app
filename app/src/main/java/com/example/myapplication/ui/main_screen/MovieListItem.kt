@@ -25,8 +25,8 @@ import com.example.myapplication.data.Movie
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun MovieListItem(
-//    movie: Movie,
-//    onEvent: (MainScreenEvent) -> Unit,
+    movie: Movie,
+    onEvent: (MainScreenEvent) -> Unit,
     modifier: Modifier = Modifier
 ){
     Card (
@@ -38,7 +38,7 @@ fun MovieListItem(
             .width(190.dp)
         ) {
             Image(
-                painter = rememberImagePainter("https://image.openmoviedb.com/kinopoisk-images/1599028/70580cf5-3287-42d6-8a76-2c715e2f6172/orig"),
+                painter = rememberImagePainter(movie.posterURL),
                 contentDescription = "movie_poster",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

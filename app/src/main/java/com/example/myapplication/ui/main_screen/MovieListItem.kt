@@ -26,7 +26,6 @@ import com.example.myapplication.data.Movie
 @Composable
 fun MovieListItem(
     movie: Movie,
-    onEvent: (MainScreenEvent) -> Unit,
     modifier: Modifier = Modifier
 ){
     Card (

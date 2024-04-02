@@ -40,12 +40,12 @@ import com.example.myapplication.util.UiEvent
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun MainScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    //onNavigate: (UiEvent.Navigate) -> Unit,
     viewModel: MainScreenViewModel = hiltViewModel()
 ){
     val movies = viewModel.movies.collectAsState(initial = emptyList())
     
-    LaunchedEffect(key1 = true) {
+    /*LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect{event ->
             when(event){
                 is UiEvent.Navigate -> onNavigate(event)
@@ -53,7 +53,7 @@ fun MainScreen(
             }
 
         }
-    }
+    }*/
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -82,7 +82,7 @@ fun MainScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 items(movies.value) { movie ->
-                    MovieListItem(movie = movie, onEvent = viewModel::onEvent )
+                    MovieListItem(movie = movie)
                     Spacer(modifier = Modifier.width(20.dp))
                 }
             }

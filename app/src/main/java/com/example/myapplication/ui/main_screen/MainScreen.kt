@@ -1,5 +1,7 @@
 package com.example.myapplication.ui.main_screen
 
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,12 +42,12 @@ import com.example.myapplication.util.UiEvent
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun MainScreen(
-    //onNavigate: (UiEvent.Navigate) -> Unit,
+    onNavigate: (UiEvent.Navigate) -> Unit,
     viewModel: MainScreenViewModel = hiltViewModel()
 ){
     val movies = viewModel.movies.collectAsState(initial = emptyList())
     
-    /*LaunchedEffect(key1 = true) {
+    LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect{event ->
             when(event){
                 is UiEvent.Navigate -> onNavigate(event)
@@ -53,7 +55,7 @@ fun MainScreen(
             }
 
         }
-    }*/
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -82,7 +84,12 @@ fun MainScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 items(movies.value) { movie ->
-                    MovieListItem(movie = movie)
+                    MovieListItem(
+                        movie = movie,
+                        Modifier.clickable {
+                            viewModel.onEvent(MainScreenEvent.OnMovieClick(movie))
+                        }
+                    )
                     Spacer(modifier = Modifier.width(20.dp))
                 }
             }

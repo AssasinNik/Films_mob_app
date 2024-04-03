@@ -28,8 +28,8 @@ import com.example.myapplication.util.UiEvent
 
 @Composable
 fun MovieScreen(
-    //onNavigate: (UiEvent.Navigate) -> Unit,
-    viewModel: MainScreenViewModel = hiltViewModel()
+    onPopBackStack: () -> Unit,
+    viewModel: MovieScreenViewModel = hiltViewModel()
 ){
     Column (
          modifier = Modifier
@@ -51,7 +51,7 @@ fun MovieScreen(
                     .fillMaxWidth()
                 ) {
                     Image(
-                        painter = rememberImagePainter("https://image.openmoviedb.com/kinopoisk-images/1599028/70580cf5-3287-42d6-8a76-2c715e2f6172/orig"),
+                        painter = rememberImagePainter(viewModel.posterUrl),
                         contentDescription = "movie_poster",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
@@ -85,7 +85,7 @@ fun MovieScreen(
                 .padding(top = 20.dp)
         ){
             Column {
-                Text(text = "Однажды в Голлливуде", fontSize = 25.sp, fontWeight = FontWeight.Bold)
+                Text(text = viewModel.title, fontSize = 25.sp, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(3.dp))
                 Box(
                     modifier = Modifier
@@ -94,10 +94,7 @@ fun MovieScreen(
                         .background(Color.White)
                 ) 
                 Spacer(modifier = Modifier.height(14.dp))
-                Text(text = "В четверг четвертого числа в четыре с четверью часа лигурийский регулировщик" +
-                        "регулировал в Лигурии, но дридать три коробля ловировали ловировали да так ине выловеровали. А" +
-                        "потом протокол про протоколо протоколом запротокалировал, как интервьюером интервьюеруемый лиурийский " +
-                        "речисто да не чисто рапортовал, да дорапортовал, а дорапортовывал")
+                Text(text = viewModel.description)
             }
         }
         

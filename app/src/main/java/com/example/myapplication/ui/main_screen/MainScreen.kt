@@ -37,6 +37,7 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.myapplication.ui.reusable_composeables.BottomNavBar
 import com.example.myapplication.ui.reusable_composeables.RoundImage
+import com.example.myapplication.ui.theme.Purple40
 import com.example.myapplication.util.UiEvent
 
 @OptIn(ExperimentalCoilApi::class)
@@ -114,7 +115,7 @@ fun MovieForMood(
         Spacer(modifier = Modifier.height(25.dp))
 
         Button(
-            colors = ButtonDefaults.buttonColors(Color.Magenta),
+            colors = ButtonDefaults.buttonColors(Purple40),
             onClick = { /*TODO*/ },
             modifier = Modifier
                 .fillMaxWidth()

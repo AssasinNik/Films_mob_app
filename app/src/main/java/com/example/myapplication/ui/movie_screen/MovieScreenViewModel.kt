@@ -40,7 +40,7 @@ class MovieScreenViewModel @Inject constructor(
         val movieId = savedStateHandle.get<Int>("movieId")!!
         viewModelScope.launch {
             repository.getMovieById(movieId)?.let { movie->
-                title = movie.title
+                title = movie.title ?: ""
                 description = movie.description ?: ""
                 posterUrl = movie.posterURL ?: ""
                 this@MovieScreenViewModel.movie = movie

@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.R
+import com.example.myapplication.ui.theme.Purple40
 
 @Composable
 fun RoundImage(
@@ -26,7 +27,7 @@ fun RoundImage(
             .aspectRatio(1f, matchHeightConstraintsFirst = true)
             .border(
                 width = 3.dp,
-                color = Color.Magenta,
+                color = Purple40,
                 shape = CircleShape
             )
             .clip(CircleShape)

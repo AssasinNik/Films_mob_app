@@ -8,10 +8,10 @@ import com.example.myapplication.util.Converters
 
 @Entity(tableName = "movies")
 data class Movie(
-    val title: String,
+    val title: String?,
     val posterURL: String?,
-    @PrimaryKey val movieId: Int,
     val description: String?,
+    @PrimaryKey val movieId: Int? = null
     //val titleEn: String?,
     //val genres: List<String>,
     //val rating: Int,

@@ -31,33 +31,39 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContent {
             MyApplicationTheme {
-                val navController = rememberNavController()
-                NavHost(
-                    navController = navController,
-                    startDestination = Routes.MAIN_SCREEN
+                Surface (
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ){
-                    composable(Routes.MAIN_SCREEN){
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = Routes.MAIN_SCREEN
+                    ){
+                        composable(Routes.MAIN_SCREEN){
 
-                        MainScreen(onNavigate = {
-                            navController.navigate(it.route)
-                        })
-                    }
+                            MainScreen(onNavigate = {
+                                navController.navigate(it.route)
+                            })
+                        }
 
-                    composable(
-                        route = Routes.MAIN_SCREEN + "?movieId={movieId}",
-                        arguments = listOf(
-                            navArgument(name = "movieId"){
-                                type = NavType.IntType
-                                defaultValue = -1
-                            }
-                        )
-                    ) {
-                        MovieScreen(onPopBackStack = {
-                            navController.popBackStack()
-                        })
+                        composable(
+                            route = Routes.MOVIE_SCREEN + "?movieId={movieId}",
+                            arguments = listOf(
+                                navArgument(name = "movieId"){
+                                    type = NavType.IntType
+                                    defaultValue = -1
+                                }
+                            )
+                        ) {
+                            MovieScreen(onPopBackStack = {
+                                navController.popBackStack()
+                            })
+                        }
                     }
                 }
             }

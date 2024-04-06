@@ -7,7 +7,8 @@ import com.example.myapplication.util.Converters
 
 @Database(
     entities = [Movie::class],
-    version = 1
+    exportSchema = false,
+    version = 4
 )
 @TypeConverters(Converters::class)
 abstract class MovieDatabase: RoomDatabase(){

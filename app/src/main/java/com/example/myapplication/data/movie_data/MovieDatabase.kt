@@ -1,4 +1,4 @@
-package com.example.myapplication.data
+package com.example.myapplication.data.movie_data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

@@ -9,5 +9,4 @@ object Routes {
     const val REGISTER_SCREEN = "register_screen"
     const val MOVIE_SELECTION_SCREEN = "movie_selection_screen"
     const val PRE_MOVIE_SELECTION_SCREEN = "pre_movie_selection_screen"
-    const val RESULT_MOVIE_SELECTION_SCREEN = "result_movie_selection_screen"
 }

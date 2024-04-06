@@ -2,7 +2,7 @@ package com.example.myapplication.ui.main_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myapplication.data.MovieRepository
+import com.example.myapplication.data.movie_data.MovieRepository
 import com.example.myapplication.util.Routes
 import com.example.myapplication.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,6 +1,6 @@
 package com.example.myapplication.ui.main_screen
 
-import com.example.myapplication.data.Movie
+import com.example.myapplication.data.movie_data.Movie
 
 sealed class MainScreenEvent {
 

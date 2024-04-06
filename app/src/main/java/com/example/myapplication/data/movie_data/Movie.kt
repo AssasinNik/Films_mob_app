@@ -1,4 +1,4 @@
-package com.example.myapplication.data
+package com.example.myapplication.data.movie_data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -11,9 +11,9 @@ data class Movie(
     val title: String?,
     val posterURL: String?,
     val description: String?,
-    @PrimaryKey val movieId: Int? = null
+    @PrimaryKey val movieId: Int? = null,
     //val titleEn: String?,
-    //val genres: List<String>,
+    val genres: List<String>
     //val rating: Int,
     //val length: Int,
     //val releaseYear: String,

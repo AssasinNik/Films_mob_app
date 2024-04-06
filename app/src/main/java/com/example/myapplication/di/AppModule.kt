@@ -2,9 +2,9 @@ package com.example.myapplication.di
 
 import android.app.Application
 import androidx.room.Room
-import com.example.myapplication.data.MovieDatabase
-import com.example.myapplication.data.MovieRepository
-import com.example.myapplication.data.MovieRepositoryImpl
+import com.example.myapplication.data.movie_data.MovieDatabase
+import com.example.myapplication.data.movie_data.MovieRepository
+import com.example.myapplication.data.movie_data.MovieRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -33,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.myapplication.ui.reusable_composeables.BottomNavBar
@@ -102,7 +103,8 @@ fun MainScreen(
 
 @Composable
 fun MovieForMood(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: MainScreenViewModel = hiltViewModel()
 ){
     Column(
         modifier = modifier
@@ -116,7 +118,9 @@ fun MovieForMood(
 
         Button(
             colors = ButtonDefaults.buttonColors(Purple40),
-            onClick = { /*TODO*/ },
+            onClick = {
+                viewModel.onEvent(MainScreenEvent.OnSelectedMoviesClick)
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)

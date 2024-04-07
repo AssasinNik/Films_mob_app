@@ -15,8 +15,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -31,6 +35,33 @@ fun MovieScreen(
     onPopBackStack: () -> Unit,
     viewModel: MovieScreenViewModel = hiltViewModel()
 ){
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
+    ) {
+        Image(
+            painter = rememberImagePainter(viewModel.posterUrl),
+            contentDescription = "backgroun_image",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .blur(radius = 10.dp)
+        )
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.radialGradient(
+                    colors = listOf(
+                        Color.Black,
+                        Color.Transparent
+                    ),
+                    radius = 2500f,
+                )
+            )
+        )
+    }
+
     Column (
          modifier = Modifier
              .fillMaxSize()

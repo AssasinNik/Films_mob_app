@@ -10,6 +10,6 @@ sealed class MainScreenEvent {
 
     data object OnAvatarClick: MainScreenEvent()
 
-    data object OnPopularMoviesClick: MainScreenEvent()
+    data object OnSelectedMoviesClick: MainScreenEvent()
 
 }

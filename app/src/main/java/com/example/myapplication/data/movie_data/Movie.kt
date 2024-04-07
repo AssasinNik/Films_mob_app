@@ -13,7 +13,7 @@ data class Movie(
     val description: String?,
     @PrimaryKey val movieId: Int? = null,
     //val titleEn: String?,
-    val genres: List<String>
+    //val genres: List<String>
     //val rating: Int,
     //val length: Int,
     //val releaseYear: String,

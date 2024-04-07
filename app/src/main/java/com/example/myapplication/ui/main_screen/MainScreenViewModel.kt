@@ -32,7 +32,7 @@ class MainScreenViewModel @Inject constructor(
             is MainScreenEvent.OnMovieSelectionButtonClick -> {
                 sendUiEvent(UiEvent.Navigate(Routes.PRE_MOVIE_SELECTION_SCREEN))
             }
-            is MainScreenEvent.OnPopularMoviesClick -> {
+            is MainScreenEvent.OnSelectedMoviesClick -> {
                 sendUiEvent(UiEvent.Navigate(Routes.MOVIE_LIST_SCREEN))
             }
         }

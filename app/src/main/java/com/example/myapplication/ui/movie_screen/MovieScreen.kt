@@ -42,7 +42,7 @@ fun MovieScreen(
     ) {
         Image(
             painter = rememberImagePainter(viewModel.posterUrl),
-            contentDescription = "backgroun_image",
+            contentDescription = "background_image",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxSize()

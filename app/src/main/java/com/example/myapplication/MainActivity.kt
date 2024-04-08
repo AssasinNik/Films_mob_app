@@ -23,6 +23,7 @@ import androidx.navigation.navArgument
 import com.example.myapplication.ui.main_screen.MainScreen
 import com.example.myapplication.ui.movie_list_screen.MovieListScreen
 import com.example.myapplication.ui.movie_screen.MovieScreen
+import com.example.myapplication.ui.register_screen.RegisterScreen
 import com.example.myapplication.ui.reusable_composeables.BottomNavBar
 import com.example.myapplication.ui.reusable_composeables.BottomNavBarItem
 import com.example.myapplication.ui.theme.MyApplicationTheme

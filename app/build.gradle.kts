@@ -73,7 +73,7 @@ dependencies {
     // Compose dependencies
     implementation (libs.androidx.lifecycle.viewmodel.compose)
     implementation (libs.androidx.navigation.compose)
-    implementation("io.coil-kt:coil-compose:1.3.1")
+
 
     //Dagger - Hilt
     ksp("com.google.dagger:hilt-compiler:2.48")
@@ -93,4 +93,13 @@ dependencies {
     
     //Gson
     implementation("com.google.code.gson:gson:2.10.1")
+
+    //http-requests
+    implementation("io.coil-kt:coil-compose:1.3.1")
+
+    //ktor
+    implementation("io.ktor:ktor-client-core:1.6.5")
+    implementation("io.ktor:ktor-client-json:1.6.5")
+    implementation("io.ktor:ktor-client-serialization:1.6.5")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
 }

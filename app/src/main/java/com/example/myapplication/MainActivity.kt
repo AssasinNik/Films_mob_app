@@ -41,8 +41,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
-                    RegisterScreen()
-                    /*val navController = rememberNavController()
+                    //RegisterScreen()
+                    val navController = rememberNavController()
                     NavHost(
                         navController = navController,
                         startDestination = Routes.MAIN_SCREEN
@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
                                 navController.popBackStack()
                             })
                         }
-                    }*/
+                    }
                 }
             }
         }

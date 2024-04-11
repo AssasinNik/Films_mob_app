@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.main_screen
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
@@ -25,6 +27,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.SpanStyle
@@ -39,6 +42,8 @@ import coil.compose.rememberImagePainter
 import com.example.myapplication.ui.reusable_composeables.BottomNavBar
 import com.example.myapplication.ui.reusable_composeables.RoundImage
 import com.example.myapplication.ui.theme.Purple40
+import com.example.myapplication.ui.theme.primaryGradientTBottom
+import com.example.myapplication.ui.theme.primaryGradientTop
 import com.example.myapplication.util.UiEvent
 
 @OptIn(ExperimentalCoilApi::class)
@@ -117,13 +122,22 @@ fun MovieForMood(
         Spacer(modifier = Modifier.height(25.dp))
 
         Button(
-            colors = ButtonDefaults.buttonColors(Purple40),
+            colors = ButtonDefaults.buttonColors(Color.Transparent),
             onClick = {
                 viewModel.onEvent(MainScreenEvent.OnSelectedMoviesClick)
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
+                .background(
+                    brush = Brush.verticalGradient(
+                        listOf(
+                            primaryGradientTop,
+                            primaryGradientTBottom
+                        )
+                    ),
+                    shape = RoundedCornerShape(30.dp)
+                )
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,

@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -34,6 +36,8 @@ import com.example.myapplication.util.UiEvent
 import com.example.myapplication.register.registerUser
 import com.example.myapplication.ui.theme.Purple40
 import com.example.myapplication.ui.theme.Purple80
+import com.example.myapplication.ui.theme.primaryGradientTBottom
+import com.example.myapplication.ui.theme.primaryGradientTop
 
 
 @Composable
@@ -57,11 +61,12 @@ fun RegisterScreen(){
         val password = remember{mutableStateOf("")}
         val username = remember{mutableStateOf("")}
         Row {
-
             Column {
                 Text(
                     text = "Логин",
                     fontSize = 17.sp,
+                    modifier = Modifier
+                        .padding(bottom = 9.dp)
                 )
                 BasicTextField(
                     modifier = Modifier
@@ -69,7 +74,12 @@ fun RegisterScreen(){
                         .clip(RoundedCornerShape(20.dp))
                         .border(
                             width = 2.dp,
-                            brush = Brush.verticalGradient(listOf(Purple80, Purple40)),
+                            brush = Brush.verticalGradient(
+                                listOf(
+                                    primaryGradientTop,
+                                    primaryGradientTBottom
+                                )
+                            ),
                             shape = RoundedCornerShape(20.dp)
                         )
                         .padding(13.dp),
@@ -88,11 +98,32 @@ fun RegisterScreen(){
 
                 Text(
                     text = "Пароль",
-                    fontSize = 19.sp,
+                    fontSize = 17.sp,
+                    modifier = Modifier
+                        .padding(bottom = 9.dp)
                 )
-                TextField(
-                    password.value,
-                    {password.value = it},
+                BasicTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(20.dp))
+                        .border(
+                            width = 2.dp,
+                            brush = Brush.verticalGradient(
+                                listOf(
+                                    primaryGradientTop,
+                                    primaryGradientTBottom
+                                )
+                            ),
+                            shape = RoundedCornerShape(20.dp)
+                        )
+                        .padding(13.dp),
+                    textStyle = TextStyle(color = Color.White, fontSize = 15.sp),
+                    cursorBrush = Brush.verticalGradient(listOf(Color.White, Color.White)),
+                    singleLine = true,
+                    value = password.value,
+                    onValueChange = {
+                        password.value = it
+                    },
                 )
 
                 Spacer(modifier = Modifier
@@ -101,20 +132,62 @@ fun RegisterScreen(){
 
                 Text(
                     text = "Имя пользователя",
-                    fontSize = 19.sp,
+                    fontSize = 17.sp,
+                    modifier = Modifier
+                        .padding(bottom = 9.dp)
                 )
-                TextField(
-                    username.value,
-                    {username.value = it},
+                BasicTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(20.dp))
+                        .border(
+                            width = 2.dp,
+                            brush = Brush.verticalGradient(
+                                listOf(
+                                    primaryGradientTop,
+                                    primaryGradientTBottom
+                                )
+                            ),
+                            shape = RoundedCornerShape(20.dp)
+                        )
+                        .padding(13.dp),
+                    textStyle = TextStyle(color = Color.White, fontSize = 15.sp),
+                    cursorBrush = Brush.verticalGradient(listOf(Color.White, Color.White)),
+                    singleLine = true,
+                    value = username.value,
+                    onValueChange = {
+                        username.value = it
+                    },
                 )
             }
         }
 
         Spacer(modifier = Modifier.height(25.dp))
-        Button(onClick = {registerUser(username.value, login.value, password.value)},
-            shape = RoundedCornerShape(15.dp),
-            modifier = Modifier.padding(10.dp),
-        ){ Text("Зарегистрироваться", fontSize = 20.sp) }
+        Button(onClick = {registerUser(
+                username.value,
+                login.value,
+                password.value
+            )},
+            colors = ButtonDefaults.buttonColors(Color.Transparent),
+            modifier = Modifier
+                .height(50.dp)
+                .fillMaxWidth()
+                .background(
+                    brush = Brush.verticalGradient(
+                        listOf(
+                            primaryGradientTop,
+                            primaryGradientTBottom
+                        )
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                )
+        ){ Text(
+            "Зарегистрироваться",
+            fontWeight = FontWeight.Normal,
+            fontSize = 16.sp,
+            color = Color.White
+        ) }
+
         Spacer(modifier = Modifier
             .height(60.dp)
         )

@@ -73,6 +73,7 @@ dependencies {
     // Compose dependencies
     implementation (libs.androidx.lifecycle.viewmodel.compose)
     implementation (libs.androidx.navigation.compose)
+    implementation ("com.exyte:animated-navigation-bar:1.0.0")
 
 
     //Dagger - Hilt

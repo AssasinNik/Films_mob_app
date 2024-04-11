@@ -56,6 +56,7 @@ fun MovieListScreenItem(
 
             Column(
                 modifier = Modifier
+
                     .fillMaxHeight()
                     .weight(75f)
             ) {

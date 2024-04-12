@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myapplication.ui.main_screen.MainScreenViewModel
+import com.example.myapplication.ui.reusable_composeables.BottomNavBar
 import com.example.myapplication.util.UiEvent
 
 @Composable
@@ -84,6 +86,4 @@ fun MovieListScreen(
             }
         }
     }
-
-
 }

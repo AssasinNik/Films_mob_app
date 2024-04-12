@@ -1,20 +1,14 @@
 package com.example.myapplication
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,15 +17,15 @@ import androidx.navigation.navArgument
 import com.example.myapplication.ui.main_screen.MainScreen
 import com.example.myapplication.ui.movie_list_screen.MovieListScreen
 import com.example.myapplication.ui.movie_screen.MovieScreen
-import com.example.myapplication.ui.register_screen.RegisterScreen
 import com.example.myapplication.ui.reusable_composeables.BottomNavBar
-import com.example.myapplication.ui.reusable_composeables.BottomNavBarItem
+import com.example.myapplication.ui.reusable_composeables.BottomNavGraph
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.example.myapplication.util.Routes
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -43,6 +37,14 @@ class MainActivity : ComponentActivity() {
                 ){
                     //RegisterScreen()
                     val navController = rememberNavController()
+                    Scaffold(
+                        bottomBar = {
+                            BottomNavBar(navController = navController)
+                        }
+                    ){
+                        BottomNavGraph(navController = navController)
+                    }
+
                     NavHost(
                         navController = navController,
                         startDestination = Routes.MAIN_SCREEN

@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navigation
 import com.example.myapplication.ui.main_screen.MainScreen
 import com.example.myapplication.ui.movie_list_screen.MovieListScreen
 import com.example.myapplication.ui.movie_screen.MovieScreen
@@ -42,43 +43,41 @@ class MainActivity : ComponentActivity() {
                             BottomNavBar(navController = navController)
                         }
                     ){
-                        BottomNavGraph(navController = navController)
-                    }
+                        NavHost(
+                            navController = navController,
+                            startDestination = Routes.MAIN_SCREEN
+                        ){
+                            composable(Routes.MAIN_SCREEN){
 
-                    NavHost(
-                        navController = navController,
-                        startDestination = Routes.MAIN_SCREEN
-                    ){
-                        composable(Routes.MAIN_SCREEN){
-
-                            MainScreen(onNavigate = {
-                                navController.navigate(it.route)
-                            })
-                        }
-
-                        composable(Routes.MOVIE_LIST_SCREEN){
-                            MovieListScreen(
-                                onNavigate = {
+                                MainScreen(onNavigate = {
                                     navController.navigate(it.route)
-                                },
-                                onPopBackStack = {
-                                    navController.popBackStack()
-                                }
-                            )
-                        }
+                                })
+                            }
 
-                        composable(
-                            route = Routes.MOVIE_SCREEN + "?movieId={movieId}",
-                            arguments = listOf(
-                                navArgument(name = "movieId"){
-                                    type = NavType.IntType
-                                    defaultValue = -1
-                                }
-                            )
-                        ) {
-                            MovieScreen(onPopBackStack = {
-                                navController.popBackStack()
-                            })
+                            composable(Routes.MOVIE_LIST_SCREEN){
+                                MovieListScreen(
+                                    onNavigate = {
+                                        navController.navigate(it.route)
+                                    },
+                                    onPopBackStack = {
+                                        navController.popBackStack()
+                                    }
+                                )
+                            }
+
+                            composable(
+                                route = Routes.MOVIE_SCREEN + "?movieId={movieId}",
+                                arguments = listOf(
+                                    navArgument(name = "movieId"){
+                                        type = NavType.IntType
+                                        defaultValue = -1
+                                    }
+                                )
+                            ) {
+                                MovieScreen(onPopBackStack = {
+                                    navController.popBackStack()
+                                })
+                            }
                         }
                     }
                 }

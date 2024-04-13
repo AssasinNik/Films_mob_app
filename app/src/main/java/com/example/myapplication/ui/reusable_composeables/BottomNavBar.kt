@@ -28,9 +28,12 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.myapplication.ui.theme.navBarBallColor
+import com.example.myapplication.ui.theme.navBarColor
 import com.example.myapplication.ui.theme.primaryGradientTBottom
 import com.example.myapplication.ui.theme.primaryGradientTop
 import com.example.myapplication.util.Routes
@@ -66,31 +69,32 @@ fun BottomNavBar(
     var selectedItemIndex by remember {
         mutableStateOf(0)
     }
-
-    AnimatedNavigationBar(
-        modifier = Modifier.height(64.dp),
-        selectedIndex = selectedItemIndex,
-        cornerRadius = shapeCornerRadius(cornerRadius = 34.dp),
-        ballAnimation = Parabolic(tween(300)),
-        indentAnimation = Height(tween(300)),
-        barColor = primaryGradientTop,
-        ballColor = primaryGradientTBottom
-    ) {
-        navigationBarItems.forEach { screen ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .noRippleClickable { selectedItemIndex = screen.ordinal }
-                    .clickable {
-                        navController.navigate(screen.route)
-                    },
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    modifier = Modifier.size(26.dp),
-                    imageVector = screen.icon,
-                    contentDescription = "Bottom Var Icon"
-                )
+    if (currenDestination?.route in setOf(Routes.MAIN_SCREEN, Routes.MOVIE_LIST_SCREEN, Routes.USER_SCREEN)) {
+        AnimatedNavigationBar(
+            modifier = Modifier.height(64.dp),
+            selectedIndex = checkCurrentDestination(currenDestination?.route),
+            cornerRadius = shapeCornerRadius(cornerRadius = 34.dp),
+            ballAnimation = Parabolic(tween(300)),
+            indentAnimation = Height(tween(300)),
+            barColor = navBarColor,
+            ballColor = navBarBallColor
+        ) {
+            navigationBarItems.forEach { screen ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .noRippleClickable {
+                            selectedItemIndex = screen.ordinal
+                            navController.navigate(screen.route)
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        modifier = Modifier.size(26.dp),
+                        imageVector = screen.icon,
+                        contentDescription = "Bottom Var Icon"
+                    )
+                }
             }
         }
     }
@@ -109,5 +113,14 @@ enum class BottomNavBarItem(val icon: ImageVector, val route: String) {
         icon = Icons.Default.AccountCircle,
         route = Routes.USER_SCREEN
     )
+}
+
+fun checkCurrentDestination(currentScreen: String?): Int {
+    when (currentScreen){
+        Routes.MAIN_SCREEN -> return 0
+        Routes.MOVIE_LIST_SCREEN -> return 1
+        Routes.USER_SCREEN -> return 3
+        else -> return 0
+    }
 }
 

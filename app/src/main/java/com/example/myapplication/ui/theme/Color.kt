@@ -12,3 +12,6 @@ val Pink40 = Color(0xFF7D5260)
 
 val primaryGradientTop = Color(0xFFB05FFD)
 val primaryGradientTBottom = Color(0xFF74D0F4)
+
+val navBarColor = Color(0xFFA78DF9)
+val navBarBallColor = Color(0xFFC079FA)

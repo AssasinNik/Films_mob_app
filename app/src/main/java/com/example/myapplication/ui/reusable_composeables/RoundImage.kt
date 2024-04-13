@@ -11,6 +11,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.R
@@ -26,6 +27,7 @@ fun RoundImage(
     Image(
         painter = userPhoto,
         contentDescription = null,
+        contentScale = ContentScale.Crop,
         modifier = modifier
             .aspectRatio(1f, matchHeightConstraintsFirst = true)
             .border(
@@ -39,5 +41,6 @@ fun RoundImage(
                 shape = CircleShape
             )
             .clip(CircleShape)
+
     )
 }

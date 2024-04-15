@@ -119,7 +119,7 @@ fun checkCurrentDestination(currentScreen: String?): Int {
     when (currentScreen){
         Routes.MAIN_SCREEN -> return 0
         Routes.MOVIE_LIST_SCREEN -> return 1
-        Routes.USER_SCREEN -> return 3
+        Routes.USER_SCREEN -> return 2
         else -> return 0
     }
 }

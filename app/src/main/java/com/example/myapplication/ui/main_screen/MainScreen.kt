@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.main_screen
 
+import android.app.usage.UsageEvents.Event
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +27,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
@@ -158,7 +160,8 @@ fun MovieForMood(
 fun Greeting(
     modifier: Modifier = Modifier,
     userName: String,
-    userPhoto: Painter
+    userPhoto: Painter,
+    viewModel: MainScreenViewModel = hiltViewModel()
 ){
     Column(
         modifier = modifier.fillMaxWidth()
@@ -195,6 +198,9 @@ fun Greeting(
                 modifier = Modifier
                     .size(50.dp)
                     .weight(20f)
+                    .clickable {
+                        viewModel.onEvent(MainScreenEvent.OnAvatarClick)
+                    }
             )
         }
 

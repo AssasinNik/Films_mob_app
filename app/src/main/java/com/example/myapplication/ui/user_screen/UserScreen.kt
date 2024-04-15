@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.register_screen
+package com.example.myapplication.ui.user_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -10,15 +10,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,34 +29,45 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.util.UiEvent
+import coil.compose.rememberImagePainter
 import com.example.myapplication.register.registerUser
-import com.example.myapplication.ui.theme.Purple40
-import com.example.myapplication.ui.theme.Purple80
+import com.example.myapplication.ui.reusable_composeables.RoundImage
 import com.example.myapplication.ui.theme.primaryGradientTBottom
 import com.example.myapplication.ui.theme.primaryGradientTop
 
-
 @Composable
-//fun RegisterScreen(onNavigate: (UiEvent.Navigate) -> Unit)
-fun RegisterScreen(){
+fun UserScreen(
+    onPopBackStack: () -> Unit
+){
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 35.dp)
-            .padding(top = 10.dp)
+            .padding(top = 30.dp)
     ){
-        Text(
-            text = "Регистрация",
-            fontSize = 19.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
-        )
-        val login = remember{mutableStateOf("")}
-        val password = remember{mutableStateOf("")}
-        val username = remember{mutableStateOf("")}
+        Row {
+             Column (
+                 horizontalAlignment = Alignment.CenterHorizontally
+             ) {
+                 RoundImage(
+                     userPhoto = rememberImagePainter("https://i.postimg.cc/wM50wWJ3/2024-03-30-131955798.png"),
+                     modifier = Modifier
+                         .size(90.dp)
+                         .padding(bottom = 5.dp)
+                 )
+                 Text(text = "Гигачадыч",
+                     fontSize = 19.sp,
+                     fontWeight = FontWeight.Bold
+                 )
+             }
+        }
+
+
+        val login = remember{ mutableStateOf("") }
+        val password = remember{ mutableStateOf("") }
+        val username = remember{ mutableStateOf("") }
         Row {
             Column {
                 Text(
@@ -76,7 +84,7 @@ fun RegisterScreen(){
                             width = 2.dp,
                             brush = Brush.verticalGradient(
                                 listOf(
-                                     primaryGradientTop,
+                                    primaryGradientTop,
                                     primaryGradientTBottom
                                 )
                             ),
@@ -131,7 +139,7 @@ fun RegisterScreen(){
                 )
 
                 Text(
-                    text = "Имя пользователя",
+                    text = "Новый пароль",
                     fontSize = 17.sp,
                     modifier = Modifier
                         .padding(bottom = 9.dp)
@@ -162,12 +170,13 @@ fun RegisterScreen(){
             }
         }
 
-        Spacer(modifier = Modifier.height(25.dp))
-        Button(onClick = {registerUser(
-                username.value,
-                login.value,
-                password.value
-            )},
+        Button(onClick = {
+            registerUser(
+            username.value,
+            login.value,
+            password.value
+        )
+        },
             colors = ButtonDefaults.buttonColors(Color.Transparent),
             modifier = Modifier
                 .height(50.dp)
@@ -182,7 +191,7 @@ fun RegisterScreen(){
                     shape = RoundedCornerShape(12.dp)
                 )
         ){ Text(
-            "Зарегистрироваться",
+            "Изменить данные",
             fontWeight = FontWeight.Normal,
             fontSize = 16.sp,
             color = Color.White

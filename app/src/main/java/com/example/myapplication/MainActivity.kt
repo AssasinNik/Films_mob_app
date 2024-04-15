@@ -15,12 +15,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.myapplication.ui.login_screen.LoginScreen
 import com.example.myapplication.ui.main_screen.MainScreen
 import com.example.myapplication.ui.movie_list_screen.MovieListScreen
 import com.example.myapplication.ui.movie_screen.MovieScreen
 import com.example.myapplication.ui.reusable_composeables.BottomNavBar
 import com.example.myapplication.ui.reusable_composeables.BottomNavGraph
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.example.myapplication.ui.user_screen.UserScreen
 import com.example.myapplication.util.Routes
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,6 +38,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
+                    //LoginScreen()
+                    //UserScreen()
                     //RegisterScreen()
                     val navController = rememberNavController()
                     Scaffold(
@@ -63,6 +67,12 @@ class MainActivity : ComponentActivity() {
                                         navController.popBackStack()
                                     }
                                 )
+                            }
+
+                            composable(Routes.USER_SCREEN){
+                                UserScreen(onPopBackStack = {
+                                    navController.popBackStack()
+                                })
                             }
 
                             composable(

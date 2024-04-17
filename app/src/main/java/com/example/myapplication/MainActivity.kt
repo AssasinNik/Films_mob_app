@@ -17,6 +17,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.myapplication.ui.login_screen.LoginScreen
 import com.example.myapplication.ui.main_screen.MainScreen
+import com.example.myapplication.ui.mood_test_pager.MoodTestPager
 import com.example.myapplication.ui.movie_list_screen.MovieListScreen
 import com.example.myapplication.ui.movie_screen.MovieScreen
 import com.example.myapplication.ui.reusable_composeables.BottomNavBar
@@ -38,10 +39,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
+                    MoodTestPager()
                     //LoginScreen()
                     //UserScreen()
                     //RegisterScreen()
-                    val navController = rememberNavController()
+                    /*val navController = rememberNavController()
                     Scaffold(
                         bottomBar = {
                             BottomNavBar(navController = navController)
@@ -89,7 +91,7 @@ class MainActivity : ComponentActivity() {
                                 })
                             }
                         }
-                    }
+                    }*/
                 }
             }
         }

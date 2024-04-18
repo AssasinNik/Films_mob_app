@@ -4,11 +4,16 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -39,11 +44,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
-                    MoodTestPager()
                     //LoginScreen()
                     //UserScreen()
                     //RegisterScreen()
-                    /*val navController = rememberNavController()
+                    val navController = rememberNavController()
                     Scaffold(
                         bottomBar = {
                             BottomNavBar(navController = navController)
@@ -51,7 +55,11 @@ class MainActivity : ComponentActivity() {
                     ){
                         NavHost(
                             navController = navController,
-                            startDestination = Routes.MAIN_SCREEN
+                            startDestination = Routes.MAIN_SCREEN,
+                            enterTransition = { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left, tween(200))},
+                            exitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Right, tween(200))},
+                            popEnterTransition =  { slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left, tween(200))},
+                            popExitTransition = { slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Right, tween(200))},
                         ){
                             composable(Routes.MAIN_SCREEN){
 
@@ -77,6 +85,12 @@ class MainActivity : ComponentActivity() {
                                 })
                             }
 
+                            composable(Routes.PRE_MOVIE_SELECTION_SCREEN){
+                                MoodTestPager(onPopBackStack = {
+                                    navController.popBackStack()
+                                })
+                            }
+
                             composable(
                                 route = Routes.MOVIE_SCREEN + "?movieId={movieId}",
                                 arguments = listOf(
@@ -91,7 +105,7 @@ class MainActivity : ComponentActivity() {
                                 })
                             }
                         }
-                    }*/
+                    }
                 }
             }
         }

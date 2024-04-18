@@ -15,3 +15,7 @@ val primaryGradientTBottom = Color(0xFF74D0F4)
 
 val navBarColor = Color(0xFFA78DF9)
 val navBarBallColor = Color(0xFFC079FA)
+
+val backgroundColor = Color(0xFF09090F)
+val testMoodPagerColor = Color(0xFF141123)
+val testMoodPagerClickedColor = Color(0xFF322A5C)

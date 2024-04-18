@@ -121,7 +121,7 @@ fun MovieForMood(
         Button(
             colors = ButtonDefaults.buttonColors(Color.Transparent),
             onClick = {
-                viewModel.onEvent(MainScreenEvent.OnSelectedMoviesClick)
+                viewModel.onEvent(MainScreenEvent.OnMovieSelectionButtonClick)
             },
             modifier = Modifier
                 .fillMaxWidth()

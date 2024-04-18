@@ -1,8 +1,10 @@
 package com.example.myapplication.ui.mood_test_pager
 
+import androidx.compose.animation.core.animateIntOffsetAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,21 +26,27 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.example.myapplication.R
+import com.example.myapplication.ui.theme.testMoodPagerClickedColor
+import com.example.myapplication.ui.theme.testMoodPagerColor
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MoodTestPager(
-
+    onPopBackStack: () -> Unit
 ){
     val pagerState = rememberPagerState(
         initialPage = 0,
@@ -96,10 +104,10 @@ fun MoodTestPager(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(
-                            color = Color.Black,
+                            color = testMoodPagerColor,
                             shape = RoundedCornerShape(15.dp)
                         )
-                        .padding(vertical = 15.dp, horizontal = 5.dp)
+                        .padding(vertical = 15.dp, horizontal = 4.dp)
                 ) {
                     Column (
                         modifier = Modifier
@@ -109,79 +117,119 @@ fun MoodTestPager(
                     ){
                         Text(
                             text = "Как выглядит ваш идеальный вечер?",
-                            fontSize = 17.sp
+                            fontSize = 17.sp,
+                            textAlign = TextAlign.Center
                         )
                     }
                 }
 
-                Spacer(modifier = Modifier.height(15.dp))
+                Spacer(modifier = Modifier.height(20.dp))
 
+                var backgroundColor = remember {
+                    mutableStateOf(testMoodPagerColor)
+                }
                 Row (
                     modifier = Modifier
                         .fillMaxWidth()
+                        .clickable {
+                            if (backgroundColor.value == testMoodPagerColor){
+                                backgroundColor.value = testMoodPagerClickedColor
+                            }
+                            else {
+                                backgroundColor.value = testMoodPagerColor
+                            }
+                        }
                         .background(
-                            color = Color.Black,
-                            shape = RoundedCornerShape(15.dp)
+                            color = backgroundColor.value,
+                            shape = RoundedCornerShape(15.dp),
                         )
-                        .padding(vertical = 15.dp, horizontal = 5.dp)
+                        .padding(vertical = 15.dp, horizontal = 15.dp)
+
+
                 ) {
-                    Text(
-                        text = "Пешая прогулка в одиночестве",
-                        fontSize = 15.sp
-                    )
+                    Column (
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                            horizontalAlignment = Alignment.Start
+                    ){
+                        Text(
+                            textAlign = TextAlign.Start,
+                            text = "Пешая прогулка в одиночестве",
+                            fontSize = 15.sp
+                        )
+                    }
                 }
 
-                Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 Row (
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(
-                            color = Color.Black,
+                            color = testMoodPagerColor,
                             shape = RoundedCornerShape(15.dp)
                         )
-                        .padding(vertical = 15.dp, horizontal = 5.dp)
-                ){
-                    Text(
-                        text = "Качаца",
-                        fontSize = 15.sp
-                    )
+                        .padding(vertical = 15.dp, horizontal = 15.dp)
+                ) {
+                    Column (
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.Start
+                    ){
+                        Text(
+                            textAlign = TextAlign.Start,
+                            text = "Пешая прогулка в одиночестве",
+                            fontSize = 15.sp
+                        )
+                    }
                 }
 
-                Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 Row (
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(
-                            color = Color.Black,
+                            color = testMoodPagerColor,
                             shape = RoundedCornerShape(15.dp)
                         )
-                        .padding(vertical = 15.dp, horizontal = 5.dp)
-                ){
-                    Text(
-                        text = "Романтичный ужин с любимым",
-                        fontSize = 15.sp
-                    )
-
+                        .padding(vertical = 15.dp, horizontal = 15.dp)
+                ) {
+                    Column (
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.Start
+                    ){
+                        Text(
+                            textAlign = TextAlign.Start,
+                            text = "Пешая прогулка в одиночестве",
+                            fontSize = 15.sp
+                        )
+                    }
                 }
 
-                Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 Row (
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(
-                            color = Color.Black,
+                            color = testMoodPagerColor,
                             shape = RoundedCornerShape(15.dp)
                         )
-                        .padding(vertical = 15.dp)
-                        .padding(start = 5.dp)
-                ){
-                    Text(
-                        text = "Констр страйк гонка вооружений",
-                        fontSize = 15.sp
-                    )
+                        .padding(vertical = 15.dp, horizontal = 15.dp)
+                ) {
+                    Column (
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.Start
+                    ){
+                        Text(
+                            textAlign = TextAlign.Start,
+                            text = "Пешая прогулка в одиночестве",
+                            fontSize = 15.sp
+                        )
+                    }
                 }
             }
         }

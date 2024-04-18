@@ -80,7 +80,7 @@ fun MovieListScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(1.dp)
+                        .height(0.2.dp)
                         .background(Color.Gray)
                 )
             }

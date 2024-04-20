@@ -13,5 +13,5 @@ import com.example.myapplication.util.Converters
 @TypeConverters(Converters::class)
 abstract class MovieDatabase: RoomDatabase(){
 
-    abstract val dao: MovieDao
+    abstract val movieDao: MovieDao
 }

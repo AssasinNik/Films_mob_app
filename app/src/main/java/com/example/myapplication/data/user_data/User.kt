@@ -9,5 +9,5 @@ data class User(
     val login: String,
     val password: String,
     val token: String,
-    @PrimaryKey val userId: String? = null
+    @PrimaryKey val userId: Int? = null
 )

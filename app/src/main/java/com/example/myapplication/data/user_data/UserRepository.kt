@@ -1,15 +1,11 @@
 package com.example.myapplication.data.user_data
 
-import androidx.room.Dao
-import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Upsert
 
-@Dao
-interface UserDao {
-    @Upsert
+interface UserRepository {
+
     suspend fun insertUser(user: User)
 
-    @Query("SELECT * FROM users WHERE userId = 0")
     suspend fun getUser(): User?
 }

@@ -13,10 +13,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieListScreenViewModel @Inject constructor(
-    repository: MovieRepository
+    private val movieRepository: MovieRepository
 ) : ViewModel(){
 
-    val movies = repository.getMovies()
+    val movies = movieRepository.getMovies()
 
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()

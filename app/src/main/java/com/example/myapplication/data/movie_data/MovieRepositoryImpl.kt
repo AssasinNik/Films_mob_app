@@ -3,7 +3,7 @@ package com.example.myapplication.data.movie_data
 import kotlinx.coroutines.flow.Flow
 
 class MovieRepositoryImpl (
-    private val dao: MovieDao
+    private val movieDao: MovieDao
 ): MovieRepository {
 
     /*override suspend fun getSelectedMovies(genres: List<String>) {
@@ -11,11 +11,11 @@ class MovieRepositoryImpl (
     }*/
 
     override suspend fun getMovieById(id: Int): Movie? {
-        return dao.getMovieById(id)
+        return movieDao.getMovieById(id)
     }
 
     override fun getMovies(): Flow<List<Movie>> {
-        return dao.getMovies()
+        return movieDao.getMovies()
     }
 
 }

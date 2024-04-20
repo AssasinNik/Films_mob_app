@@ -5,6 +5,9 @@ import androidx.room.Room
 import com.example.myapplication.data.movie_data.MovieDatabase
 import com.example.myapplication.data.movie_data.MovieRepository
 import com.example.myapplication.data.movie_data.MovieRepositoryImpl
+import com.example.myapplication.data.user_data.UserDatabase
+import com.example.myapplication.data.user_data.UserRepository
+import com.example.myapplication.data.user_data.UserRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,6 +31,22 @@ object AppModule {
     @Provides
     @Singleton
     fun provideMovieRepository(db: MovieDatabase): MovieRepository {
-        return MovieRepositoryImpl(db.dao)
+        return MovieRepositoryImpl(db.movieDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserDatabase(app: Application): UserDatabase {
+        return Room.databaseBuilder(
+            app,
+            UserDatabase::class.java,
+            "user_db"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(db: UserDatabase): UserRepository {
+        return UserRepositoryImpl(db.userDao)
     }
 }

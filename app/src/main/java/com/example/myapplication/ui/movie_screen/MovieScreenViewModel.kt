@@ -1,5 +1,7 @@
 package com.example.myapplication.ui.movie_screen
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -17,9 +19,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieScreenViewModel @Inject constructor(
-    private val repository: MovieRepository,
+    private val movieRepository: MovieRepository,
     savedStateHandle: SavedStateHandle
-): ViewModel() {
+): ViewModel(), Parcelable {
 
     var movie by mutableStateOf<Movie?>(null)
         private set
@@ -36,15 +38,39 @@ class MovieScreenViewModel @Inject constructor(
     private  val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
+    constructor(parcel: Parcel) : this(
+        TODO("repository"),
+        TODO("savedStateHandle")
+    ) {
+    }
+
     init {
         val movieId = savedStateHandle.get<Int>("movieId")!!
         viewModelScope.launch {
-            repository.getMovieById(movieId)?.let { movie->
+            movieRepository.getMovieById(movieId)?.let { movie->
                 title = movie.title ?: ""
                 description = movie.description ?: ""
                 posterUrl = movie.posterURL ?: ""
                 this@MovieScreenViewModel.movie = movie
             }
+        }
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<MovieScreenViewModel> {
+        override fun createFromParcel(parcel: Parcel): MovieScreenViewModel {
+            return MovieScreenViewModel(parcel)
+        }
+
+        override fun newArray(size: Int): Array<MovieScreenViewModel?> {
+            return arrayOfNulls(size)
         }
     }
 }

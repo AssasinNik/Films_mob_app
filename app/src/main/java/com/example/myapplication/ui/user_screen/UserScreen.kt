@@ -24,11 +24,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.example.myapplication.register.registerUser
 import com.example.myapplication.ui.reusable_composeables.RoundImage
@@ -37,7 +43,8 @@ import com.example.myapplication.ui.theme.primaryGradientTop
 
 @Composable
 fun UserScreen(
-    onPopBackStack: () -> Unit
+    onPopBackStack: () -> Unit,
+    viewModel: UserScreenViewModel = hiltViewModel()
 ){
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -52,22 +59,18 @@ fun UserScreen(
                  horizontalAlignment = Alignment.CenterHorizontally
              ) {
                  RoundImage(
-                     userPhoto = rememberImagePainter("https://i.postimg.cc/wM50wWJ3/2024-03-30-131955798.png"),
+                     userPhoto = rememberImagePainter(viewModel.avatar),
                      modifier = Modifier
                          .size(90.dp)
                          .padding(bottom = 5.dp)
                  )
-                 Text(text = "Гигачадыч",
+                 Text(text = viewModel.login,
                      fontSize = 19.sp,
                      fontWeight = FontWeight.Bold
                  )
              }
         }
 
-
-        val login = remember{ mutableStateOf("") }
-        val password = remember{ mutableStateOf("") }
-        val username = remember{ mutableStateOf("") }
         Row {
             Column {
                 Text(
@@ -94,9 +97,9 @@ fun UserScreen(
                     textStyle = TextStyle(color = Color.White, fontSize = 15.sp),
                     cursorBrush = Brush.verticalGradient(listOf(Color.White, Color.White)),
                     singleLine = true,
-                    value = login.value,
+                    value = viewModel.login,
                     onValueChange = {
-                        login.value = it
+                        viewModel.onEvent(UserScreenEvent.OnLoginChange(it))
                     },
                 )
 
@@ -128,10 +131,11 @@ fun UserScreen(
                     textStyle = TextStyle(color = Color.White, fontSize = 15.sp),
                     cursorBrush = Brush.verticalGradient(listOf(Color.White, Color.White)),
                     singleLine = true,
-                    value = password.value,
+                    value = viewModel.password,
                     onValueChange = {
-                        password.value = it
+                        viewModel.onEvent(UserScreenEvent.OnPasswordChange(it))
                     },
+                    visualTransformation = PasswordVisualTransformation()
                 )
 
                 Spacer(modifier = Modifier
@@ -162,21 +166,17 @@ fun UserScreen(
                     textStyle = TextStyle(color = Color.White, fontSize = 15.sp),
                     cursorBrush = Brush.verticalGradient(listOf(Color.White, Color.White)),
                     singleLine = true,
-                    value = username.value,
+                    value = viewModel.newPasswords,
                     onValueChange = {
-                        username.value = it
+                        viewModel.onEvent(UserScreenEvent.OnNewPasswordChange(it))
                     },
                 )
             }
         }
 
-        Button(onClick = {
-            registerUser(
-            username.value,
-            login.value,
-            password.value
-        )
-        },
+        Button(onClick = {(
+            viewModel.onEvent(UserScreenEvent.OnSaveChangesClick)
+        )},
             colors = ButtonDefaults.buttonColors(Color.Transparent),
             modifier = Modifier
                 .height(50.dp)
@@ -199,6 +199,19 @@ fun UserScreen(
 
         Spacer(modifier = Modifier
             .height(60.dp)
+        )
+    }
+}
+
+class PasswordVisualTransformation : VisualTransformation {
+    override fun filter(text: AnnotatedString): TransformedText {
+        return TransformedText(
+            buildAnnotatedString {
+                text.forEach {
+                    append("*")
+                }
+            },
+            OffsetMapping.Identity
         )
     }
 }

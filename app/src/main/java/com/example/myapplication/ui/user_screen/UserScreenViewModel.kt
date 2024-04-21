@@ -26,6 +26,9 @@ class UserScreenViewModel @Inject constructor(
     var password by mutableStateOf("")
         private set
 
+    var avatar by mutableStateOf("")
+        private set
+
     var token by mutableStateOf("")
         private set
 
@@ -43,6 +46,9 @@ class UserScreenViewModel @Inject constructor(
             userRepository.getUser()?.let { user ->
                 login = user.login
                 password = user.password
+                if (user.avatar != null) {
+                    avatar = user.avatar
+                }
                 token = user.token
             }
         }
@@ -74,6 +80,7 @@ class UserScreenViewModel @Inject constructor(
                             User(
                                 name = "TestName",
                                 login = login,
+                                avatar = avatar,
                                 password = newPasswords,
                                 token = token,
                                 userId = 0,

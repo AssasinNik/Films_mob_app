@@ -33,7 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myapplication.util.UiEvent
-import com.example.myapplication.register.registerUser
+import com.example.myapplication.ui.register.registerUser
 import com.example.myapplication.ui.theme.Purple40
 import com.example.myapplication.ui.theme.Purple80
 import com.example.myapplication.ui.theme.primaryGradientTBottom
@@ -163,11 +163,13 @@ fun RegisterScreen(){
         }
 
         Spacer(modifier = Modifier.height(25.dp))
-        Button(onClick = {registerUser(
+        Button(onClick = {
+            registerUser(
                 username.value,
                 login.value,
                 password.value
-            )},
+            )
+        },
             colors = ButtonDefaults.buttonColors(Color.Transparent),
             modifier = Modifier
                 .height(50.dp)

@@ -1,4 +1,4 @@
-package com.example.myapplication.register
+package com.example.myapplication.ui.register
 
 import io.ktor.client.HttpClient
 import io.ktor.client.request.post

@@ -68,8 +68,8 @@ fun MainScreen(
             .padding(vertical = 40.dp)
     ){
         Greeting(
-            userName = "Гигачадыч",
-            userPhoto = rememberImagePainter("https://i.postimg.cc/wM50wWJ3/2024-03-30-131955798.png")
+            userName = viewModel.login,
+            userPhoto = rememberImagePainter(viewModel.avatar)
         )
 
         MovieForMood()

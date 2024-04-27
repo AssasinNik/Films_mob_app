@@ -56,6 +56,9 @@ class UserScreenViewModel @Inject constructor(
 
     fun onEvent(event: UserScreenEvent) {
         when (event) {
+            is UserScreenEvent.OnEditUserDataClick -> {
+
+            }
             is UserScreenEvent.OnLoginChange -> {
                 login = event.login
             }

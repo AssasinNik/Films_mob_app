@@ -68,7 +68,7 @@ fun MainScreen(
             .padding(vertical = 40.dp)
     ){
         Greeting(
-            userName = viewModel.login,
+            userName = viewModel.name,
             userPhoto = rememberImagePainter(viewModel.avatar)
         )
 

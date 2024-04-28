@@ -20,10 +20,17 @@ import javax.inject.Inject
 class UserScreenViewModel @Inject constructor(
     private val userRepository: UserRepository
 ): ViewModel() {
+
+    var name by mutableStateOf("")
+        private set
+
     var login by mutableStateOf("")
         private set
 
     var password by mutableStateOf("")
+        private set
+
+    var insertPassword by mutableStateOf("")
         private set
 
     var avatar by mutableStateOf("")
@@ -44,6 +51,9 @@ class UserScreenViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             userRepository.getUser()?.let { user ->
+                if (user.name != null) {
+                    name = user.name
+                }
                 login = user.login
                 password = user.password
                 if (user.avatar != null) {
@@ -64,7 +74,8 @@ class UserScreenViewModel @Inject constructor(
             }
 
             is UserScreenEvent.OnPasswordChange -> {
-                if (password == event.password) {
+                insertPassword = event.password
+                if (password == insertPassword) {
                     isPasswordIsValid = true
                 }
                 else {
@@ -78,10 +89,21 @@ class UserScreenViewModel @Inject constructor(
 
             is UserScreenEvent.OnSaveChangesClick -> {
                 viewModelScope.launch {
+                    userRepository.insertUser(
+                        User(
+                            name = name,
+                            login = login,
+                            avatar = avatar,
+                            password = password,
+                            token = token,
+                            userId = 0,
+                        )
+                    )
+
                     if (isPasswordIsValid && newPasswords.isNotBlank()){
                         userRepository.insertUser(
                             User(
-                                name = "TestName",
+                                name = name,
                                 login = login,
                                 avatar = avatar,
                                 password = newPasswords,
@@ -89,7 +111,7 @@ class UserScreenViewModel @Inject constructor(
                                 userId = 0,
                             )
                         )
-
+                        insertPassword = ""
                         newPasswords = ""
                     }
                     else {

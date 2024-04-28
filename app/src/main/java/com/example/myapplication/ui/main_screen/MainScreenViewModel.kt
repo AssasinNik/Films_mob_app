@@ -26,6 +26,9 @@ class MainScreenViewModel @Inject constructor(
     private  val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
+    var name by mutableStateOf("")
+        private set
+
     var login by mutableStateOf("")
         private set
 
@@ -35,6 +38,9 @@ class MainScreenViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             userRepository.getUser()?.let { user ->
+                if (user.name != null) {
+                    name = user.name
+                }
                 login = user.login
                 if (user.avatar != null) {
                     avatar = user.avatar

@@ -64,7 +64,7 @@ fun UserScreen(
                          .size(90.dp)
                          .padding(bottom = 5.dp)
                  )
-                 Text(text = viewModel.login,
+                 Text(text = viewModel.name,
                      fontSize = 19.sp,
                      fontWeight = FontWeight.Bold
                  )
@@ -131,7 +131,7 @@ fun UserScreen(
                     textStyle = TextStyle(color = Color.White, fontSize = 15.sp),
                     cursorBrush = Brush.verticalGradient(listOf(Color.White, Color.White)),
                     singleLine = true,
-                    value = viewModel.password,
+                    value = viewModel.insertPassword,
                     onValueChange = {
                         viewModel.onEvent(UserScreenEvent.OnPasswordChange(it))
                     },

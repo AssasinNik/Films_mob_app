@@ -35,6 +35,17 @@ class MovieScreenViewModel @Inject constructor(
     var posterUrl by mutableStateOf("")
         private set
 
+    var rating by mutableStateOf("")
+        private set
+
+    var releaseYear by mutableStateOf("")
+        private set
+
+    var ageLimit by mutableStateOf("")
+        private set
+    var length by mutableStateOf("")
+        private set
+
     private  val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
@@ -50,7 +61,11 @@ class MovieScreenViewModel @Inject constructor(
             movieRepository.getMovieById(movieId)?.let { movie->
                 title = movie.title ?: ""
                 description = movie.description ?: ""
-                posterUrl = movie.posterURL ?: ""
+                posterUrl = movie.posterURL
+                rating = movie.rating.toString()
+                releaseYear = movie.releaseYear
+                ageLimit = movie.ageLimit ?: ""
+                length = movie.length.toString()
                 this@MovieScreenViewModel.movie = movie
             }
         }

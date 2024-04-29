@@ -65,11 +65,11 @@ fun MovieListScreenItem(
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Bold
                 )
-                Text(text = "2018",
+                Text(text = movie.releaseYear,
                     fontSize = 13.sp,
                     color = Color.Gray
                 )
-                Text(text = "боевик, комедия",
+                Text(text = movie.genres,
                     fontSize = 13.sp,
                     color = Color.Gray
                 )

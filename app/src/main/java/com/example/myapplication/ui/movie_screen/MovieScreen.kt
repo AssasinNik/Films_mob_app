@@ -2,6 +2,8 @@ package com.example.myapplication.ui.movie_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,7 +13,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -97,16 +101,16 @@ fun MovieScreen(
                     .padding(start = 15.dp, top = 5.dp)
             ){
                 Text(text = "Год выпуска:", fontSize = 15.sp, lineHeight = 16.sp)
-                Text(text = "2019", fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                Text(text = viewModel.releaseYear, fontSize = 15.sp, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(text = "Рейтинг:", fontSize = 15.sp, lineHeight = 16.sp)
-                Text(text = "8.2", fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                Text(text = viewModel.rating, fontSize = 15.sp, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(text = "Продолжительность:", fontSize = 15.sp, lineHeight = 16.sp)
-                Text(text = "2 часа 35 минут", fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                Text(text = "${viewModel.length} минут", fontSize = 15.sp, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(text = "Возрастная категория:", fontSize = 15.sp, lineHeight = 16.sp)
-                Text(text = "17+", fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                Text(text = viewModel.ageLimit, fontSize = 15.sp, fontWeight = FontWeight.Bold)
             }
         }
         
@@ -125,7 +129,11 @@ fun MovieScreen(
                         .background(Color.White)
                 ) 
                 Spacer(modifier = Modifier.height(14.dp))
-                Text(text = viewModel.description)
+                Text(
+                    text = viewModel.description,
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState(), true)
+                )
             }
         }
         

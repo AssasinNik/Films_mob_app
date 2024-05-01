@@ -27,6 +27,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,26 +36,41 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.backgroundColor
 import com.example.myapplication.ui.theme.primaryGradientTBottom
 import com.example.myapplication.ui.theme.primaryGradientTop
+import com.example.myapplication.util.UiEvent
 import androidx.compose.material3.TextFieldColors as TextFieldColors1
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun EditUserData(
-
+    onNavigate: (UiEvent.Navigate) -> Unit,
+    onPopBackStack: () -> Unit,
+    viewModel: EditUserDataViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect{event ->
+            when(event){
+                is UiEvent.Navigate -> onNavigate(event)
+                else -> Unit
+            }
+        }
+    }
+
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 containerColor = primaryGradientTop,
-                onClick = { /*TODO*/ },
+                onClick = {
+                    viewModel.onEvent(EditUserDataEvent.OnSaveChangesClick)
+                },
                 icon = {
                     Icon(imageVector = Icons.Filled.Check, contentDescription = "Save")
                 },
@@ -101,8 +117,10 @@ fun EditUserData(
             Spacer(modifier = Modifier.height(20.dp))
 
             TextField(
-                value = "Name",
-                onValueChange = {},
+                value = viewModel.name,
+                onValueChange = {
+                    viewModel.onEvent(EditUserDataEvent.OnUserNameChange(it))
+                },
                 label = {
                     Text(text = "Имя")
                 },
@@ -113,7 +131,8 @@ fun EditUserData(
                     focusedLabelColor = primaryGradientTop,
                     unfocusedLabelColor = primaryGradientTop,
                     cursorColor = Color.White,
-                )
+                ),
+                singleLine = true
             )
         }
     }

@@ -45,9 +45,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
-                    EditUserData()
-
-                    /*val navController = rememberNavController()
+                    val navController = rememberNavController()
                     Scaffold(
                         bottomBar = {
                             BottomNavBar(navController = navController)
@@ -80,15 +78,31 @@ class MainActivity : ComponentActivity() {
                             }
 
                             composable(Routes.USER_SCREEN){
-                                UserScreen(onPopBackStack = {
-                                    navController.popBackStack()
-                                })
+                                UserScreen(
+                                    onNavigate = {
+                                        navController.navigate(it.route)
+                                    },
+                                    onPopBackStack = {
+                                        navController.popBackStack()
+                                    }
+                                )
                             }
 
                             composable(Routes.PRE_MOVIE_SELECTION_SCREEN){
                                 MoodTestPager(onPopBackStack = {
                                     navController.popBackStack()
                                 })
+                            }
+
+                            composable(Routes.EDIT_USER_DATA_SCREEN) {
+                                EditUserData(
+                                    onNavigate = {
+                                        navController.navigate(it.route)
+                                    },
+                                    onPopBackStack = {
+                                        navController.popBackStack()
+                                    }
+                                )
                             }
 
                             composable(
@@ -105,7 +119,7 @@ class MainActivity : ComponentActivity() {
                                 })
                             }
                         }
-                    }*/
+                    }
                 }
             }
         }

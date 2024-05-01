@@ -9,11 +9,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.data.movie_data.Movie
 import com.example.myapplication.data.user_data.User
 import com.example.myapplication.data.user_data.UserRepository
+import com.example.myapplication.util.Routes
 import com.example.myapplication.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import okhttp3.Route
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,14 +53,10 @@ class UserScreenViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             userRepository.getUser()?.let { user ->
-                if (user.name != null) {
-                    name = user.name
-                }
+                name = user.name ?: ""
                 login = user.login
                 password = user.password
-                if (user.avatar != null) {
-                    avatar = user.avatar
-                }
+                avatar = user.avatar  ?: ""
                 token = user.token
             }
         }
@@ -67,7 +65,7 @@ class UserScreenViewModel @Inject constructor(
     fun onEvent(event: UserScreenEvent) {
         when (event) {
             is UserScreenEvent.OnEditUserDataClick -> {
-
+                sendUiEvent(UiEvent.Navigate(Routes.EDIT_USER_DATA_SCREEN))
             }
             is UserScreenEvent.OnLoginChange -> {
                 login = event.login
@@ -124,6 +122,12 @@ class UserScreenViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    private fun sendUiEvent(event: UiEvent) {
+        viewModelScope.launch{
+            _uiEvent.send(event)
         }
     }
 }

@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.myapplication.ui.edit_user_data.EditUserData
 import com.example.myapplication.ui.login_screen.LoginScreen
 import com.example.myapplication.ui.main_screen.MainScreen
 import com.example.myapplication.ui.mood_test_pager.MoodTestPager
@@ -44,10 +45,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ){
-                    //LoginScreen()
-                    //UserScreen()
-                    //RegisterScreen()
-                    val navController = rememberNavController()
+                    EditUserData()
+
+                    /*val navController = rememberNavController()
                     Scaffold(
                         bottomBar = {
                             BottomNavBar(navController = navController)
@@ -105,7 +105,7 @@ class MainActivity : ComponentActivity() {
                                 })
                             }
                         }
-                    }
+                    }*/
                 }
             }
         }

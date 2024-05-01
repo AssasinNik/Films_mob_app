@@ -96,7 +96,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
 
     //http-requests
-    implementation("io.coil-kt:coil-compose:1.3.1")
+    implementation("io.coil-kt:coil-compose:2.1.0")
 
     //ktor
     implementation("io.ktor:ktor-client-core:1.6.5")

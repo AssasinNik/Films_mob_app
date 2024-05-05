@@ -1,5 +1,8 @@
 package com.example.myapplication.ui.edit_user_data
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -7,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.user_data.User
 import com.example.myapplication.data.user_data.UserRepository
+import com.example.myapplication.ui.Constants
 import com.example.myapplication.util.Routes
 import com.example.myapplication.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,11 +33,11 @@ class EditUserDataViewModel @Inject constructor(
     var password by mutableStateOf("")
         private set
 
-    var avatar by mutableStateOf("")
-        private set
+    var avatar by mutableStateOf<Uri>(Constants.DEFAULT_URI)
 
     var token by mutableStateOf("")
         private set
+
 
     init {
         viewModelScope.launch {
@@ -41,7 +45,7 @@ class EditUserDataViewModel @Inject constructor(
                 name = user.name ?: ""
                 login = user.login
                 password = user.password
-                avatar = user.avatar  ?: ""
+                avatar = user.avatar ?: Constants.DEFAULT_URI
                 token = user.token
             }
         }

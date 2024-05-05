@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.user_screen
 
+import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
@@ -9,6 +10,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.data.movie_data.Movie
 import com.example.myapplication.data.user_data.User
 import com.example.myapplication.data.user_data.UserRepository
+import com.example.myapplication.ui.Constants
 import com.example.myapplication.util.Routes
 import com.example.myapplication.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,7 +37,7 @@ class UserScreenViewModel @Inject constructor(
     var insertPassword by mutableStateOf("")
         private set
 
-    var avatar by mutableStateOf("")
+    var avatar by mutableStateOf<Uri>(Constants.DEFAULT_URI)
         private set
 
     var token by mutableStateOf("")
@@ -56,7 +58,7 @@ class UserScreenViewModel @Inject constructor(
                 name = user.name ?: ""
                 login = user.login
                 password = user.password
-                avatar = user.avatar  ?: ""
+                avatar = user.avatar ?: Constants.DEFAULT_URI
                 token = user.token
             }
         }

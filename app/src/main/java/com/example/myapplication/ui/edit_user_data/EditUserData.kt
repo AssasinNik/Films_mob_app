@@ -1,9 +1,15 @@
 package com.example.myapplication.ui.edit_user_data
 
 import android.annotation.SuppressLint
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,6 +34,10 @@ import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,6 +47,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.backgroundColor
@@ -61,6 +72,13 @@ fun EditUserData(
             }
         }
     }
+
+    val photoPickerLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia()) {uri: Uri? ->
+        uri?.let {
+            viewModel.avatar = uri
+        }
+    }
+
 
     Scaffold(
         modifier = Modifier
@@ -94,9 +112,9 @@ fun EditUserData(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            Image(
-                painter = rememberImagePainter(R.drawable.test_image),
-                contentDescription = null,
+            AsyncImage(
+                model = viewModel.avatar,
+                contentDescription = "User photo",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .height(200.dp)
@@ -112,6 +130,11 @@ fun EditUserData(
                         shape = CircleShape
                     )
                     .clip(CircleShape)
+                    .clickable {
+                        photoPickerLauncher.launch(
+                            PickVisualMediaRequest()
+                        )
+                    }
             )
 
             Spacer(modifier = Modifier.height(20.dp))

@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.reusable_composeables
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.aspectRatio
@@ -11,16 +12,17 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.myapplication.ui.theme.primaryGradientTBottom
 import com.example.myapplication.ui.theme.primaryGradientTop
 
 @Composable
 fun RoundImage(
-    userPhoto: Painter,
+    model: Uri,
     modifier: Modifier = Modifier
 ){
-    Image(
-        painter = userPhoto,
+    AsyncImage(
+        model = model,
         contentDescription = null,
         contentScale = ContentScale.Crop,
         modifier = modifier

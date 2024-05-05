@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.main_screen
 
 import android.app.usage.UsageEvents.Event
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -69,7 +70,7 @@ fun MainScreen(
     ){
         Greeting(
             userName = viewModel.name,
-            userPhoto = rememberImagePainter(viewModel.avatar)
+            model = viewModel.avatar
         )
 
         MovieForMood()
@@ -160,7 +161,7 @@ fun MovieForMood(
 fun Greeting(
     modifier: Modifier = Modifier,
     userName: String,
-    userPhoto: Painter,
+    model: Uri,
     viewModel: MainScreenViewModel = hiltViewModel()
 ){
     Column(
@@ -194,7 +195,7 @@ fun Greeting(
                 )
             }
             RoundImage(
-                userPhoto = userPhoto,
+                model = model,
                 modifier = Modifier
                     .size(50.dp)
                     .weight(20f)

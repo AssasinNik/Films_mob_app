@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.main_screen
 
+import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -7,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.movie_data.MovieRepository
 import com.example.myapplication.data.user_data.UserRepository
+import com.example.myapplication.ui.Constants
 import com.example.myapplication.util.Routes
 import com.example.myapplication.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,19 +34,15 @@ class MainScreenViewModel @Inject constructor(
     var login by mutableStateOf("")
         private set
 
-    var avatar by mutableStateOf("")
+    var avatar by mutableStateOf<Uri>(Constants.DEFAULT_URI)
         private set
 
     init {
         viewModelScope.launch {
             userRepository.getUser()?.let { user ->
-                if (user.name != null) {
-                    name = user.name
-                }
+                name = user.name ?: ""
                 login = user.login
-                if (user.avatar != null) {
-                    avatar = user.avatar
-                }
+                avatar = user.avatar ?: Constants.DEFAULT_URI
             }
         }
     }

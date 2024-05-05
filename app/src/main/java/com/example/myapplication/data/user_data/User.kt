@@ -1,5 +1,6 @@
 package com.example.myapplication.data.user_data
 
+import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -7,7 +8,7 @@ import androidx.room.PrimaryKey
 data class User(
     val name: String?,
     val login: String,
-    val avatar: String?,
+    val avatar: Uri?,
     val password: String,
     val token: String,
     @PrimaryKey val userId: Int? = null

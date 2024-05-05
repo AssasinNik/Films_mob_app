@@ -76,7 +76,7 @@ fun UserScreen(
                  horizontalAlignment = Alignment.CenterHorizontally
              ) {
                  RoundImage(
-                     userPhoto = rememberImagePainter(viewModel.avatar),
+                     model = viewModel.avatar,
                      modifier = Modifier
                          .size(90.dp)
                          .padding(bottom = 5.dp)

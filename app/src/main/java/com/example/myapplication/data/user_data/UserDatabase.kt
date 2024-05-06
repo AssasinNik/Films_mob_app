@@ -10,9 +10,8 @@ import com.example.myapplication.util.Converters
 @Database (
     entities = [User::class],
     exportSchema = false,
-    version = 2
+    version = 3
 )
-@TypeConverters(Converters::class)
 abstract class UserDatabase: RoomDatabase(){
 
     abstract val userDao: UserDao

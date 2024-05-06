@@ -34,7 +34,7 @@ class MainScreenViewModel @Inject constructor(
     var login by mutableStateOf("")
         private set
 
-    var avatar by mutableStateOf<Uri>(Constants.DEFAULT_URI)
+    var avatar by mutableStateOf(Constants.DEFAULT_URI.toString())
         private set
 
     init {
@@ -42,7 +42,7 @@ class MainScreenViewModel @Inject constructor(
             userRepository.getUser()?.let { user ->
                 name = user.name ?: ""
                 login = user.login
-                avatar = user.avatar ?: Constants.DEFAULT_URI
+                avatar = user.avatar ?: Constants.DEFAULT_URI.toString()
             }
         }
     }

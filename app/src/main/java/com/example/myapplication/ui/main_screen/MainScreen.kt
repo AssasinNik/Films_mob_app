@@ -70,7 +70,7 @@ fun MainScreen(
     ){
         Greeting(
             userName = viewModel.name,
-            model = viewModel.avatar
+            model = Uri.parse(viewModel.avatar)
         )
 
         MovieForMood()

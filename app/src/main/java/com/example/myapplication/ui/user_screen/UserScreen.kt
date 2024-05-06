@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.user_screen
 
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -46,6 +47,7 @@ import com.example.myapplication.ui.register.registerUser
 import com.example.myapplication.ui.reusable_composeables.RoundImage
 import com.example.myapplication.ui.theme.primaryGradientTBottom
 import com.example.myapplication.ui.theme.primaryGradientTop
+import com.example.myapplication.ui.theme.textFieldBackground
 import com.example.myapplication.util.UiEvent
 
 @Composable
@@ -76,7 +78,7 @@ fun UserScreen(
                  horizontalAlignment = Alignment.CenterHorizontally
              ) {
                  RoundImage(
-                     model = viewModel.avatar,
+                     model = Uri.parse(viewModel.avatar),
                      modifier = Modifier
                          .size(90.dp)
                          .padding(bottom = 5.dp)
@@ -137,6 +139,10 @@ fun UserScreen(
                             ),
                             shape = RoundedCornerShape(20.dp)
                         )
+                        .background(
+                            color = textFieldBackground,
+                            shape = RoundedCornerShape(20.dp)
+                        )
                         .padding(13.dp),
                     textStyle = TextStyle(color = Color.White, fontSize = 15.sp),
                     cursorBrush = Brush.verticalGradient(listOf(Color.White, Color.White)),
@@ -169,6 +175,10 @@ fun UserScreen(
                                     primaryGradientTBottom
                                 )
                             ),
+                            shape = RoundedCornerShape(20.dp)
+                        )
+                        .background(
+                            color = textFieldBackground,
                             shape = RoundedCornerShape(20.dp)
                         )
                         .padding(13.dp),
@@ -204,6 +214,10 @@ fun UserScreen(
                                     primaryGradientTBottom
                                 )
                             ),
+                            shape = RoundedCornerShape(20.dp)
+                        )
+                        .background(
+                            color = textFieldBackground,
                             shape = RoundedCornerShape(20.dp)
                         )
                         .padding(13.dp),

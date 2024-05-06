@@ -33,7 +33,7 @@ class EditUserDataViewModel @Inject constructor(
     var password by mutableStateOf("")
         private set
 
-    var avatar by mutableStateOf<Uri>(Constants.DEFAULT_URI)
+    var avatar by mutableStateOf(Constants.DEFAULT_URI.toString())
 
     var token by mutableStateOf("")
         private set
@@ -45,7 +45,7 @@ class EditUserDataViewModel @Inject constructor(
                 name = user.name ?: ""
                 login = user.login
                 password = user.password
-                avatar = user.avatar ?: Constants.DEFAULT_URI
+                avatar = user.avatar ?: Constants.DEFAULT_URI.toString()
                 token = user.token
             }
         }
@@ -56,10 +56,6 @@ class EditUserDataViewModel @Inject constructor(
 
     fun onEvent (event: EditUserDataEvent) {
         when(event) {
-            is EditUserDataEvent.OnAvatarClick -> {
-
-            }
-
             is EditUserDataEvent.OnUserNameChange-> {
                 name = event.name
             }

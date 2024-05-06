@@ -37,7 +37,7 @@ class UserScreenViewModel @Inject constructor(
     var insertPassword by mutableStateOf("")
         private set
 
-    var avatar by mutableStateOf<Uri>(Constants.DEFAULT_URI)
+    var avatar by mutableStateOf(Constants.DEFAULT_URI.toString())
         private set
 
     var token by mutableStateOf("")
@@ -58,7 +58,7 @@ class UserScreenViewModel @Inject constructor(
                 name = user.name ?: ""
                 login = user.login
                 password = user.password
-                avatar = user.avatar ?: Constants.DEFAULT_URI
+                avatar = user.avatar ?: Constants.DEFAULT_URI.toString()
                 token = user.token
             }
         }

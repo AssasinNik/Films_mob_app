@@ -44,6 +44,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -54,6 +55,7 @@ import com.example.myapplication.ui.theme.backgroundColor
 import com.example.myapplication.ui.theme.primaryGradientTBottom
 import com.example.myapplication.ui.theme.primaryGradientTop
 import com.example.myapplication.util.UiEvent
+import java.io.File
 import androidx.compose.material3.TextFieldColors as TextFieldColors1
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -75,10 +77,9 @@ fun EditUserData(
 
     val photoPickerLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia()) {uri: Uri? ->
         uri?.let {
-            viewModel.avatar = uri
+            viewModel.avatar = uri.toString()
         }
     }
-
 
     Scaffold(
         modifier = Modifier
@@ -113,7 +114,7 @@ fun EditUserData(
             Spacer(modifier = Modifier.height(40.dp))
 
             AsyncImage(
-                model = viewModel.avatar,
+                model = Uri.parse(viewModel.avatar),
                 contentDescription = "User photo",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

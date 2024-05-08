@@ -71,6 +71,20 @@ class MovieScreenViewModel @Inject constructor(
         }
     }
 
+    fun onEvent(event: MovieScreenEvent) {
+        when(event) {
+            is MovieScreenEvent.OnBackIconClick -> {
+                sendUiEvent(UiEvent.PopBackStack)
+            }
+        }
+    }
+
+    private fun sendUiEvent(event: UiEvent) {
+        viewModelScope.launch {
+            _uiEvent.send(event)
+        }
+    }
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
 
     }

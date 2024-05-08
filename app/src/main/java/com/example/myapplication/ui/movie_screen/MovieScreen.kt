@@ -2,6 +2,7 @@ package com.example.myapplication.ui.movie_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
@@ -16,9 +17,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -32,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.example.myapplication.ui.main_screen.MainScreenViewModel
+import com.example.myapplication.ui.theme.testMoodPagerClickedColor
 import com.example.myapplication.util.UiEvent
 
 @Composable
@@ -39,6 +45,14 @@ fun MovieScreen(
     onPopBackStack: () -> Unit,
     viewModel: MovieScreenViewModel = hiltViewModel()
 ){
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                is UiEvent.PopBackStack -> onPopBackStack()
+                else -> Unit
+            }
+        }
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -69,9 +83,22 @@ fun MovieScreen(
     Column (
          modifier = Modifier
              .fillMaxSize()
-             .padding(vertical = 40.dp)
+             .padding(vertical = 10.dp)
              .padding(horizontal = 15.dp)
     ){
+        Row {
+            Icon(
+                modifier = Modifier
+                    .clickable {
+                        viewModel.onEvent(MovieScreenEvent.OnBackIconClick)
+                    },
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Back"
+            )
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
         Row(
             modifier = Modifier
                 .weight(45f)

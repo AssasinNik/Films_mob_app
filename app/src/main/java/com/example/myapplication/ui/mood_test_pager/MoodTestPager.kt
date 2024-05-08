@@ -25,6 +25,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,16 +39,28 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.testMoodPagerClickedColor
 import com.example.myapplication.ui.theme.testMoodPagerColor
+import com.example.myapplication.util.UiEvent
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MoodTestPager(
-    onPopBackStack: () -> Unit
+    onPopBackStack: () -> Unit,
+    viewModel: MoodTestPagerViewModel = hiltViewModel()
 ){
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                is UiEvent.PopBackStack -> onPopBackStack()
+                else -> Unit
+            }
+        }
+
+    }
     val pagerState = rememberPagerState(
         initialPage = 0,
     ) {
@@ -68,7 +81,14 @@ fun MoodTestPager(
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.End
             ){
-                Icon(imageVector = Icons.Default.Close, contentDescription = "Close Icon")
+                Icon(
+                    modifier = Modifier
+                        .clickable {
+                            viewModel.onEvent(MoodTestPagerEvent.onCloseIconClick)
+                        },
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Close Icon"
+                )
             }
         }
 
@@ -132,10 +152,9 @@ fun MoodTestPager(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-                            if (backgroundColor.value == testMoodPagerColor){
+                            if (backgroundColor.value == testMoodPagerColor) {
                                 backgroundColor.value = testMoodPagerClickedColor
-                            }
-                            else {
+                            } else {
                                 backgroundColor.value = testMoodPagerColor
                             }
                         }

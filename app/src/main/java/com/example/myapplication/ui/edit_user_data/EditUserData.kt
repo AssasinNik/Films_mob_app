@@ -10,6 +10,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,6 +22,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -70,6 +72,7 @@ fun EditUserData(
         viewModel.uiEvent.collect{event ->
             when(event){
                 is UiEvent.Navigate -> onNavigate(event)
+                is UiEvent.PopBackStack -> onPopBackStack()
                 else -> Unit
             }
         }
@@ -106,6 +109,20 @@ fun EditUserData(
                 .padding(vertical = 10.dp)
                 .padding(horizontal = 30.dp)
         ){
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start,
+            ) {
+                Icon(
+                    modifier = Modifier
+                        .clickable {
+                            viewModel.onEvent(EditUserDataEvent.OnBackIconClick)
+                        },
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back"
+                )
+            }
             Text(
                 text = "Имя & Фото",
                 fontSize = 18.sp

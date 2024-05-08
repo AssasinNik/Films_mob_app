@@ -75,6 +75,10 @@ class EditUserDataViewModel @Inject constructor(
                 }
                 sendUiEvent(UiEvent.Navigate(Routes.USER_SCREEN))
             }
+
+            is EditUserDataEvent.OnBackIconClick -> {
+                sendUiEvent(UiEvent.PopBackStack)
+            }
         }
     }
 

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
@@ -20,6 +21,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.myapplication.data.remote.PostService
+import com.example.myapplication.data.remote.dto.PostRequest
+import com.example.myapplication.data.remote.dto.PostResponse
 import com.example.myapplication.ui.edit_user_data.EditUserData
 import com.example.myapplication.ui.login_screen.LoginScreen
 import com.example.myapplication.ui.main_screen.MainScreen
@@ -35,6 +39,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val service = PostService.create()
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
 

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.devtools.ksp")
     id ("dagger.hilt.android.plugin")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -100,7 +101,10 @@ dependencies {
 
     //ktor
     implementation("io.ktor:ktor-client-core:1.6.5")
-    implementation("io.ktor:ktor-client-json:1.6.5")
+    implementation("io.ktor:ktor-client-android:1.6.5")
     implementation("io.ktor:ktor-client-serialization:1.6.5")
+    implementation("io.ktor:ktor-client-logging:1.6.5")
+    implementation("ch.qos.logback:logback-classic:1.2.3")
+
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
 }

@@ -5,6 +5,10 @@ import androidx.room.Room
 import com.example.myapplication.data.movie_data.MovieDatabase
 import com.example.myapplication.data.movie_data.MovieRepository
 import com.example.myapplication.data.movie_data.MovieRepositoryImpl
+import com.example.myapplication.data.questions_data.Question
+import com.example.myapplication.data.questions_data.QuestionDatabase
+import com.example.myapplication.data.questions_data.QuestionRepository
+import com.example.myapplication.data.questions_data.QuestionRepositoryImpl
 import com.example.myapplication.data.user_data.UserDatabase
 import com.example.myapplication.data.user_data.UserRepository
 import com.example.myapplication.data.user_data.UserRepositoryImpl
@@ -48,5 +52,21 @@ object AppModule {
     @Singleton
     fun provideUserRepository(db: UserDatabase): UserRepository {
         return UserRepositoryImpl(db.userDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideQuestionDatabase(app: Application): QuestionDatabase {
+        return Room.databaseBuilder(
+            app,
+            QuestionDatabase::class.java,
+            "question_db"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideQuestionRepository(db: QuestionDatabase): QuestionRepository {
+        return QuestionRepositoryImpl(db.questionDao)
     }
 }

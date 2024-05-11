@@ -61,7 +61,7 @@ object AppModule {
             app,
             QuestionDatabase::class.java,
             "question_db"
-        ).build()
+        ).createFromAsset("database/question.db").build()
     }
 
     @Provides

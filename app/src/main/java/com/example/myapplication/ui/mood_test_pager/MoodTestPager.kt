@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.mood_test_pager
 
+import android.util.Log
 import androidx.compose.animation.core.animateIntOffsetAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -26,6 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.example.myapplication.R
+import com.example.myapplication.data.questions_data.Question
 import com.example.myapplication.ui.theme.testMoodPagerClickedColor
 import com.example.myapplication.ui.theme.testMoodPagerColor
 import com.example.myapplication.util.UiEvent
@@ -52,6 +55,21 @@ fun MoodTestPager(
     onPopBackStack: () -> Unit,
     viewModel: MoodTestPagerViewModel = hiltViewModel()
 ){
+
+    val question1 = viewModel.question1.collectAsState(initial = emptyList())
+    val question2 = viewModel.question2.collectAsState(initial = emptyList())
+    val question3 = viewModel.question3.collectAsState(initial = emptyList())
+    val question4 = viewModel.question4.collectAsState(initial = emptyList())
+    val question5 = viewModel.question5.collectAsState(initial = emptyList())
+
+    val questions = listOf(
+        question1,
+        question2,
+        question3,
+        question4,
+        question5
+    )
+
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
             when (event) {
@@ -59,13 +77,14 @@ fun MoodTestPager(
                 else -> Unit
             }
         }
-
     }
+
     val pagerState = rememberPagerState(
         initialPage = 0,
     ) {
         5
     }
+
     Column (
         modifier = Modifier
             .fillMaxSize()
@@ -94,162 +113,10 @@ fun MoodTestPager(
 
         HorizontalPager(
             state = pagerState,
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 20.dp)
-            ) {
-
-                Card (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 30.dp),
-                    shape = RoundedCornerShape(15.dp),
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.test_image),
-                            contentDescription = "movie_poster",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        )
-                    }
-                }
-                Row (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            color = testMoodPagerColor,
-                            shape = RoundedCornerShape(15.dp)
-                        )
-                        .padding(vertical = 15.dp, horizontal = 4.dp)
-                ) {
-                    Column (
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ){
-                        Text(
-                            text = "Как выглядит ваш идеальный вечер?",
-                            fontSize = 17.sp,
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                var backgroundColor = remember {
-                    mutableStateOf(testMoodPagerColor)
-                }
-                Row (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            if (backgroundColor.value == testMoodPagerColor) {
-                                backgroundColor.value = testMoodPagerClickedColor
-                            } else {
-                                backgroundColor.value = testMoodPagerColor
-                            }
-                        }
-                        .background(
-                            color = backgroundColor.value,
-                            shape = RoundedCornerShape(15.dp),
-                        )
-                        .padding(vertical = 15.dp, horizontal = 15.dp)
-
-
-                ) {
-                    Column (
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                            horizontalAlignment = Alignment.Start
-                    ){
-                        Text(
-                            textAlign = TextAlign.Start,
-                            text = "Пешая прогулка в одиночестве",
-                            fontSize = 15.sp
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Row (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            color = testMoodPagerColor,
-                            shape = RoundedCornerShape(15.dp)
-                        )
-                        .padding(vertical = 15.dp, horizontal = 15.dp)
-                ) {
-                    Column (
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalAlignment = Alignment.Start
-                    ){
-                        Text(
-                            textAlign = TextAlign.Start,
-                            text = "Пешая прогулка в одиночестве",
-                            fontSize = 15.sp
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Row (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            color = testMoodPagerColor,
-                            shape = RoundedCornerShape(15.dp)
-                        )
-                        .padding(vertical = 15.dp, horizontal = 15.dp)
-                ) {
-                    Column (
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalAlignment = Alignment.Start
-                    ){
-                        Text(
-                            textAlign = TextAlign.Start,
-                            text = "Пешая прогулка в одиночестве",
-                            fontSize = 15.sp
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Row (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            color = testMoodPagerColor,
-                            shape = RoundedCornerShape(15.dp)
-                        )
-                        .padding(vertical = 15.dp, horizontal = 15.dp)
-                ) {
-                    Column (
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalAlignment = Alignment.Start
-                    ){
-                        Text(
-                            textAlign = TextAlign.Start,
-                            text = "Пешая прогулка в одиночестве",
-                            fontSize = 15.sp
-                        )
-                    }
-                }
+        ) {index ->
+            if (questions[0].value.isNotEmpty() && questions[1].value.isNotEmpty() && questions[2].value.isNotEmpty() &&
+                questions[3].value.isNotEmpty() && questions[4].value.isNotEmpty()) {
+                QuestionPage(question = questions[index].value[0])
             }
         }
     }

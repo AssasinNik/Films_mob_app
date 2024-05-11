@@ -15,5 +15,6 @@ data class Question(
     val genresOfAnswer2: String?,
     val genresOfAnswer3: String?,
     val genresOfAnswer4: String?,
+    val picture: String?,
     val type: Int
 )

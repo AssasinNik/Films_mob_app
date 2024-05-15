@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.mood_test_pager
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.animation.core.animateIntOffsetAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -21,16 +22,23 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -45,16 +53,22 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.example.myapplication.R
 import com.example.myapplication.data.questions_data.Question
+import com.example.myapplication.ui.edit_user_data.EditUserDataEvent
+import com.example.myapplication.ui.theme.primaryGradientTop
 import com.example.myapplication.ui.theme.testMoodPagerClickedColor
 import com.example.myapplication.ui.theme.testMoodPagerColor
 import com.example.myapplication.util.UiEvent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MoodTestPager(
     onPopBackStack: () -> Unit,
     viewModel: MoodTestPagerViewModel = hiltViewModel()
 ){
+    val scope: CoroutineScope = rememberCoroutineScope()
 
     val question1 = viewModel.question1.collectAsState(initial = emptyList())
     val question2 = viewModel.question2.collectAsState(initial = emptyList())
@@ -69,55 +83,81 @@ fun MoodTestPager(
         question4,
         question5
     )
-
-    LaunchedEffect(key1 = true) {
-        viewModel.uiEvent.collect { event ->
-            when (event) {
-                is UiEvent.PopBackStack -> onPopBackStack()
-                else -> Unit
-            }
-        }
-    }
-
     val pagerState = rememberPagerState(
         initialPage = 0,
     ) {
         5
     }
 
-    Column (
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 15.dp)
-    ){
-        Row (
-            modifier = Modifier
-                .padding(bottom = 25.dp)
-                .padding(horizontal = 20.dp)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.End
-            ){
-                Icon(
-                    modifier = Modifier
-                        .clickable {
-                            viewModel.onEvent(MoodTestPagerEvent.onCloseIconClick)
-                        },
-                    imageVector = Icons.Default.Close,
-                    contentDescription = "Close Icon"
-                )
-            }
-        }
-
-        HorizontalPager(
-            state = pagerState,
-        ) {index ->
-            if (questions[0].value.isNotEmpty() && questions[1].value.isNotEmpty() && questions[2].value.isNotEmpty() &&
-                questions[3].value.isNotEmpty() && questions[4].value.isNotEmpty()) {
-                QuestionPage(question = questions[index].value[0])
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                is UiEvent.ToGiveAnswer ->{
+                    pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                }
+                is UiEvent.PopBackStack -> onPopBackStack()
+                else -> Unit
             }
         }
     }
+
+
+    Scaffold (
+        modifier = Modifier
+            .fillMaxSize(),
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                containerColor = primaryGradientTop,
+                onClick = {
+                    scope.launch {
+                        viewModel.onEvent(MoodTestPagerEvent.onNextActionButtonClick)
+                    }
+                },
+                text = {
+                    Text(text = "Далее")
+                },
+                icon = {
+                    Icon(imageVector = Icons.Filled.ArrowForward, contentDescription = "Save")
+                }
+            )
+        }
+    ){
+        Column (
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 15.dp)
+        ){
+            Row (
+                modifier = Modifier
+                    .padding(bottom = 25.dp)
+                    .padding(horizontal = 20.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.End
+                ){
+                    Icon(
+                        modifier = Modifier
+                            .clickable {
+                                viewModel.onEvent(MoodTestPagerEvent.onCloseIconClick)
+                            },
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close Icon"
+                    )
+                }
+            }
+
+            HorizontalPager(
+                userScrollEnabled = false,
+                state = pagerState,
+            ) {index ->
+                if (questions[0].value.isNotEmpty() && questions[1].value.isNotEmpty() && questions[2].value.isNotEmpty() &&
+                    questions[3].value.isNotEmpty() && questions[4].value.isNotEmpty()) {
+                    QuestionPage(question = questions[index].value[0])
+                }
+            }
+        }
+    }
+
 }

@@ -37,6 +37,9 @@ class MoodTestPagerViewModel @Inject constructor(
             is MoodTestPagerEvent.onCloseIconClick -> {
                 sendUiEvent(UiEvent.PopBackStack)
             }
+            is MoodTestPagerEvent.onNextActionButtonClick -> {
+                sendUiEvent(UiEvent.ToGiveAnswer)
+            }
         }
     }
 

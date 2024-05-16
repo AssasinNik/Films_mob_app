@@ -22,8 +22,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.myapplication.data.remote.PostService
-import com.example.myapplication.data.remote.dto.PostRequest
-import com.example.myapplication.data.remote.dto.PostResponse
 import com.example.myapplication.ui.edit_user_data.EditUserData
 import com.example.myapplication.ui.login_screen.LoginScreen
 import com.example.myapplication.ui.main_screen.MainScreen

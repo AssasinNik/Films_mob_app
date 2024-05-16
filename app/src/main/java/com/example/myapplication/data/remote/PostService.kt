@@ -1,5 +1,6 @@
 package com.example.myapplication.data.remote
 
+import com.example.myapplication.data.remote.dto.PostRequestLogin
 import com.example.myapplication.data.remote.dto.PostRequestRegister
 import com.example.myapplication.data.remote.dto.PostRequestToken
 import com.example.myapplication.data.remote.dto.PostResponseNewFilms
@@ -13,7 +14,9 @@ import io.ktor.client.features.logging.Logging
 
 interface PostService {
     suspend fun Post_New_Film(postRequestToken: PostRequestToken): PostResponseNewFilms?
-    suspend fun Post_Register(postRequestToken: PostRequestRegister): PostResponseUser?
+    suspend fun Post_Register(postRequestData: PostRequestRegister): PostResponseUser?
+
+    suspend fun Post_Login(postRequestData: PostRequestLogin): PostResponseUser?
 
     companion object{
         fun create(): PostService{

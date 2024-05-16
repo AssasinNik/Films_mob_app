@@ -1,5 +1,6 @@
 package com.example.myapplication.data.remote
 
+import com.example.myapplication.data.remote.dto.PostRequestLogin
 import com.example.myapplication.data.remote.dto.PostRequestRegister
 import com.example.myapplication.data.remote.dto.PostRequestToken
 import com.example.myapplication.data.remote.dto.PostResponseNewFilms
@@ -45,6 +46,29 @@ class PostServiceImpl(
                 url(Routes.REGISTER)
                 contentType(ContentType.Application.Json)
                 body = postRequestRegister
+            }
+        } catch (e: ClientRequestException){
+            println("ERROR: ${e.response.status.description}")
+            null
+        }catch (e: ServerResponseException){
+            println("ERROR: ${e.response.status.description}")
+            null
+        }catch (e: RedirectResponseException){
+            println("ERROR: ${e.response.status.description}")
+            null
+        }
+        catch (e: Exception){
+            println("ERROR: ${e.message}")
+            null
+        }
+    }
+
+    override suspend fun Post_Login(postRequestData: PostRequestLogin): PostResponseUser? {
+        return try{
+            client.post<PostResponseUser> {
+                url(Routes.LOGIN)
+                contentType(ContentType.Application.Json)
+                body = postRequestData
             }
         } catch (e: ClientRequestException){
             println("ERROR: ${e.response.status.description}")

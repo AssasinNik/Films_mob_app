@@ -1,5 +1,6 @@
 package com.example.myapplication.data.remote
 
+import android.util.Log
 import com.example.myapplication.data.remote.dto.PostRequestImage
 import com.example.myapplication.data.remote.dto.PostRequestLogin
 import com.example.myapplication.data.remote.dto.PostRequestMood
@@ -10,6 +11,7 @@ import com.example.myapplication.data.remote.dto.PostResponseDefault
 import com.example.myapplication.data.remote.dto.PostResponseFilms
 import com.example.myapplication.data.remote.dto.PostResponseImageName
 import com.example.myapplication.data.remote.dto.PostResponseUser
+import com.example.myapplication.data.remote.dto.PostResponseWrapper
 import io.ktor.client.HttpClient
 import io.ktor.client.features.ClientRequestException
 import io.ktor.client.features.RedirectResponseException
@@ -50,25 +52,25 @@ class PostServiceImpl(
         }
     }
 
-    override suspend fun Post_Register(postRequestRegister: PostRequestRegister): PostResponseUser? {
+    override suspend fun Post_Register(postRequestRegister: PostRequestRegister): PostResponseWrapper? {
         return try{
-            client.post<PostResponseUser> {
+            client.post<PostResponseWrapper> {
                 url(Routes.REGISTER)
                 contentType(ContentType.Application.Json)
                 body = postRequestRegister
             }
         } catch (e: ClientRequestException){
-            println("ERROR: ${e.response.status.description}")
+            Log.e("ERROR MESSAGING", "ERROR: ${e.response.status.description}")
             null
         }catch (e: ServerResponseException){
-            println("ERROR: ${e.response.status.description}")
+            Log.e("ERROR MESSAGING", "ERROR: ${e.response.status.description}")
             null
         }catch (e: RedirectResponseException){
-            println("ERROR: ${e.response.status.description}")
+            Log.e("ERROR MESSAGING", "ERROR: ${e.response.status.description}")
             null
         }
         catch (e: Exception){
-            println("ERROR: ${e.message}")
+            Log.e("ERROR MESSAGING", "ERROR: ${e.message}")
             null
         }
     }

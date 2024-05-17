@@ -10,6 +10,7 @@ import com.example.myapplication.data.remote.dto.PostResponseDefault
 import com.example.myapplication.data.remote.dto.PostResponseFilms
 import com.example.myapplication.data.remote.dto.PostResponseImageName
 import com.example.myapplication.data.remote.dto.PostResponseUser
+import com.example.myapplication.data.remote.dto.PostResponseWrapper
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.features.json.JsonFeature
@@ -19,7 +20,7 @@ import io.ktor.client.features.logging.Logging
 
 interface PostService {
     suspend fun Post_New_Film(postRequestToken: PostRequestToken): PostResponseFilms?
-    suspend fun Post_Register(postRequestData: PostRequestRegister): PostResponseUser?
+    suspend fun Post_Register(postRequestData: PostRequestRegister): PostResponseWrapper?
     suspend fun Post_Auth(postRequestToken: PostRequestToken): PostResponseUser?
     suspend fun Post_Login(postRequestData: PostRequestLogin): PostResponseUser?
     suspend fun Post_ChPwd(postRequestData: PostRequestPassword): PostResponseDefault?

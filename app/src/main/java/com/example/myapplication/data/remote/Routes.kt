@@ -2,7 +2,7 @@ package com.example.myapplication.data.remote
 
 object Routes {
 
-    private const val address = "https://127.0.0.1:8443"
+    private const val address = "http://77.221.153.78:8080"
     const val GET_NEW_FILMS = "$address/films/new"
     const val GET_MOVIE_FOR_MOOD = "$address/films/movie_for_mood"
     const val REGISTER = "$address/auth/register"

@@ -2,20 +2,24 @@ package com.example.myapplication.data.remote.dto
 
 import kotlinx.serialization.Serializable
 
-
+@Serializable
+sealed class ServerResponse
 @Serializable
 data class PostResponseWrapper(
-    val data: PostResponseUser,  // Вложенный объект данных пользователя
-    val message: String?,        // Сообщение, опциональное поле
-    val statusCode: StatusCode   // Статус ответа
-)
-
+    val data: PostResponseUser?,
+    val message: String?,
+    val statusCode: StatusCode
+) : ServerResponse()
+@Serializable
+data class ErrorServerResponse(
+    val message: String,
+    val statusCode: StatusCode
+) : ServerResponse()
 @Serializable
 data class StatusCode(
     val value: Int,
     val description: String
 )
-
 @Serializable
 data class PostResponseUser(
     val id: Int,

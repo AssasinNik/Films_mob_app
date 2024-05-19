@@ -63,20 +63,37 @@ class MainScreenViewModel @Inject constructor(
         fun registerUser(email: String, username: String, parol: String) {
             val registerRequest = PostRequestRegister(email = email, username = username, parol_user = parol)
             viewModelScope.launch {
-                try {
-                    val response = service.Post_Register(registerRequest)
-                    // Обновление имени и логина после успешной регистрации
-                    response?.data?.let {
-                        name = it.username ?: ""
-                        login = it.token ?: ""  // Здесь предполагаем, что логин это username
+                val response = service.Post_Register(registerRequest)
+                when (response) {
+                    is PostResponseWrapper -> {
+                        // Успешный ответ, обновляем UI
+                        response.data?.let { userData ->
+                            name = userData.username ?: ""
+                            login = userData.token ?: ""  // Используем token в качестве логина для простоты
+                        }
+                        response.data?.image?.let { imageUrl ->
+                            avatar = imageUrl
+                        } ?: run {
+                            userRepository.getUser()?.let { user ->
+                                avatar = user.avatar ?: Constants.DEFAULT_URI.toString()
+                            }
+                        }
                     }
-                } catch (e: Exception) {
-                    println("Failed to register user: ${e.message}")
-                    name = ""  // Сброс значений в случае ошибки
-                    login = ""
-                }
-                userRepository.getUser()?.let { user ->
-                    avatar = user.avatar ?: Constants.DEFAULT_URI.toString()
+                    is ErrorServerResponse -> {
+                        // Выводим сообщение об ошибке
+                        println("Registration failed: ${response.message}")
+                        // Сброс значений в случае ошибки
+                        name = ""
+                        login = ""
+                        avatar = Constants.DEFAULT_URI.toString()
+                    }
+                    else -> {
+                        // Обработка неизвестной ошибки
+                        println("An unexpected error occurred during registration")
+                        name = ""
+                        login = ""
+                        avatar = Constants.DEFAULT_URI.toString()
+                    }
                 }
             }
         }

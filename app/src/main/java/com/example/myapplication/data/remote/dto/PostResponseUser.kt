@@ -1,16 +1,20 @@
 package com.example.myapplication.data.remote.dto
-
+import kotlinx.serialization.Polymorphic
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Polymorphic
 sealed class ServerResponse
 @Serializable
+@SerialName("PostResponseWrapper")
 data class PostResponseWrapper(
     val data: PostResponseUser?,
     val message: String?,
     val statusCode: StatusCode
 ) : ServerResponse()
 @Serializable
+@SerialName("ErrorServerResponse")
 data class ErrorServerResponse(
     val message: String,
     val statusCode: StatusCode

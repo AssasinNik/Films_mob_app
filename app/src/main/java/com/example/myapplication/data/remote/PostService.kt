@@ -17,6 +17,7 @@ import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.features.logging.LogLevel
 import io.ktor.client.features.logging.Logging
 
+
 interface PostService {
     suspend fun Post_New_Film(postRequestToken: PostRequestToken): FilmResponse
     suspend fun Post_Register(postRequestData: PostRequestRegister): ServerResponse?

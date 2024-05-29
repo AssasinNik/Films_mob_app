@@ -88,12 +88,12 @@ class PostServiceImpl(
     }
 
 
-    override suspend fun Post_Register(postRequestRegister: PostRequestRegister): ServerResponse? {
+    override suspend fun Post_Register(postRequestData: PostRequestRegister): ServerResponse? {
         return try {
             val response: HttpResponse = client.post {
                 url(Routes.REGISTER)
                 contentType(ContentType.Application.Json)
-                body = postRequestRegister
+                body = postRequestData
             }
             when {
                 response.status == HttpStatusCode.OK -> {

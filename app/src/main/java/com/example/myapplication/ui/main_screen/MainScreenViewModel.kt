@@ -47,7 +47,6 @@ class MainScreenViewModel @Inject constructor(
     private val service = PostService.create()  // Создание экземпляра сервиса
 
     init {
-        //registerUser("ilya57@gmail.com", "Nikita", "Parol1810!")
         viewModelScope.launch {
 
             userRepository.getUser()?.let { user ->
@@ -57,48 +56,6 @@ class MainScreenViewModel @Inject constructor(
             }
         }
     }
-
-
-    /*
-        fun registerUser(email: String, username: String, parol: String) {
-            val registerRequest = PostRequestRegister(email = email, username = username, parol_user = parol)
-            viewModelScope.launch {
-                val response = service.Post_Register(registerRequest)
-                when (response) {
-                    is PostResponseWrapper -> {
-                        // Успешный ответ, обновляем UI
-                        response.data?.let { userData ->
-                            name = userData.username ?: ""
-                            login = userData.token ?: ""  // Используем token в качестве логина для простоты
-                        }
-                        response.data?.image?.let { imageUrl ->
-                            avatar = imageUrl
-                        } ?: run {
-                            userRepository.getUser()?.let { user ->
-                                avatar = user.avatar ?: Constants.DEFAULT_URI.toString()
-                            }
-                        }
-                    }
-                    is ErrorServerResponse -> {
-                        // Выводим сообщение об ошибке
-                        println("Registration failed: ${response.message}")
-                        // Сброс значений в случае ошибки
-                        name = ""
-                        login = ""
-                        avatar = Constants.DEFAULT_URI.toString()
-                    }
-                    else -> {
-                        // Обработка неизвестной ошибки
-                        println("An unexpected error occurred during registration")
-                        name = ""
-                        login = ""
-                        avatar = Constants.DEFAULT_URI.toString()
-                    }
-                }
-            }
-        }
-
-     */
     fun onEvent(event: MainScreenEvent){
         when(event) {
             is MainScreenEvent.OnMovieClick -> {

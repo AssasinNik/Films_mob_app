@@ -1,0 +1,297 @@
+@startuml
+class com.example.myapplication.ui.movie_screen.MovieScreenViewModel {
+}
+class com.example.myapplication.ui.movie_screen.CREATOR {
++ MovieScreenViewModel createFromParcel(Parcel)
++ Array<MovieScreenViewModel?> newArray(Int)
+}
+
+class com.example.myapplication.ui.mood_test_pager.MoodTestPagerViewModel {
+}
+class com.example.myapplication.ui.user_screen.UserScreenViewModel {
+}
+class com.example.myapplication.data.questions_data.QuestionRepositoryImpl {
+}
+class com.example.myapplication.data.remote.dto.PostResponseImageName {
+}
+class com.example.myapplication.ui.register.RegistrationResponse {
+}
+class com.example.myapplication.ui.register.UserData {
+}
+class com.example.myapplication.ui.register.StatusCode {
+}
+class com.example.myapplication.data.movie_data.Movie {
+}
+class com.example.myapplication.data.remote.dto.PostRequestRegister {
+}
+class com.example.myapplication.ui.user_screen.UserScreenEvent$OnLoginChange {
+}
+class com.example.myapplication.ui.user_screen.UserScreenEvent$OnPasswordChange {
+}
+class com.example.myapplication.ui.user_screen.UserScreenEvent$OnNewPasswordChange {
+}
+class com.example.myapplication.ui.user_screen.UserScreenEvent$OnEditUserDataClick {
+}
+class com.example.myapplication.ui.user_screen.UserScreenEvent$OnSaveChangesClick {
+}
+class com.example.myapplication.ui.user_screen.UserScreenEvent {
+}
+class com.example.myapplication.data.questions_data.Question {
+}
+class com.example.myapplication.data.remote.dto.PostRequestImage {
+}
+class com.example.myapplication.data.remote.dto.PostRequestLogin {
+}
+class com.example.myapplication.data.user_data.UserRepositoryImpl {
+}
+interface com.example.myapplication.data.questions_data.QuestionRepository {
++ Flow<List<Question>> getQuestionsByType(Int)
++ Flow<List<Question>> getQuestions()
+}
+
+class com.example.myapplication.data.remote.dto.PostResponseDefault {
+}
+class com.example.myapplication.data.remote.dto.ServerResponse {
+}
+class com.example.myapplication.data.remote.dto.PostResponseWrapper {
+}
+class com.example.myapplication.data.remote.dto.ErrorServerResponse {
+}
+class com.example.myapplication.data.remote.dto.StatusCode {
+}
+class com.example.myapplication.data.remote.dto.PostResponseUser {
+}
+class com.example.myapplication.data.questions_data.null {
+}
+abstract class com.example.myapplication.data.questions_data.QuestionDatabase {
++ QuestionDao questionDao
+}
+
+class com.example.myapplication.data.remote.Routes {
+-  address
++  GET_NEW_FILMS
++  GET_MOVIE_FOR_MOOD
++  REGISTER
++  LOGIN
++  AUTH
++  CHANGE_IMAGE
++  CHANGE_PWD
++  GET_IMAGE
+}
+
+class com.example.myapplication.data.remote.dto.PostRequestPassword {
+}
+class com.example.myapplication.ui.edit_user_data.EditUserDataViewModel {
+}
+interface com.example.myapplication.data.user_data.UserRepository {
++ void insertUser(User)
++ User? getUser()
+}
+
+class com.example.myapplication.ui.mood_test_pager.MoodTestPagerEvent$onCloseIconClick {
+}
+class com.example.myapplication.ui.mood_test_pager.MoodTestPagerEvent$onNextActionButtonClick {
+}
+class com.example.myapplication.ui.mood_test_pager.MoodTestPagerEvent {
+}
+interface com.example.myapplication.data.movie_data.MovieRepository {
++ Movie? getMovieById(Int)
++ Flow<List<Movie>> getMovies()
+}
+
+class com.example.myapplication.data.user_data.null {
+}
+abstract class com.example.myapplication.data.user_data.UserDatabase {
++ UserDao userDao
+}
+
+interface com.example.myapplication.data.movie_data.MovieDao {
++ Movie? getMovieById(Int)
++ Flow<List<Movie>> getMovies()
+}
+
+class com.example.myapplication.MovieApp {
+}
+class com.example.myapplication.data.remote.dto.PostRequestToken {
+}
+class com.example.myapplication.ui.register_screen.RegisterScreenEvent {
+}
+interface com.example.myapplication.data.questions_data.QuestionDao {
++ Flow<List<Question>> getQuestionsByType(Int)
++ Flow<List<Question>> getQuestions()
+}
+
+class com.example.myapplication.data.remote.PostServiceImpl {
+}
+class com.example.myapplication.data.movie_data.MovieRepositoryImpl {
+}
+class com.example.myapplication.util.UiEvent$ToGiveAnswer {
+}
+class com.example.myapplication.util.UiEvent$PopBackStack {
+}
+class com.example.myapplication.util.UiEvent$Navigate {
+}
+class com.example.myapplication.util.UiEvent {
+}
+class com.example.myapplication.data.user_data.User {
+}
+class com.example.myapplication.ui.register_screen.RegisterScreenViewModel {
+}
+class com.example.myapplication.MainActivity {
++ void onCreate(Bundle?)
+}
+
+interface com.example.myapplication.data.user_data.UserDao {
++ void insertUser(User)
++ User? getUser()
+}
+
+class com.example.myapplication.ui.edit_user_data.EditUserDataEvent$OnUserNameChange {
+}
+class com.example.myapplication.ui.edit_user_data.EditUserDataEvent$OnSaveChangesClick {
+}
+class com.example.myapplication.ui.edit_user_data.EditUserDataEvent$OnBackIconClick {
+}
+class com.example.myapplication.ui.edit_user_data.EditUserDataEvent {
+}
+enum com.example.myapplication.ui.reusable_composeables.BottomNavBarItem {
+}
+class com.example.myapplication.data.remote.dto.PostRequestMood {
+}
+class com.example.myapplication.util.Converters {
++ void listToJson(List<String>?)
++ void jsonToList(String)
+}
+
+class com.example.myapplication.data.remote.PostService$Companion {
++ PostService create()
+}
+
+interface com.example.myapplication.data.remote.PostService {
++ FilmResponse Post_New_Film(PostRequestToken)
++ ServerResponse? Post_Register(PostRequestRegister)
++ ServerResponse? Post_Auth(PostRequestToken)
++ ServerResponse? Post_Login(PostRequestLogin)
++ PostResponseDefault? Post_ChPwd(PostRequestPassword)
++ FilmResponse Post_MovieMood(PostRequestMood)
++ PostResponseImageName? ChangeImage(PostRequestImage)
+}
+
+class com.example.myapplication.di.AppModule {
++ MovieDatabase provideMovieDatabase(Application)
++ MovieRepository provideMovieRepository(MovieDatabase)
++ UserDatabase provideUserDatabase(Application)
++ UserRepository provideUserRepository(UserDatabase)
++ QuestionDatabase provideQuestionDatabase(Application)
++ QuestionRepository provideQuestionRepository(QuestionDatabase)
+}
+
+class com.example.myapplication.ui.user_screen.PasswordVisualTransformation {
++ TransformedText filter(AnnotatedString)
+}
+
+class com.example.myapplication.ui.Constants$Companion {
++ Uri DEFAULT_URI
+}
+
+class com.example.myapplication.ui.Constants {
+}
+class com.example.myapplication.util.Routes {
++  MAIN_SCREEN
++  USER_SCREEN
++  MOVIE_LIST_SCREEN
++  MOVIE_SCREEN
++  LOG_IN_SCREEN
++  REGISTER_SCREEN
++  MOVIE_SELECTION_SCREEN
++  PRE_MOVIE_SELECTION_SCREEN
++  EDIT_USER_DATA_SCREEN
+}
+
+class com.example.myapplication.ui.movie_list_screen.MovieListScreenEvent$OnMovieClick {
+}
+class com.example.myapplication.ui.movie_list_screen.MovieListScreenEvent {
+}
+class com.example.myapplication.data.remote.dto.FilmResponse {
+}
+class com.example.myapplication.data.remote.dto.FilmListResponse {
+}
+class com.example.myapplication.data.remote.dto.FilmErrorResponse {
+}
+class com.example.myapplication.data.remote.dto.Film {
+}
+class com.example.myapplication.ui.main_screen.MainScreenViewModel {
+}
+class com.example.myapplication.ui.movie_list_screen.MovieListScreenViewModel {
+}
+class com.example.myapplication.ui.movie_screen.MovieScreenEvent$OnBackIconClick {
+}
+class com.example.myapplication.ui.movie_screen.MovieScreenEvent {
+}
+class com.example.myapplication.ui.main_screen.MainScreenEvent$OnMovieClick {
+}
+class com.example.myapplication.ui.main_screen.MainScreenEvent$OnMovieSelectionButtonClick {
+}
+class com.example.myapplication.ui.main_screen.MainScreenEvent$OnAvatarClick {
+}
+class com.example.myapplication.ui.main_screen.MainScreenEvent$OnSelectedMoviesClick {
+}
+class com.example.myapplication.ui.main_screen.MainScreenEvent {
+}
+class com.example.myapplication.data.movie_data.null {
+}
+abstract class com.example.myapplication.data.movie_data.MovieDatabase {
++ MovieDao movieDao
+}
+
+
+
+com.example.myapplication.ui.movie_screen.Creator <|.. com.example.myapplication.ui.movie_screen.CREATOR
+com.example.myapplication.ui.user_screen.UserScreenEvent +.. com.example.myapplication.ui.user_screen.UserScreenEvent$OnLoginChange
+com.example.myapplication.ui.user_screen.UserScreenEvent <|-- com.example.myapplication.ui.user_screen.UserScreenEvent$OnLoginChange
+com.example.myapplication.ui.user_screen.UserScreenEvent +.. com.example.myapplication.ui.user_screen.UserScreenEvent$OnPasswordChange
+com.example.myapplication.ui.user_screen.UserScreenEvent <|-- com.example.myapplication.ui.user_screen.UserScreenEvent$OnPasswordChange
+com.example.myapplication.ui.user_screen.UserScreenEvent +.. com.example.myapplication.ui.user_screen.UserScreenEvent$OnNewPasswordChange
+com.example.myapplication.ui.user_screen.UserScreenEvent <|-- com.example.myapplication.ui.user_screen.UserScreenEvent$OnNewPasswordChange
+com.example.myapplication.ui.user_screen.UserScreenEvent +.. com.example.myapplication.ui.user_screen.UserScreenEvent$OnEditUserDataClick
+com.example.myapplication.ui.user_screen.UserScreenEvent <|-- com.example.myapplication.ui.user_screen.UserScreenEvent$OnEditUserDataClick
+com.example.myapplication.ui.user_screen.UserScreenEvent +.. com.example.myapplication.ui.user_screen.UserScreenEvent$OnSaveChangesClick
+com.example.myapplication.ui.user_screen.UserScreenEvent <|-- com.example.myapplication.ui.user_screen.UserScreenEvent$OnSaveChangesClick
+androidx.room.RoomDatabase <|-- com.example.myapplication.data.questions_data.QuestionDatabase
+com.example.myapplication.ui.mood_test_pager.MoodTestPagerEvent +.. com.example.myapplication.ui.mood_test_pager.MoodTestPagerEvent$onCloseIconClick
+com.example.myapplication.ui.mood_test_pager.MoodTestPagerEvent <|-- com.example.myapplication.ui.mood_test_pager.MoodTestPagerEvent$onCloseIconClick
+com.example.myapplication.ui.mood_test_pager.MoodTestPagerEvent +.. com.example.myapplication.ui.mood_test_pager.MoodTestPagerEvent$onNextActionButtonClick
+com.example.myapplication.ui.mood_test_pager.MoodTestPagerEvent <|-- com.example.myapplication.ui.mood_test_pager.MoodTestPagerEvent$onNextActionButtonClick
+androidx.room.RoomDatabase <|-- com.example.myapplication.data.user_data.UserDatabase
+android.app.Application <|-- com.example.myapplication.MovieApp
+com.example.myapplication.util.UiEvent +.. com.example.myapplication.util.UiEvent$ToGiveAnswer
+com.example.myapplication.util.UiEvent <|-- com.example.myapplication.util.UiEvent$ToGiveAnswer
+com.example.myapplication.util.UiEvent +.. com.example.myapplication.util.UiEvent$PopBackStack
+com.example.myapplication.util.UiEvent <|-- com.example.myapplication.util.UiEvent$PopBackStack
+com.example.myapplication.util.UiEvent +.. com.example.myapplication.util.UiEvent$Navigate
+com.example.myapplication.util.UiEvent <|-- com.example.myapplication.util.UiEvent$Navigate
+androidx.lifecycle.ViewModel <|-- com.example.myapplication.ui.register_screen.RegisterScreenViewModel
+androidx.activity.ComponentActivity <|-- com.example.myapplication.MainActivity
+com.example.myapplication.ui.edit_user_data.EditUserDataEvent +.. com.example.myapplication.ui.edit_user_data.EditUserDataEvent$OnUserNameChange
+com.example.myapplication.ui.edit_user_data.EditUserDataEvent <|-- com.example.myapplication.ui.edit_user_data.EditUserDataEvent$OnUserNameChange
+com.example.myapplication.ui.edit_user_data.EditUserDataEvent +.. com.example.myapplication.ui.edit_user_data.EditUserDataEvent$OnSaveChangesClick
+com.example.myapplication.ui.edit_user_data.EditUserDataEvent <|-- com.example.myapplication.ui.edit_user_data.EditUserDataEvent$OnSaveChangesClick
+com.example.myapplication.ui.edit_user_data.EditUserDataEvent +.. com.example.myapplication.ui.edit_user_data.EditUserDataEvent$OnBackIconClick
+com.example.myapplication.ui.edit_user_data.EditUserDataEvent <|-- com.example.myapplication.ui.edit_user_data.EditUserDataEvent$OnBackIconClick
+com.example.myapplication.data.remote.PostService +.. com.example.myapplication.data.remote.PostService$Companion
+androidx.compose.ui.text.input.VisualTransformation <|.. com.example.myapplication.ui.user_screen.PasswordVisualTransformation
+com.example.myapplication.ui.Constants +.. com.example.myapplication.ui.Constants$Companion
+com.example.myapplication.ui.movie_list_screen.MovieListScreenEvent +.. com.example.myapplication.ui.movie_list_screen.MovieListScreenEvent$OnMovieClick
+com.example.myapplication.ui.movie_list_screen.MovieListScreenEvent <|-- com.example.myapplication.ui.movie_list_screen.MovieListScreenEvent$OnMovieClick
+com.example.myapplication.ui.movie_screen.MovieScreenEvent +.. com.example.myapplication.ui.movie_screen.MovieScreenEvent$OnBackIconClick
+com.example.myapplication.ui.movie_screen.MovieScreenEvent <|-- com.example.myapplication.ui.movie_screen.MovieScreenEvent$OnBackIconClick
+com.example.myapplication.ui.main_screen.MainScreenEvent +.. com.example.myapplication.ui.main_screen.MainScreenEvent$OnMovieClick
+com.example.myapplication.ui.main_screen.MainScreenEvent <|-- com.example.myapplication.ui.main_screen.MainScreenEvent$OnMovieClick
+com.example.myapplication.ui.main_screen.MainScreenEvent +.. com.example.myapplication.ui.main_screen.MainScreenEvent$OnMovieSelectionButtonClick
+com.example.myapplication.ui.main_screen.MainScreenEvent <|-- com.example.myapplication.ui.main_screen.MainScreenEvent$OnMovieSelectionButtonClick
+com.example.myapplication.ui.main_screen.MainScreenEvent +.. com.example.myapplication.ui.main_screen.MainScreenEvent$OnAvatarClick
+com.example.myapplication.ui.main_screen.MainScreenEvent <|-- com.example.myapplication.ui.main_screen.MainScreenEvent$OnAvatarClick
+com.example.myapplication.ui.main_screen.MainScreenEvent +.. com.example.myapplication.ui.main_screen.MainScreenEvent$OnSelectedMoviesClick
+com.example.myapplication.ui.main_screen.MainScreenEvent <|-- com.example.myapplication.ui.main_screen.MainScreenEvent$OnSelectedMoviesClick
+androidx.room.RoomDatabase <|-- com.example.myapplication.data.movie_data.MovieDatabase
+@enduml

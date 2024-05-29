@@ -10,15 +10,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,166 +28,138 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.util.UiEvent
-import com.example.myapplication.ui.register.registerUser
-import com.example.myapplication.ui.theme.Purple40
-import com.example.myapplication.ui.theme.Purple80
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.myapplication.ui.movie_screen.MovieScreenViewModel
 import com.example.myapplication.ui.theme.primaryGradientTBottom
 import com.example.myapplication.ui.theme.primaryGradientTop
-
+import com.example.myapplication.ui.register_screen.RegisterScreenViewModel
 
 @Composable
-//fun RegisterScreen(onNavigate: (UiEvent.Navigate) -> Unit)
-fun RegisterScreen(){
-    Column (
+fun RegisterScreen(viewModel: RegisterScreenViewModel = hiltViewModel()) {
+    val login = remember { mutableStateOf("") }
+    val password = remember { mutableStateOf("") }
+    val username = remember { mutableStateOf("") }
+
+    Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 35.dp)
             .padding(top = 10.dp)
-    ){
+    ) {
         Text(
             text = "Регистрация",
             fontSize = 19.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
-        val login = remember{mutableStateOf("")}
-        val password = remember{mutableStateOf("")}
-        val username = remember{mutableStateOf("")}
+
         Row {
             Column {
                 Text(
                     text = "Логин",
                     fontSize = 17.sp,
-                    modifier = Modifier
-                        .padding(bottom = 9.dp)
+                    modifier = Modifier.padding(bottom = 9.dp)
                 )
                 BasicTextField(
+                    value = login.value,
+                    onValueChange = { login.value = it },
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(20.dp))
                         .border(
                             width = 2.dp,
                             brush = Brush.verticalGradient(
-                                listOf(
-                                     primaryGradientTop,
-                                    primaryGradientTBottom
-                                )
+                                listOf(primaryGradientTop, primaryGradientTBottom)
                             ),
                             shape = RoundedCornerShape(20.dp)
                         )
                         .padding(13.dp),
                     textStyle = TextStyle(color = Color.White, fontSize = 15.sp),
-                    cursorBrush = Brush.verticalGradient(listOf(Color.White, Color.White)),
                     singleLine = true,
-                    value = login.value,
-                    onValueChange = {
-                        login.value = it
-                    },
+                    cursorBrush = Brush.verticalGradient(listOf(Color.White, Color.White))
                 )
 
-                Spacer(modifier = Modifier
-                    .height(25.dp)
-                )
+                Spacer(modifier = Modifier.height(25.dp))
 
                 Text(
                     text = "Пароль",
                     fontSize = 17.sp,
-                    modifier = Modifier
-                        .padding(bottom = 9.dp)
+                    modifier = Modifier.padding(bottom = 9.dp)
                 )
                 BasicTextField(
+                    value = password.value,
+                    onValueChange = { password.value = it },
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(20.dp))
                         .border(
                             width = 2.dp,
                             brush = Brush.verticalGradient(
-                                listOf(
-                                    primaryGradientTop,
-                                    primaryGradientTBottom
-                                )
+                                listOf(primaryGradientTop, primaryGradientTBottom)
                             ),
                             shape = RoundedCornerShape(20.dp)
                         )
                         .padding(13.dp),
                     textStyle = TextStyle(color = Color.White, fontSize = 15.sp),
-                    cursorBrush = Brush.verticalGradient(listOf(Color.White, Color.White)),
                     singleLine = true,
-                    value = password.value,
-                    onValueChange = {
-                        password.value = it
-                    },
+                    cursorBrush = Brush.verticalGradient(listOf(Color.White, Color.White))
                 )
 
-                Spacer(modifier = Modifier
-                    .height(25.dp)
-                )
+                Spacer(modifier = Modifier.height(25.dp))
 
                 Text(
                     text = "Имя пользователя",
                     fontSize = 17.sp,
-                    modifier = Modifier
-                        .padding(bottom = 9.dp)
+                    modifier = Modifier.padding(bottom = 9.dp)
                 )
                 BasicTextField(
+                    value = username.value,
+                    onValueChange = { username.value = it },
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(20.dp))
                         .border(
                             width = 2.dp,
                             brush = Brush.verticalGradient(
-                                listOf(
-                                    primaryGradientTop,
-                                    primaryGradientTBottom
-                                )
+                                listOf(primaryGradientTop, primaryGradientTBottom)
                             ),
                             shape = RoundedCornerShape(20.dp)
                         )
                         .padding(13.dp),
                     textStyle = TextStyle(color = Color.White, fontSize = 15.sp),
-                    cursorBrush = Brush.verticalGradient(listOf(Color.White, Color.White)),
                     singleLine = true,
-                    value = username.value,
-                    onValueChange = {
-                        username.value = it
-                    },
+                    cursorBrush = Brush.verticalGradient(listOf(Color.White, Color.White))
                 )
             }
         }
 
         Spacer(modifier = Modifier.height(25.dp))
-        Button(onClick = {
-            registerUser(
-                username.value,
-                login.value,
-                password.value
-            )
-        },
+
+        Button(
+            onClick = {
+                viewModel.registerUser(login.value, username.value, password.value)
+            },
             colors = ButtonDefaults.buttonColors(Color.Transparent),
             modifier = Modifier
                 .height(50.dp)
                 .fillMaxWidth()
                 .background(
                     brush = Brush.verticalGradient(
-                        listOf(
-                            primaryGradientTop,
-                            primaryGradientTBottom
-                        )
+                        listOf(primaryGradientTop, primaryGradientTBottom)
                     ),
                     shape = RoundedCornerShape(12.dp)
                 )
-        ){ Text(
-            "Зарегистрироваться",
-            fontWeight = FontWeight.Normal,
-            fontSize = 16.sp,
-            color = Color.White
-        ) }
+        ) {
+            Text(
+                "Зарегистрироваться",
+                fontWeight = FontWeight.Normal,
+                fontSize = 16.sp,
+                color = Color.White
+            )
+        }
 
-        Spacer(modifier = Modifier
-            .height(60.dp)
-        )
+        Spacer(modifier = Modifier.height(60.dp))
     }
 }

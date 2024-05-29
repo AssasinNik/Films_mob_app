@@ -28,7 +28,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.myapplication.ui.register.registerUser
 import com.example.myapplication.ui.theme.primaryGradientTBottom
 import com.example.myapplication.ui.theme.primaryGradientTop
 
@@ -121,11 +120,6 @@ fun LoginScreen(){
 
         Spacer(modifier = Modifier.height(25.dp))
         Button(onClick = {
-            registerUser(
-            username.value,
-            login.value,
-            password.value
-        )
         },
             colors = ButtonDefaults.buttonColors(Color.Transparent),
             modifier = Modifier

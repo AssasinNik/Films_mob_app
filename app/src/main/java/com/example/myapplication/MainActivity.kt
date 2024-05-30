@@ -71,8 +71,6 @@ class MainActivity : ComponentActivity() {
                             BottomNavBar(navController = navController)
                         }
                     ){
-                        RegisterScreen()
-                        /*
                         NavHost(
                             navController = navController,
                             startDestination = Routes.MAIN_SCREEN,
@@ -140,7 +138,7 @@ class MainActivity : ComponentActivity() {
                                     navController.popBackStack()
                                 })
                             }
-                        }*/
+                        }
                     }
 
                 }

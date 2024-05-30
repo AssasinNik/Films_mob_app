@@ -24,7 +24,8 @@ class RegisterScreenViewModel @Inject constructor(
     fun registerUser(email: String, username: String, password: String) {
         val registerRequest = PostRequestRegister(email = email, username = username, parol_user = password)
         viewModelScope.launch {
-            when (val response = apiService.Post_Register(registerRequest)) {
+            val response = apiService.Post_Register(registerRequest)
+            when (response) {
                 is PostResponseWrapper -> {
                     response.data?.let { userData ->
                         // Сохранение данных в Room

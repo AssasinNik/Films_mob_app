@@ -9,10 +9,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.data.movie_data.Movie
 import com.example.myapplication.data.movie_data.MovieRepository
 import com.example.myapplication.data.remote.PostService
+import com.example.myapplication.data.remote.dto.ErrorServerResponse
+import com.example.myapplication.data.remote.dto.FilmErrorResponse
+import com.example.myapplication.data.remote.dto.FilmListResponse
 import com.example.myapplication.data.remote.dto.PostRequestRegister
+import com.example.myapplication.data.remote.dto.PostRequestToken
 import com.example.myapplication.data.remote.dto.PostResponseWrapper
+import com.example.myapplication.data.user_data.User
 import com.example.myapplication.data.user_data.UserRepository
 import com.example.myapplication.ui.Constants
 import com.example.myapplication.util.Routes
@@ -44,11 +50,10 @@ class MainScreenViewModel @Inject constructor(
     var avatar by mutableStateOf(Constants.DEFAULT_URI.toString())
         private set
 
-    private val service = PostService.create()  // Создание экземпляра сервиса
 
     init {
         viewModelScope.launch {
-
+            getNewFilms("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmaWxtX2FwcCIsImF1ZCI6ImZpbG1fYXBwIiwiZW1haWwiOiJuZWtldDEyQGV4YW1wbGUuY29tIn0.3MtS_2nhLuxE88S3JKlHeWjaphGYevTmRuH8TOSwAjw")
             userRepository.getUser()?.let { user ->
                 name = user.name ?: ""
                 login = user.login
@@ -69,6 +74,50 @@ class MainScreenViewModel @Inject constructor(
             }
             is MainScreenEvent.OnSelectedMoviesClick -> {
                 sendUiEvent(UiEvent.Navigate(Routes.MOVIE_LIST_SCREEN))
+            }
+        }
+    }
+
+
+    fun getNewFilms(token: String) {
+        val apiService = PostService.create()
+        Log.d("MainScreenViewModel", "Starting getNewFilms with token: $token")
+        if (apiService == null) {
+            Log.e("MainScreenViewModel", "apiService is null at the time of the call")
+        } else {
+            Log.d("MainScreenViewModel", "apiService is initialized")
+        }
+        val filmRequest = PostRequestToken(token)
+        viewModelScope.launch {
+            val response = apiService.Post_New_Film(filmRequest)
+            when (response) {
+                is FilmListResponse -> {
+                    response.data?.forEach { film ->
+                        val movie = Movie(
+                            movieId = film.movie_id,
+                            title = film.title ?: "",
+                            titleEn = film.titleEn ?: "",
+                            genres = film.genres.joinToString(", "),  // Преобразование списка жанров в строку
+                            posterURL = film.posterURL,
+                            rating = film.rating.toInt(),
+                            length = film.length,
+                            description = film.description ?: "",
+                            releaseYear = film.releaseDate.toString(),
+                            ageLimit = film.ageLimit.toString()
+                        )
+                        // Предполагается, что у вас есть метод в userRepository для вставки фильма
+                        movieRepository.insertFilm(movie)
+                        Log.d("RegisterScreenViewModel", "Movie fetched and saved: ${film.title}")
+                    }
+                }
+                is FilmErrorResponse -> {
+                    println("Fetching movies failed: ${response.message}")
+                    Log.e("RegisterScreenViewModel", "Fetching movies failed: ${response.message}")
+                }
+                else -> {
+                    println("An unexpected error occurred during fetching movies")
+                    Log.e("RegisterScreenViewModel", "An unexpected error occurred during fetching movies")
+                }
             }
         }
     }

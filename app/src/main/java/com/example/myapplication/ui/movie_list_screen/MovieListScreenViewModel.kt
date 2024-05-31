@@ -3,6 +3,7 @@ package com.example.myapplication.ui.movie_list_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.movie_data.MovieRepository
+import com.example.myapplication.ui.Constants
 import com.example.myapplication.util.Routes
 import com.example.myapplication.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +21,6 @@ class MovieListScreenViewModel @Inject constructor(
 
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
-
     fun onEvent(event: MovieListScreenEvent){
         when(event){
             is MovieListScreenEvent.OnMovieClick -> {

@@ -1,9 +1,11 @@
 package com.example.myapplication.data.remote.dto
 
+import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.Serializable
 
 // Базовый класс для всех ответов, связанных с фильмами
 @Serializable
+@Polymorphic
 sealed class FilmResponse
 
 // Класс для успешного ответа со списком фильмов
@@ -18,7 +20,7 @@ data class FilmListResponse(
 @Serializable
 data class FilmErrorResponse(
     val exception: String?,
-    val message: String,
+    val message: String?,
     val statusCode: StatusCode
 ) : FilmResponse()
 

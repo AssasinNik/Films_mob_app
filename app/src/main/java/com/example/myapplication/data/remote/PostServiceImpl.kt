@@ -47,26 +47,13 @@ class PostServiceImpl(
                 contentType(ContentType.Application.Json)
                 body = postRequestToken
             }
-            when (response.status) {
-                HttpStatusCode.OK -> {
-                    try {
-                        response.receive<FilmListResponse>().also {
-                            // Проверяем, содержит ли ответ данные
-                            if (it.data.isNullOrEmpty()) {
-                                // Если данных нет, возвращаем FilmErrorResponse с сообщением
-                                FilmErrorResponse(null, "No new films available", it.statusCode)
-                            } else {
-                                it  // Возвращаем успешный список фильмов
-                            }
-                        }
-                    } catch (e: SerializationException) {
-                        // В случае ошибки десериализации, возвращаем FilmErrorResponse
-                        FilmErrorResponse(null, "Error parsing server response: ${e.localizedMessage}",
-                            StatusCode(response.status.value, response.status.description))
-                    }
+            when {
+                response.status == HttpStatusCode.OK -> {
+                    response.receive<FilmResponse>()
                 }
-                else -> FilmErrorResponse(null, "Failed to fetch new films: ${response.status.description}",
-                    StatusCode(response.status.value, response.status.description))
+                else -> {
+                    FilmErrorResponse(null, response.content.toString(), StatusCode(response.status.value, response.status.description))
+                }
             }
         } catch (e: ClientRequestException) {
             println("Client request error: ${e.response.status.description}")
@@ -220,7 +207,7 @@ class PostServiceImpl(
     }
 
 
-    override suspend fun Post_ChPwd(postRequestData: PostRequestPassword): PostResponseDefault? {
+    override suspend fun Post_ChPwd(postRequestData: PostRequestPassword): ErrorServerResponse? {
         return try {
             val response: HttpResponse = client.post {
                 url(Routes.CHANGE_PWD)
@@ -229,9 +216,9 @@ class PostServiceImpl(
             }
             // Проверяем, был ли запрос успешным
             if (response.status == HttpStatusCode.OK) {
-                response.receive<PostResponseDefault>().also {
+                response.receive<ErrorServerResponse>().also {
                     // Логируем ответ сервера
-                    if (it.message.isNotEmpty()) {
+                    if (it.message!!.isNotEmpty()) {
                         println("Response message: ${it.message}")
                     }
                     return it // Возвращаем объект PostResponseDefault
@@ -239,20 +226,22 @@ class PostServiceImpl(
             } else {
                 // В случае ошибки формируем PostResponseDefault с сообщением об ошибке
                 println("Failed to change password: ${response.status.description}")
-                PostResponseDefault("Failed to change password: ${response.status.description}")
+                ErrorServerResponse("Server response error: ${response.status.description}", StatusCode(response.status.value, response.status.description))
             }
         } catch (e: ClientRequestException) {
             println("Client request error: ${e.response.status.description}")
-            PostResponseDefault("Client request error: ${e.message}")
+            ErrorServerResponse("Server response error: ${e.message}", StatusCode(e.response.status.value, e.response.status.description))
         } catch (e: ServerResponseException) {
             println("Server response error: ${e.response.status.description}")
-            PostResponseDefault("Server response error: ${e.message}")
+            ErrorServerResponse("Server response error: ${e.message}", StatusCode(e.response.status.value, e.response.status.description))
         } catch (e: RedirectResponseException) {
             println("Redirect response error: ${e.response.status.description}")
-            PostResponseDefault("Redirect response error: ${e.message}")
+            ErrorServerResponse("Server response error: ${e.message}", StatusCode(e.response.status.value, e.response.status.description))
         } catch (e: Exception) {
             println("Unexpected error: ${e.message}")
-            PostResponseDefault("Unexpected error: ${e.message}")
+            ErrorServerResponse("Server response error: ${e.message}", StatusCode(120,
+                e.message.toString()
+            ))
         }
     }
     override suspend fun ChangeImage(postRequestImage: PostRequestImage): PostResponseImageName? {

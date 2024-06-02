@@ -11,6 +11,7 @@ import com.example.myapplication.data.remote.dto.PostRequestMood
 import com.example.myapplication.data.remote.dto.PostRequestPassword
 import com.example.myapplication.data.remote.dto.PostRequestRegister
 import com.example.myapplication.data.remote.dto.PostRequestToken
+import com.example.myapplication.data.remote.dto.PostRequestUsername
 import com.example.myapplication.data.remote.dto.PostResponseDefault
 import com.example.myapplication.data.remote.dto.PostResponseImageName
 import com.example.myapplication.data.remote.dto.PostResponseWrapper
@@ -213,6 +214,44 @@ class PostServiceImpl(
                 url(Routes.CHANGE_PWD)
                 contentType(ContentType.Application.Json)
                 body = postRequestData
+            }
+            // Проверяем, был ли запрос успешным
+            if (response.status == HttpStatusCode.OK) {
+                response.receive<ErrorServerResponse>().also {
+                    // Логируем ответ сервера
+                    if (it.message!!.isNotEmpty()) {
+                        println("Response message: ${it.message}")
+                    }
+                    return it // Возвращаем объект PostResponseDefault
+                }
+            } else {
+                // В случае ошибки формируем PostResponseDefault с сообщением об ошибке
+                println("Failed to change password: ${response.status.description}")
+                ErrorServerResponse("Server response error: ${response.status.description}", StatusCode(response.status.value, response.status.description))
+            }
+        } catch (e: ClientRequestException) {
+            println("Client request error: ${e.response.status.description}")
+            ErrorServerResponse("Server response error: ${e.message}", StatusCode(e.response.status.value, e.response.status.description))
+        } catch (e: ServerResponseException) {
+            println("Server response error: ${e.response.status.description}")
+            ErrorServerResponse("Server response error: ${e.message}", StatusCode(e.response.status.value, e.response.status.description))
+        } catch (e: RedirectResponseException) {
+            println("Redirect response error: ${e.response.status.description}")
+            ErrorServerResponse("Server response error: ${e.message}", StatusCode(e.response.status.value, e.response.status.description))
+        } catch (e: Exception) {
+            println("Unexpected error: ${e.message}")
+            ErrorServerResponse("Server response error: ${e.message}", StatusCode(120,
+                e.message.toString()
+            ))
+        }
+    }
+
+    override suspend fun Post_ChUsr(postRequestUsername: PostRequestUsername): ErrorServerResponse? {
+        return try {
+            val response: HttpResponse = client.post {
+                url(Routes.CHANGE_PWD)
+                contentType(ContentType.Application.Json)
+                body = postRequestUsername
             }
             // Проверяем, был ли запрос успешным
             if (response.status == HttpStatusCode.OK) {

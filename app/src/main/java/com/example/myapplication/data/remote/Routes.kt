@@ -10,5 +10,6 @@ object Routes {
     const val AUTH = "$address/auth/authenticate"
     const val CHANGE_IMAGE = "$address/change/image"
     const val CHANGE_PWD = "$address/change/password"
+    const val CHANGE_USN = "$address/change/username"
     const val GET_IMAGE = "$address/change/images"
 }

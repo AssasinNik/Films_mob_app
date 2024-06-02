@@ -10,6 +10,7 @@ import com.example.myapplication.data.remote.dto.PostRequestMood
 import com.example.myapplication.data.remote.dto.PostRequestPassword
 import com.example.myapplication.data.remote.dto.PostRequestRegister
 import com.example.myapplication.data.remote.dto.PostRequestToken
+import com.example.myapplication.data.remote.dto.PostRequestUsername
 import com.example.myapplication.data.remote.dto.PostResponseDefault
 import com.example.myapplication.data.remote.dto.PostResponseImageName
 import com.example.myapplication.data.remote.dto.PostResponseWrapper
@@ -71,6 +72,7 @@ interface PostService {
     suspend fun Post_Auth(postRequestToken: PostRequestToken): ServerResponse?
     suspend fun Post_Login(postRequestData: PostRequestLogin): ServerResponse?
     suspend fun Post_ChPwd(postRequestData: PostRequestPassword): ErrorServerResponse?
+    suspend fun Post_ChUsr(postRequestUsername: PostRequestUsername): ErrorServerResponse?
     suspend fun Post_MovieMood(postRequestData: PostRequestMood): FilmResponse
     suspend fun ChangeImage(postRequestImage: PostRequestImage): PostResponseImageName?
 

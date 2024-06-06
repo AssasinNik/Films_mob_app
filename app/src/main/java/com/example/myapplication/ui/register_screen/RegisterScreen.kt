@@ -16,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -33,12 +34,25 @@ import com.example.myapplication.ui.movie_screen.MovieScreenViewModel
 import com.example.myapplication.ui.theme.primaryGradientTBottom
 import com.example.myapplication.ui.theme.primaryGradientTop
 import com.example.myapplication.ui.register_screen.RegisterScreenViewModel
+import com.example.myapplication.util.UiEvent
 
 @Composable
-fun RegisterScreen(viewModel: RegisterScreenViewModel = hiltViewModel()) {
+fun RegisterScreen(
+    viewModel: RegisterScreenViewModel = hiltViewModel(),
+    onNavigate: (UiEvent.Navigate) -> Unit
+) {
     val login = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
     val username = remember { mutableStateOf("") }
+
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect{ event ->
+            when(event) {
+                is UiEvent.Navigate -> onNavigate(event)
+                else -> Unit
+            }
+        }
+    }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -63,8 +77,10 @@ fun RegisterScreen(viewModel: RegisterScreenViewModel = hiltViewModel()) {
                     modifier = Modifier.padding(bottom = 9.dp)
                 )
                 BasicTextField(
-                    value = login.value,
-                    onValueChange = { login.value = it },
+                    value = viewModel.login,
+                    onValueChange = {
+                        viewModel.onEvent(RegisterScreenEvent.OnLoginChange(it))
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(20.dp))
@@ -89,8 +105,10 @@ fun RegisterScreen(viewModel: RegisterScreenViewModel = hiltViewModel()) {
                     modifier = Modifier.padding(bottom = 9.dp)
                 )
                 BasicTextField(
-                    value = password.value,
-                    onValueChange = { password.value = it },
+                    value = viewModel.password,
+                    onValueChange = {
+                        viewModel.onEvent(RegisterScreenEvent.OnPasswordChange(it))
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(20.dp))
@@ -115,8 +133,10 @@ fun RegisterScreen(viewModel: RegisterScreenViewModel = hiltViewModel()) {
                     modifier = Modifier.padding(bottom = 9.dp)
                 )
                 BasicTextField(
-                    value = username.value,
-                    onValueChange = { username.value = it },
+                    value = viewModel.name,
+                    onValueChange = {
+                        viewModel.onEvent(RegisterScreenEvent.OnNameChange(it))
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(20.dp))
@@ -140,6 +160,7 @@ fun RegisterScreen(viewModel: RegisterScreenViewModel = hiltViewModel()) {
         Button(
             onClick = {
                 viewModel.registerUser(login.value, username.value, password.value)
+                viewModel.onEvent(RegisterScreenEvent.OnRegisterClick)
             },
             colors = ButtonDefaults.buttonColors(Color.Transparent),
             modifier = Modifier

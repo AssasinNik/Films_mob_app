@@ -5,6 +5,9 @@ import androidx.room.Room
 import com.example.myapplication.data.movie_data.MovieDatabase
 import com.example.myapplication.data.movie_data.MovieRepository
 import com.example.myapplication.data.movie_data.MovieRepositoryImpl
+import com.example.myapplication.data.new_movie_data.NewMovieDatabase
+import com.example.myapplication.data.new_movie_data.NewMovieRepository
+import com.example.myapplication.data.new_movie_data.NewMovieRepositoryImpl
 import com.example.myapplication.data.questions_data.Question
 import com.example.myapplication.data.questions_data.QuestionDatabase
 import com.example.myapplication.data.questions_data.QuestionRepository
@@ -36,6 +39,22 @@ object AppModule {
     @Singleton
     fun provideMovieRepository(db: MovieDatabase): MovieRepository {
         return MovieRepositoryImpl(db.movieDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewMovieDatabase(app: Application): NewMovieDatabase {
+        return Room.databaseBuilder(
+            app,
+            NewMovieDatabase::class.java,
+            "new_movie_db"
+        ).createFromAsset("database/movie.db").build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewMovieRepository(db: NewMovieDatabase): NewMovieRepository {
+        return NewMovieRepositoryImpl(db.newMovieDao)
     }
 
     @Provides

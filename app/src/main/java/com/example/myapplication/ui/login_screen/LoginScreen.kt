@@ -127,7 +127,7 @@ fun LoginScreen(
                     singleLine = true,
                     value = viewModel.password,
                     onValueChange = {
-                        viewModel.onEvent(LoginScreenEvent.OnLoginChange(it))
+                        viewModel.onEvent(LoginScreenEvent.OnPasswordChange(it))
                     },
                 )
             }

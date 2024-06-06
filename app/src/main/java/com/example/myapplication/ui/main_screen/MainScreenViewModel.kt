@@ -15,6 +15,7 @@ import com.example.myapplication.data.remote.PostService
 import com.example.myapplication.data.remote.dto.ErrorServerResponse
 import com.example.myapplication.data.remote.dto.FilmErrorResponse
 import com.example.myapplication.data.remote.dto.FilmListResponse
+import com.example.myapplication.data.remote.dto.PostRequestLogin
 import com.example.myapplication.data.remote.dto.PostRequestRegister
 import com.example.myapplication.data.remote.dto.PostRequestToken
 import com.example.myapplication.data.remote.dto.PostResponseWrapper
@@ -49,15 +50,22 @@ class MainScreenViewModel @Inject constructor(
 
     var avatar by mutableStateOf(Constants.DEFAULT_URI.toString())
         private set
-
+    var token by mutableStateOf("")
+        private set
 
     init {
         viewModelScope.launch {
-            getNewFilms("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmaWxtX2FwcCIsImF1ZCI6ImZpbG1fYXBwIiwiZW1haWwiOiJuZWtldDEyQGV4YW1wbGUuY29tIn0.3MtS_2nhLuxE88S3JKlHeWjaphGYevTmRuH8TOSwAjw")
             userRepository.getUser()?.let { user ->
                 name = user.name ?: ""
                 login = user.login
                 avatar = user.avatar ?: Constants.DEFAULT_URI.toString()
+                token = user.token
+            }
+            if(authUser(token)){
+                getNewFilms(token)
+            }
+            else{
+                Log.d("Some problem", "Auth failed")
             }
         }
     }
@@ -120,6 +128,42 @@ class MainScreenViewModel @Inject constructor(
                 }
             }
         }
+    }
+    fun authUser(token: String) : Boolean{
+        val apiService = PostService.create()
+        val authRequest = PostRequestToken(token)
+        var flag: Boolean = false
+        viewModelScope.launch {
+            val response = apiService.Post_Auth(authRequest)
+            when (response) {
+                is PostResponseWrapper -> {
+                    response.data?.let { userData ->
+                        // Сохранение данных в Room
+                        val user = User(
+                            name = userData.username,
+                            login = userData.token ?: "",
+                            avatar = userData.image,
+                            password = userData.parol.toString(),
+                            token = userData.token ?: ""
+                        )
+                        Log.d("MainScreenViewModel", "Auth successful: ${userData.username}")
+                    }
+                    flag = true
+                }
+                is ErrorServerResponse -> {
+                    println("Auth failed: ${response.message}")
+                    Log.e("MainScreenViewModel", "Auth failed: ${response.message}")
+                    flag = false
+
+                }
+                else -> {
+                    println("An unexpected error occurred during registration")
+                    Log.e("MainScreenViewModel", "An unexpected error occurred during auth")
+                    flag = false
+                }
+            }
+        }
+        return flag
     }
 
     private fun sendUiEvent(event: UiEvent) {

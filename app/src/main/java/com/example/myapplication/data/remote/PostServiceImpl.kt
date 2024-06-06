@@ -114,7 +114,7 @@ class PostServiceImpl(
                 body = postRequestToken
             }
             when (response.status) {
-                HttpStatusCode.OK -> response.receive<PostResponseWrapper>()  // Предполагаем, что сервер возвращает данные пользователя в обертке
+                HttpStatusCode.OK -> response.receive<ServerResponse>()  // Предполагаем, что сервер возвращает данные пользователя в обертке
                 else -> ErrorServerResponse("Auth failed: ${response.status.description}",
                     StatusCode(response.status.value, response.status.description))
             }
@@ -141,7 +141,7 @@ class PostServiceImpl(
                 body = postRequestData
             }
             when (response.status) {
-                HttpStatusCode.OK -> response.receive<PostResponseWrapper>()  // Предполагаем, что сервер возвращает данные пользователя в обертке
+                HttpStatusCode.OK -> response.receive<ServerResponse>()  // Предполагаем, что сервер возвращает данные пользователя в обертке
                 else -> ErrorServerResponse("Login failed: ${response.status.description}",
                     StatusCode(response.status.value, response.status.description))
             }

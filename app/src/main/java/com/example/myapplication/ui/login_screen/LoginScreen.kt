@@ -28,11 +28,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myapplication.ui.theme.primaryGradientTBottom
 import com.example.myapplication.ui.theme.primaryGradientTop
 
 @Composable
-fun LoginScreen(){
+fun LoginScreen(viewModel: LoginScreenViewModel = hiltViewModel()){
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
@@ -120,6 +121,7 @@ fun LoginScreen(){
 
         Spacer(modifier = Modifier.height(25.dp))
         Button(onClick = {
+            viewModel.loginUser(login.value, password.value)
         },
             colors = ButtonDefaults.buttonColors(Color.Transparent),
             modifier = Modifier

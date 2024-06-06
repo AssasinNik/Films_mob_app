@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.user_screen
 
 import android.net.Uri
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
@@ -8,6 +9,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapplication.data.movie_data.Movie
+import com.example.myapplication.data.remote.PostService
+import com.example.myapplication.data.remote.dto.ErrorServerResponse
+import com.example.myapplication.data.remote.dto.PostRequestPassword
+import com.example.myapplication.data.remote.dto.PostRequestRegister
+import com.example.myapplication.data.remote.dto.PostResponseWrapper
 import com.example.myapplication.data.user_data.User
 import com.example.myapplication.data.user_data.UserRepository
 import com.example.myapplication.ui.Constants
@@ -65,6 +71,7 @@ class UserScreenViewModel @Inject constructor(
     }
 
     fun onEvent(event: UserScreenEvent) {
+        changePassword(login, password, newPasswords)
         when (event) {
             is UserScreenEvent.OnEditUserDataClick -> {
                 sendUiEvent(UiEvent.Navigate(Routes.EDIT_USER_DATA_SCREEN))
@@ -122,6 +129,25 @@ class UserScreenViewModel @Inject constructor(
 
                         }
                     }
+                }
+            }
+        }
+    }
+
+    fun changePassword(email: String, parol_user: String, new_parol: String?) {
+        val apiService = PostService.create()
+        val changePwdRequest = PostRequestPassword(email = email, parol_user = parol_user, new_parol = new_parol, token = token)
+        viewModelScope.launch {
+            val response = apiService.Post_ChPwd(changePwdRequest)
+            when (response) {
+                is ErrorServerResponse -> {
+                    println("Message Change: ${response.message}")
+                    Log.e("changePassword", "Message Change: ${response.message}")
+
+                }
+                else -> {
+                    println("An unexpected error occurred during registration")
+                    Log.e("changePassword", "An unexpected error occurred during changing")
                 }
             }
         }

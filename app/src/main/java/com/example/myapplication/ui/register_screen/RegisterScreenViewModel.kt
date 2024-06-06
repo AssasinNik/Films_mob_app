@@ -13,11 +13,13 @@ import com.example.myapplication.data.remote.dto.PostResponseWrapper
 import com.example.myapplication.data.user_data.User
 import com.example.myapplication.data.user_data.UserRepository
 import com.example.myapplication.ui.Constants
+import com.example.myapplication.util.Routes
 import com.example.myapplication.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import okhttp3.Route
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,6 +54,9 @@ class RegisterScreenViewModel @Inject constructor(
             }
             is RegisterScreenEvent.OnPasswordChange -> {
                 password = event.password
+            }
+            is RegisterScreenEvent.OnLinkClick -> {
+                sendUiEvent(UiEvent.Navigate(Routes.LOG_IN_SCREEN))
             }
         }
     }

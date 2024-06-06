@@ -2,6 +2,7 @@ package com.example.myapplication.ui.register_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,11 +26,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.myapplication.ui.login_screen.LoginScreenEvent
 import com.example.myapplication.ui.movie_screen.MovieScreenViewModel
 import com.example.myapplication.ui.theme.primaryGradientTBottom
 import com.example.myapplication.ui.theme.primaryGradientTop
@@ -176,8 +180,18 @@ fun RegisterScreen(
                 color = Color.White
             )
         }
-        
-        Text(text = "Уже есть аккаунт?")
+
+        Text(
+            text = "Уже есть аккаунт?",
+            fontWeight = FontWeight.Normal,
+            textDecoration = TextDecoration.Underline,
+            fontSize = 13.sp,
+            color = Color.White,
+            modifier = Modifier
+                .clickable {
+                    viewModel.onEvent(RegisterScreenEvent.OnLinkClick)
+                }
+        )
 
         Spacer(modifier = Modifier.height(60.dp))
     }

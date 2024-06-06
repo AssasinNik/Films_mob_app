@@ -4,6 +4,7 @@ import com.example.myapplication.ui.register_screen.RegisterScreenEvent
 
 sealed class LoginScreenEvent {
     object OnLoginButtonClick: LoginScreenEvent()
+    object OnLinkClick: LoginScreenEvent()
     data class OnLoginChange(val login: String): LoginScreenEvent()
     data class OnPasswordChange(val password: String): LoginScreenEvent()
 

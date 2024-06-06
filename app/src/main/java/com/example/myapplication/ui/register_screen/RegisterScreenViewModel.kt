@@ -24,8 +24,6 @@ import javax.inject.Inject
 class RegisterScreenViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
-    private val apiService = PostService.create()
-
     var name by mutableStateOf("")
         private set
 
@@ -38,11 +36,13 @@ class RegisterScreenViewModel @Inject constructor(
     private  val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
+    private val apiService = PostService.create()
+
     fun onEvent(event: RegisterScreenEvent){
         when(event) {
             is RegisterScreenEvent.OnRegisterClick -> {
                 registerUser(login, name, password)
-                sendUiEvent(UiEvent.Navigate("main"))
+                sendUiEvent(UiEvent.Navigate("main")) //Добавить условие на удачную регистрацию
             }
             is RegisterScreenEvent.OnLoginChange -> {
                 login = event.login

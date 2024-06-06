@@ -41,10 +41,7 @@ fun RegisterScreen(
     viewModel: RegisterScreenViewModel = hiltViewModel(),
     onNavigate: (UiEvent.Navigate) -> Unit
 ) {
-    val login = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
-    val username = remember { mutableStateOf("") }
-
+    
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect{ event ->
             when(event) {
@@ -159,7 +156,6 @@ fun RegisterScreen(
 
         Button(
             onClick = {
-                viewModel.registerUser(login.value, username.value, password.value)
                 viewModel.onEvent(RegisterScreenEvent.OnRegisterClick)
             },
             colors = ButtonDefaults.buttonColors(Color.Transparent),
@@ -180,6 +176,8 @@ fun RegisterScreen(
                 color = Color.White
             )
         }
+        
+        Text(text = "Уже есть аккаунт?")
 
         Spacer(modifier = Modifier.height(60.dp))
     }

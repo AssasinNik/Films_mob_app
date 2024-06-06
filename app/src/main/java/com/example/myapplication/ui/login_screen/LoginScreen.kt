@@ -16,6 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -31,9 +32,22 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.myapplication.ui.theme.primaryGradientTBottom
 import com.example.myapplication.ui.theme.primaryGradientTop
+import com.example.myapplication.util.UiEvent
 
 @Composable
-fun LoginScreen(viewModel: LoginScreenViewModel = hiltViewModel()){
+fun LoginScreen(
+    viewModel: LoginScreenViewModel = hiltViewModel(),
+    onNavigate: (UiEvent.Navigate) -> Unit
+){
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect{ event ->
+            when(event) {
+                is UiEvent.Navigate -> onNavigate(event)
+                else -> Unit
+            }
+        }
+    }
+
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween,
@@ -48,9 +62,6 @@ fun LoginScreen(viewModel: LoginScreenViewModel = hiltViewModel()){
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
-        val login = remember{ mutableStateOf("") }
-        val password = remember{ mutableStateOf("") }
-        val username = remember{ mutableStateOf("") }
         Row {
             Column {
                 Text(
@@ -77,9 +88,9 @@ fun LoginScreen(viewModel: LoginScreenViewModel = hiltViewModel()){
                     textStyle = TextStyle(color = Color.White, fontSize = 15.sp),
                     cursorBrush = Brush.verticalGradient(listOf(Color.White, Color.White)),
                     singleLine = true,
-                    value = login.value,
+                    value = viewModel.login,
                     onValueChange = {
-                        login.value = it
+                        viewModel.onEvent(LoginScreenEvent.OnLoginChange(it))
                     },
                 )
 
@@ -111,9 +122,9 @@ fun LoginScreen(viewModel: LoginScreenViewModel = hiltViewModel()){
                     textStyle = TextStyle(color = Color.White, fontSize = 15.sp),
                     cursorBrush = Brush.verticalGradient(listOf(Color.White, Color.White)),
                     singleLine = true,
-                    value = password.value,
+                    value = viewModel.password,
                     onValueChange = {
-                        password.value = it
+                        viewModel.onEvent(LoginScreenEvent.OnLoginChange(it))
                     },
                 )
             }
@@ -121,7 +132,7 @@ fun LoginScreen(viewModel: LoginScreenViewModel = hiltViewModel()){
 
         Spacer(modifier = Modifier.height(25.dp))
         Button(onClick = {
-            viewModel.loginUser(login.value, password.value)
+            viewModel.onEvent(LoginScreenEvent.OnLoginButtonClick)
         },
             colors = ButtonDefaults.buttonColors(Color.Transparent),
             modifier = Modifier

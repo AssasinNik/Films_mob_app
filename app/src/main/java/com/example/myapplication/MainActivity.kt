@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
                                     })
                                 }
 
-                                /*composable(Routes.LOG_IN_SCREEN){
+                                composable(Routes.LOG_IN_SCREEN){
 
                                     LoginScreen(onNavigate = {
                                         navController.navigate(it.route) {
@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
                                             }
                                         }
                                     })
-                                }*/
+                                }
                             }
 
                             navigation(startDestination = Routes.MAIN_SCREEN, route = "main"){

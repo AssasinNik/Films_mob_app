@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,6 +24,7 @@ import com.example.myapplication.ui.main_screen.MainScreen
 import com.example.myapplication.ui.mood_test_pager.MoodTestPager
 import com.example.myapplication.ui.movie_list_screen.MovieListScreen
 import com.example.myapplication.ui.movie_screen.MovieScreen
+import com.example.myapplication.ui.new_movie_screen.NewMovieScreen
 import com.example.myapplication.ui.register_screen.RegisterScreen
 import com.example.myapplication.ui.reusable_composeables.BottomNavBar
 import com.example.myapplication.ui.theme.MyApplicationTheme
@@ -36,6 +38,12 @@ class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen().apply {
+            /*setKeepOnScreenCondition {
+
+            }*/
+        }
+
         setContent {
             MyApplicationTheme {
                 Surface (
@@ -112,9 +120,14 @@ class MainActivity : ComponentActivity() {
                                 }
 
                                 composable(Routes.PRE_MOVIE_SELECTION_SCREEN){
-                                    MoodTestPager(onPopBackStack = {
+                                    MoodTestPager(
+                                        onNavigate = {
+                                            navController.navigate(it.route)
+                                        },
+                                        onPopBackStack = {
                                         navController.popBackStack()
-                                    })
+                                        }
+                                    )
                                 }
 
                                 composable(Routes.EDIT_USER_DATA_SCREEN) {
@@ -138,6 +151,20 @@ class MainActivity : ComponentActivity() {
                                     )
                                 ) {
                                     MovieScreen(onPopBackStack = {
+                                        navController.popBackStack()
+                                    })
+                                }
+
+                                composable(
+                                    route = Routes.NEW_MOVIE_SCREEN + "?movieId={movieId}",
+                                    arguments = listOf(
+                                        navArgument(name = "movieId"){
+                                            type = NavType.IntType
+                                            defaultValue = -1
+                                        }
+                                    )
+                                ) {
+                                    NewMovieScreen(onPopBackStack = {
                                         navController.popBackStack()
                                     })
                                 }

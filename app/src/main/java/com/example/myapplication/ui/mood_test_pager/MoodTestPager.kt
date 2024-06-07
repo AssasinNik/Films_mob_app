@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.mood_test_pager
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.animation.core.animateIntOffsetAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -21,10 +22,14 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -48,15 +53,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.example.myapplication.R
 import com.example.myapplication.data.questions_data.Question
+import com.example.myapplication.ui.edit_user_data.EditUserDataEvent
+import com.example.myapplication.ui.theme.primaryGradientTop
 import com.example.myapplication.ui.theme.testMoodPagerClickedColor
 import com.example.myapplication.ui.theme.testMoodPagerColor
 import com.example.myapplication.util.UiEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MoodTestPager(
+    onNavigate: (UiEvent.Navigate) -> Unit,
     onPopBackStack: () -> Unit,
     viewModel: MoodTestPagerViewModel = hiltViewModel()
 ){
@@ -80,6 +89,7 @@ fun MoodTestPager(
         viewModel.uiEvent.collect { event ->
             when (event) {
                 is UiEvent.PopBackStack -> onPopBackStack()
+                is UiEvent.Navigate -> onNavigate(event)
                 else -> Unit
             }
         }
@@ -90,53 +100,65 @@ fun MoodTestPager(
     ) {
         5
     }
-
-    Column (
+    Scaffold (
         modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 15.dp)
-    ){
-        Row (
-            modifier = Modifier
-                .padding(bottom = 25.dp)
-                .padding(horizontal = 20.dp)
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalAlignment = Alignment.End
-            ){
-                Icon(
-                    modifier = Modifier
-                        .clickable {
-                            viewModel.onEvent(MoodTestPagerEvent.onCloseIconClick)
-                        },
-                    imageVector = Icons.Default.Close,
-                    contentDescription = "Close Icon"
-                )
-            }
-        }
-
-        Row(modifier = Modifier
-            .fillMaxWidth(),
-        ) {
-            Button(onClick = {
-                scope.launch {
-                    pagerState.animateScrollToPage(pagerState.currentPage + 1)
+            .fillMaxSize(),
+        floatingActionButton = {
+            ExtendedFloatingActionButton(
+                containerColor = primaryGradientTop,
+                onClick = {
+                    if (pagerState.currentPage == 4){
+                        viewModel.onEvent(MoodTestPagerEvent.onLastPageClick)
+                    }
+                    scope.launch {
+                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                    }
+                },
+                icon = {
+                    Icon(imageVector = Icons.Filled.ArrowForward, contentDescription = "Save")
+                },
+                text = {
+                    Text(text = "Далее")
                 }
-            }) {
-                Text(text = "Далее")
-            }
+            )
         }
+    ){
+        Column (
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 15.dp)
+        ){
+            Row (
+                modifier = Modifier
+                    .padding(bottom = 25.dp)
+                    .padding(horizontal = 20.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.End
+                ){
+                    Icon(
+                        modifier = Modifier
+                            .clickable {
+                                viewModel.onEvent(MoodTestPagerEvent.onCloseIconClick)
+                            },
+                        imageVector = Icons.Default.Close,
+                        contentDescription = "Close Icon"
+                    )
+                }
+            }
 
-        HorizontalPager(
-            userScrollEnabled = false,
-            state = pagerState,
-        ) {index ->
-            if (questions[0].value.isNotEmpty() && questions[1].value.isNotEmpty() && questions[2].value.isNotEmpty() &&
-                questions[3].value.isNotEmpty() && questions[4].value.isNotEmpty()) {
-                QuestionPage(question = questions[index].value[0])
+            HorizontalPager(
+                userScrollEnabled = false,
+                state = pagerState,
+            ) {index ->
+                if (questions[0].value.isNotEmpty() && questions[1].value.isNotEmpty() && questions[2].value.isNotEmpty() &&
+                    questions[3].value.isNotEmpty() && questions[4].value.isNotEmpty()) {
+                    QuestionPage(question = questions[index].value[0], questionNumber = index)
+                }
             }
         }
     }
+
 }

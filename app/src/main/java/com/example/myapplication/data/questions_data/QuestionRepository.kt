@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface QuestionRepository {
 
-    fun getQuestionsByType(type: Int): Flow<List<Question>>
+    fun getQuestionsById(id: Int): Flow<List<Question>>
 
     fun getQuestions(): Flow<List<Question>>
 }

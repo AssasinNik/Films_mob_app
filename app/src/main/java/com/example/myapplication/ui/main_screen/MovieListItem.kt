@@ -15,11 +15,12 @@ import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.example.myapplication.data.movie_data.Movie
+import com.example.myapplication.data.new_movie_data.NewMovie
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun MovieListItem(
-    movie: Movie,
+    movie: NewMovie,
     modifier: Modifier = Modifier
 ){
     Card (

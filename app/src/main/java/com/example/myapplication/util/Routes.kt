@@ -5,6 +5,7 @@ object Routes {
     const val USER_SCREEN = "user_screen"
     const val MOVIE_LIST_SCREEN = "movie_list_screen"
     const val MOVIE_SCREEN = "movie_screen"
+    const val NEW_MOVIE_SCREEN = "new_movie_screen"
     const val LOG_IN_SCREEN = "log_in_screen"
     const val REGISTER_SCREEN = "register_screen"
     const val MOVIE_SELECTION_SCREEN = "movie_selection_screen"

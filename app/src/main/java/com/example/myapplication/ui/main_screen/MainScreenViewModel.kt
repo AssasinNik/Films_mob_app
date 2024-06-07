@@ -2,6 +2,7 @@ package com.example.myapplication.ui.main_screen
 
 import android.net.Uri
 import android.util.Log
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,6 +12,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.movie_data.Movie
 import com.example.myapplication.data.movie_data.MovieRepository
+import com.example.myapplication.data.new_movie_data.NewMovie
+import com.example.myapplication.data.new_movie_data.NewMovieRepository
 import com.example.myapplication.data.remote.PostService
 import com.example.myapplication.data.remote.dto.ErrorServerResponse
 import com.example.myapplication.data.remote.dto.FilmErrorResponse
@@ -32,12 +35,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
-    private val movieRepository: MovieRepository,
+    private val newMovieRepository: NewMovieRepository,
     private val userRepository: UserRepository
 ): ViewModel(){
 
 
-    val movies = movieRepository.getMovies()
+    val movies = newMovieRepository.getMovies()
 
     private  val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
@@ -72,7 +75,7 @@ class MainScreenViewModel @Inject constructor(
     fun onEvent(event: MainScreenEvent){
         when(event) {
             is MainScreenEvent.OnMovieClick -> {
-                sendUiEvent(UiEvent.Navigate(Routes.MOVIE_SCREEN + "?movieId=${event.movie.movieId}"))
+                sendUiEvent(UiEvent.Navigate(Routes.NEW_MOVIE_SCREEN + "?movieId=${event.movie.movieId}"))
             }
             is MainScreenEvent.OnAvatarClick -> {
                 sendUiEvent(UiEvent.Navigate(Routes.USER_SCREEN))
@@ -101,7 +104,7 @@ class MainScreenViewModel @Inject constructor(
             when (response) {
                 is FilmListResponse -> {
                     response.data?.forEach { film ->
-                        val movie = Movie(
+                        val movie = NewMovie(
                             movieId = film.movie_id,
                             title = film.title ?: "",
                             titleEn = film.titleEn ?: "",
@@ -114,7 +117,7 @@ class MainScreenViewModel @Inject constructor(
                             ageLimit = film.ageLimit.toString()
                         )
                         // Предполагается, что у вас есть метод в userRepository для вставки фильма
-                        movieRepository.insertFilm(movie)
+                        newMovieRepository.insertFilms(movie)
                         Log.d("RegisterScreenViewModel", "Movie fetched and saved: ${film.title}")
                     }
                 }

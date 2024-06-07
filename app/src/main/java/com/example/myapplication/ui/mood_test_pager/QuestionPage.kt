@@ -16,10 +16,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,12 +32,16 @@ import coil.compose.rememberImagePainter
 import com.example.myapplication.data.questions_data.Question
 import com.example.myapplication.ui.theme.testMoodPagerClickedColor
 import com.example.myapplication.ui.theme.testMoodPagerColor
+import kotlinx.coroutines.launch
 
 @Composable
 fun QuestionPage(
+    questionNumber: Int,
     question: Question,
     viewModel: MoodTestPagerViewModel = hiltViewModel()
 ) {
+    var selectedAnswerIndex by remember { mutableStateOf(-1) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -85,26 +92,24 @@ fun QuestionPage(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        var backgroundColor = remember {
-            mutableStateOf(testMoodPagerColor)
-        }
         Row (
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable {
-                    if (backgroundColor.value == testMoodPagerColor) {
-                        backgroundColor.value = testMoodPagerClickedColor
-                    } else {
-                        backgroundColor.value = testMoodPagerColor
-                    }
-                }
                 .background(
-                    color = backgroundColor.value,
-                    shape = RoundedCornerShape(15.dp),
+                    color = if (selectedAnswerIndex == 0) Color.Gray else testMoodPagerColor,
+                    shape = RoundedCornerShape(15.dp)
                 )
                 .padding(vertical = 15.dp, horizontal = 15.dp)
-
-
+                .clickable {
+                    when (questionNumber){
+                        0 -> viewModel.answer1 = question.genresOfAnswer1 ?: ""
+                        1 -> viewModel.answer2 = question.genresOfAnswer1 ?: ""
+                        2 -> viewModel.answer3 = question.genresOfAnswer1 ?: ""
+                        3 -> viewModel.answer4 = question.genresOfAnswer1 ?: ""
+                        4 -> viewModel.answer5 = question.genresOfAnswer1 ?: ""
+                    }
+                    selectedAnswerIndex = 0
+                }
         ) {
             Column (
                 modifier = Modifier
@@ -125,10 +130,20 @@ fun QuestionPage(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    color = testMoodPagerColor,
+                    color = if (selectedAnswerIndex == 1) Color.Gray else testMoodPagerColor,
                     shape = RoundedCornerShape(15.dp)
                 )
                 .padding(vertical = 15.dp, horizontal = 15.dp)
+                .clickable {
+                    when (questionNumber){
+                        0 -> viewModel.answer1 = question.genresOfAnswer2 ?: ""
+                        1 -> viewModel.answer2 = question.genresOfAnswer2 ?: ""
+                        2 -> viewModel.answer3 = question.genresOfAnswer2 ?: ""
+                        3 -> viewModel.answer4 = question.genresOfAnswer2 ?: ""
+                        4 -> viewModel.answer5 = question.genresOfAnswer2 ?: ""
+                    }
+                    selectedAnswerIndex = 1
+                }
         ) {
             Column (
                 modifier = Modifier
@@ -149,10 +164,20 @@ fun QuestionPage(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    color = testMoodPagerColor,
+                    color = if (selectedAnswerIndex == 2) Color.Gray else testMoodPagerColor,
                     shape = RoundedCornerShape(15.dp)
                 )
                 .padding(vertical = 15.dp, horizontal = 15.dp)
+                .clickable {
+                    when (questionNumber){
+                        0 -> viewModel.answer1 = question.genresOfAnswer3 ?: ""
+                        1 -> viewModel.answer2 = question.genresOfAnswer3 ?: ""
+                        2 -> viewModel.answer3 = question.genresOfAnswer3 ?: ""
+                        3 -> viewModel.answer4 = question.genresOfAnswer3 ?: ""
+                        4 -> viewModel.answer5 = question.genresOfAnswer3 ?: ""
+                    }
+                    selectedAnswerIndex = 2
+                }
         ) {
             Column (
                 modifier = Modifier
@@ -173,10 +198,20 @@ fun QuestionPage(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    color = testMoodPagerColor,
+                    color = if (selectedAnswerIndex == 3) Color.Gray else testMoodPagerColor,
                     shape = RoundedCornerShape(15.dp)
                 )
                 .padding(vertical = 15.dp, horizontal = 15.dp)
+                .clickable {
+                    when (questionNumber){
+                        0 -> viewModel.answer1 = question.genresOfAnswer4 ?: ""
+                        1 -> viewModel.answer2 = question.genresOfAnswer4 ?: ""
+                        2 -> viewModel.answer3 = question.genresOfAnswer4 ?: ""
+                        3 -> viewModel.answer4 = question.genresOfAnswer4 ?: ""
+                        4 -> viewModel.answer5 = question.genresOfAnswer4 ?: ""
+                    }
+                    selectedAnswerIndex = 3
+                }
         ) {
             Column (
                 modifier = Modifier
@@ -190,5 +225,6 @@ fun QuestionPage(
                 )
             }
         }
+
     }
 }

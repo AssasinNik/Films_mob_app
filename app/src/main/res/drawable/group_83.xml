@@ -1,0 +1,14 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:height="50dp" android:viewportHeight="1437" android:viewportWidth="1437" android:width="50dp">
+    <group
+        android:name="animationGroup"
+        android:pivotX="718"
+        android:pivotY="718">
+        <path android:fillColor="#000000" android:pathData="M718.5,718.5m-718.5,0a718.5,718.5 0,1 1,1437 0a718.5,718.5 0,1 1,-1437 0"/>
+
+        <path android:fillColor="#84C5E9" android:pathData="M864.3,604.6L1051,604.6A96,96 0,0 1,1147 700.6L1147,701.6A96,96 0,0 1,1051 797.6L864.3,797.6A96,96 0,0 1,768.3 701.6L768.3,700.6A96,96 0,0 1,864.3 604.6z"/>
+
+        <path android:fillColor="#B265EF" android:pathData="M575.7,601L383,601A93,93 0,0 0,290 694L290,701A93,93 0,0 0,383 794L575.7,794A93,93 0,0 0,668.7 701L668.7,694A93,93 0,0 0,575.7 601z"/>
+    </group>
+
+    
+</vector>

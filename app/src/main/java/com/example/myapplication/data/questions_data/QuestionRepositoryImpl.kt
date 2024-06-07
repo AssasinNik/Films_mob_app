@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.Flow
 class QuestionRepositoryImpl(
     private val questionDao: QuestionDao
 ): QuestionRepository{
-    override fun getQuestionsByType(type: Int): Flow<List<Question>> {
-        return questionDao.getQuestionsByType(type)
+    override fun getQuestionsById(id: Int): Flow<List<Question>> {
+        return questionDao.getQuestionsById(id)
     }
 
     override fun getQuestions(): Flow<List<Question>> {

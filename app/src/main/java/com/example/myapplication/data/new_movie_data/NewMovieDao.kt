@@ -1,10 +1,12 @@
 package com.example.myapplication.data.new_movie_data
 
+import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
 import com.example.myapplication.data.movie_data.Movie
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface NewMovieDao {
 
     /*@Query("SELECT * FROM movies WHERE genres = :genres")

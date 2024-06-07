@@ -15,7 +15,7 @@ class MovieRepositoryImpl (
         return movieDao.getMovieById(id)
     }
 
-    override suspend fun insertFilm(movie: Movie) {
+    override suspend fun insertFilms(movie: Movie) {
         return movieDao.insertFilms(movie)
     }
 
@@ -23,4 +23,7 @@ class MovieRepositoryImpl (
         return movieDao.getMovies()
     }
 
+    override fun deleteMovies() {
+        return movieDao.deleteMovies()
+    }
 }

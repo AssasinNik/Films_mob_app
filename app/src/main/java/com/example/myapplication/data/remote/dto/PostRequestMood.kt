@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PostRequestMood(
     val token : String,
-    val genres : List<String>
+    val genres : Array<String>
 )

@@ -11,7 +11,6 @@ import com.example.myapplication.data.remote.dto.PostRequestPassword
 import com.example.myapplication.data.remote.dto.PostRequestRegister
 import com.example.myapplication.data.remote.dto.PostRequestToken
 import com.example.myapplication.data.remote.dto.PostRequestUsername
-import com.example.myapplication.data.remote.dto.PostResponseDefault
 import com.example.myapplication.data.remote.dto.PostResponseImageName
 import com.example.myapplication.data.remote.dto.PostResponseWrapper
 import com.example.myapplication.data.remote.dto.ServerResponse

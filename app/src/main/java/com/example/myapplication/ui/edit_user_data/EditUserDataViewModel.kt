@@ -45,7 +45,7 @@ class EditUserDataViewModel @Inject constructor(
                 name = user.name ?: ""
                 login = user.login
                 password = user.password
-                avatar = user.avatar ?: Constants.DEFAULT_URI.toString()
+                avatar = ("http://77.221.153.78:8080/change/images/" + user.avatar) ?: Constants.DEFAULT_URI.toString()
                 token = user.token
             }
         }

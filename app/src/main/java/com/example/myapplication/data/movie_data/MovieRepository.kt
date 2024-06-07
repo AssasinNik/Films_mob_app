@@ -7,7 +7,9 @@ interface MovieRepository {
 
     suspend fun getMovieById(id: Int) : Movie?
 
-    suspend fun insertFilm(movie: Movie)
+    suspend fun insertFilms(movie: Movie)
 
     fun getMovies(): Flow<List<Movie>>
+
+    fun deleteMovies()
 }

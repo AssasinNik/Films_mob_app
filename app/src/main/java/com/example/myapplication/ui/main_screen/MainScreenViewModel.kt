@@ -1,25 +1,17 @@
 package com.example.myapplication.ui.main_screen
 
-import android.net.Uri
 import android.util.Log
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myapplication.data.movie_data.Movie
-import com.example.myapplication.data.movie_data.MovieRepository
 import com.example.myapplication.data.new_movie_data.NewMovie
 import com.example.myapplication.data.new_movie_data.NewMovieRepository
 import com.example.myapplication.data.remote.PostService
 import com.example.myapplication.data.remote.dto.ErrorServerResponse
 import com.example.myapplication.data.remote.dto.FilmErrorResponse
 import com.example.myapplication.data.remote.dto.FilmListResponse
-import com.example.myapplication.data.remote.dto.PostRequestLogin
-import com.example.myapplication.data.remote.dto.PostRequestRegister
 import com.example.myapplication.data.remote.dto.PostRequestToken
 import com.example.myapplication.data.remote.dto.PostResponseWrapper
 import com.example.myapplication.data.user_data.User
@@ -61,15 +53,10 @@ class MainScreenViewModel @Inject constructor(
             userRepository.getUser()?.let { user ->
                 name = user.name ?: ""
                 login = user.login
-                avatar = user.avatar ?: Constants.DEFAULT_URI.toString()
                 token = user.token
+                avatar = ("http://77.221.153.78:8080/change/images/" + user.avatar) ?: Constants.DEFAULT_URI.toString()
             }
-            if(authUser(token)){
-                getNewFilms(token)
-            }
-            else{
-                Log.d("Some problem", "Auth failed")
-            }
+            getNewFilms(token)
         }
     }
     fun onEvent(event: MainScreenEvent){

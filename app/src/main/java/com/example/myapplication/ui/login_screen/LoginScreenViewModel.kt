@@ -44,7 +44,7 @@ class LoginScreenViewModel @Inject constructor(
         when(event) {
             is LoginScreenEvent.OnLoginButtonClick -> {
                 loginUser(login, password)
-                sendUiEvent(UiEvent.Navigate("main")) //Добавить условия на удачную автроризацию
+
             }
             is LoginScreenEvent.OnLoginChange -> {
                 login = event.login
@@ -67,22 +67,26 @@ class LoginScreenViewModel @Inject constructor(
                     response.data?.let { userData ->
                         // Сохранение данных в Room
                         val user = User(
+                            userId = 0,
                             name = userData.username,
-                            login = userData.token ?: "",
+                            login = userData.email,
                             avatar = userData.image,
                             password = password,
                             token = userData.token ?: ""
                         )
                         userRepository.insertUser(user)
                         Log.d("LoginScreenViewModel", "Login successful: ${userData.username}")
+                        sendUiEvent(UiEvent.Navigate("main")) //Добавить условия на удачную автроризацию
                     }
                 }
                 is ErrorServerResponse -> {
+                    sendUiEvent(UiEvent.ShowSnackbar(response.message.toString()))
                     println("Login failed: ${response.message}")
                     Log.e("LoginScreenViewModel", "Login failed: ${response.message}")
 
                 }
                 else -> {
+                    sendUiEvent(UiEvent.ShowSnackbar("An unexpected error occurred during registration"))
                     println("An unexpected error occurred during registration")
                     Log.e("LoginScreenViewModel", "An unexpected error occurred during registration")
                 }

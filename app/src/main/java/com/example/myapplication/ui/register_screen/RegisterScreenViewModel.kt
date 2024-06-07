@@ -12,14 +12,12 @@ import com.example.myapplication.data.remote.dto.PostRequestRegister
 import com.example.myapplication.data.remote.dto.PostResponseWrapper
 import com.example.myapplication.data.user_data.User
 import com.example.myapplication.data.user_data.UserRepository
-import com.example.myapplication.ui.Constants
 import com.example.myapplication.util.Routes
 import com.example.myapplication.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import okhttp3.Route
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,7 +42,7 @@ class RegisterScreenViewModel @Inject constructor(
         when(event) {
             is RegisterScreenEvent.OnRegisterClick -> {
                 registerUser(login, name, password)
-                sendUiEvent(UiEvent.Navigate("main")) //Добавить условие на удачную регистрацию
+
             }
             is RegisterScreenEvent.OnLoginChange -> {
                 login = event.login
@@ -70,22 +68,25 @@ class RegisterScreenViewModel @Inject constructor(
                     response.data?.let { userData ->
                         // Сохранение данных в Room
                         val user = User(
+                            userId = 0,
                             name = userData.username,
-                            login = userData.token ?: "",
+                            login = userData.email,
                             avatar = userData.image,
                             password = password,
                             token = userData.token ?: ""
                         )
                         userRepository.insertUser(user)
                         Log.d("RegisterScreenViewModel", "Registration successful: ${userData.username}")
+                        sendUiEvent(UiEvent.Navigate("main"))
                     }
                 }
                 is ErrorServerResponse -> {
+                    sendUiEvent(UiEvent.ShowSnackbar(response.message.toString()))
                     println("Registration failed: ${response.message}")
                     Log.e("RegisterScreenViewModel", "Registration failed: ${response.message}")
-
                 }
                 else -> {
+                    sendUiEvent(UiEvent.ShowSnackbar("An unexpected error occurred during registration"))
                     println("An unexpected error occurred during registration")
                     Log.e("RegisterScreenViewModel", "An unexpected error occurred during registration")
                 }

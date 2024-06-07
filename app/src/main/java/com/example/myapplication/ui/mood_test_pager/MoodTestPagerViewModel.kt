@@ -1,27 +1,37 @@
 package com.example.myapplication.ui.mood_test_pager
 
 import android.util.Log
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.data.movie_data.Movie
 import com.example.myapplication.data.movie_data.MovieRepository
 import com.example.myapplication.data.questions_data.QuestionRepository
+import com.example.myapplication.data.remote.PostService
+import com.example.myapplication.data.remote.dto.FilmErrorResponse
+import com.example.myapplication.data.remote.dto.FilmListResponse
+import com.example.myapplication.data.remote.dto.PostRequestMood
+import com.example.myapplication.data.user_data.UserRepository
 import com.example.myapplication.util.Routes
 import com.example.myapplication.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MoodTestPagerViewModel @Inject constructor(
-    private val questionRepository: QuestionRepository
+    private val questionRepository: QuestionRepository,
+    private val userRepository: UserRepository,
+    private val movieRepository: MovieRepository,
 ): ViewModel() {
+
+    var token by mutableStateOf("")
+        private set
 
     private val uniqueRandomNumbers = generateUniqueRandomNumbers(24)
 
@@ -99,18 +109,159 @@ class MoodTestPagerViewModel @Inject constructor(
                 }
 
                 //Твой код получения фильмов и добавление их в ROOM
-
-                sendUiEvent(UiEvent.Navigate(Routes.MOVIE_LIST_SCREEN))
+                getFilms(token,genresRating)
             }
         }
     }
-
+    init {
+        viewModelScope.launch {
+            userRepository.getUser()?.let { user ->
+                token = user.token
+            }
+        }
+    }
     private fun sendUiEvent(event: UiEvent) {
         viewModelScope.launch {
             _uiEvent.send(event)
         }
     }
+    fun getFilms(token: String , genresRating: MutableMap<String, Int>) {
+        val topTwoEntries = genresRating.entries.sortedByDescending { it.value }.take(2)
+        val valuesArray = topTwoEntries.map { it.key }.toTypedArray()
 
+        val individualArrays = mutableListOf<Array<String>>()
+
+        valuesArray.forEach { key ->
+            individualArrays.add(arrayOf(key))
+        }
+
+        val apiService = PostService.create()
+        Log.d("MoodScreenViewModel", "Starting getFilms with token: $token")
+        if (apiService == null) {
+            Log.e("MoodScreenViewModel", "apiService is null at the time of the call")
+        } else {
+            Log.d("MoodScreenViewModel", "apiService is initialized")
+        }
+        val filmRequest = PostRequestMood(token, valuesArray)
+        viewModelScope.launch {
+            val response = apiService.Post_MovieMood(filmRequest)
+            when (response) {
+                is FilmListResponse -> {
+                    var count = 0
+                    response.data?.forEach { film ->
+                        if (count < 7) {
+                            val movie = Movie(
+                                movieId = film.movie_id,
+                                title = film.title ?: "",
+                                titleEn = film.titleEn ?: "",
+                                genres = film.genres.joinToString(", "),
+                                posterURL = film.posterURL,
+                                rating = film.rating.toInt(),
+                                length = film.length,
+                                description = film.description ?: "",
+                                releaseYear = film.releaseDate.toString(),
+                                ageLimit = film.ageLimit.toString()
+                            )
+                            viewModelScope.launch(Dispatchers.IO) {
+                                movieRepository.deleteMovies()
+                                movieRepository.insertFilms(movie)
+                            }
+                            Log.d("RegisterScreenViewModel", "Movie fetched and saved: ${film.title}")
+                            sendUiEvent(UiEvent.Navigate(Routes.MOVIE_LIST_SCREEN))
+                            count++
+                        }
+                    }
+                }
+                is FilmErrorResponse -> {
+                    println("Fetching movies failed: ${response.message}")
+                    Log.e("MoodScreenViewModel", "Fetching movies failed: ${response.message}")
+                }
+                else -> {
+                    println("An unexpected error occurred during fetching movies")
+                    Log.e("MoodScreenViewModel", "An unexpected error occurred during fetching movies")
+                }
+            }
+        }
+        val filmRequest1 = PostRequestMood(token, individualArrays[0])
+        viewModelScope.launch {
+            val response = apiService.Post_MovieMood(filmRequest1)
+            when (response) {
+                is FilmListResponse -> {
+                    var count = 0
+                    response.data?.forEach { film ->
+                        if (count < 3) {
+                            val movie = Movie(
+                                movieId = film.movie_id,
+                                title = film.title ?: "",
+                                titleEn = film.titleEn ?: "",
+                                genres = film.genres.joinToString(", "),
+                                posterURL = film.posterURL,
+                                rating = film.rating.toInt(),
+                                length = film.length,
+                                description = film.description ?: "",
+                                releaseYear = film.releaseDate.toString(),
+                                ageLimit = film.ageLimit.toString()
+                            )
+                            viewModelScope.launch(Dispatchers.IO) {
+                                movieRepository.insertFilms(movie)
+                            }
+                            Log.d("RegisterScreenViewModel", "Movie fetched and saved: ${film.title}")
+                            sendUiEvent(UiEvent.Navigate(Routes.MOVIE_LIST_SCREEN))
+                            count++
+                        }
+                    }
+                }
+                is FilmErrorResponse -> {
+                    println("Fetching movies failed: ${response.message}")
+                    Log.e("MoodScreenViewModel", "Fetching movies failed: ${response.message}")
+                }
+                else -> {
+                    println("An unexpected error occurred during fetching movies")
+                    Log.e("MoodScreenViewModel", "An unexpected error occurred during fetching movies")
+                }
+            }
+        }
+        val filmRequest2 = PostRequestMood(token, individualArrays[1])
+        viewModelScope.launch {
+            val response = apiService.Post_MovieMood(filmRequest2)
+            when (response) {
+                is FilmListResponse -> {
+                    var count = 0
+                    response.data?.forEach { film ->
+                        if (count < 3) {
+                            val movie = Movie(
+                                movieId = film.movie_id,
+                                title = film.title ?: "",
+                                titleEn = film.titleEn ?: "",
+                                genres = film.genres.joinToString(", "),
+                                posterURL = film.posterURL,
+                                rating = film.rating.toInt(),
+                                length = film.length,
+                                description = film.description ?: "",
+                                releaseYear = film.releaseDate.toString(),
+                                ageLimit = film.ageLimit.toString()
+                            )
+                            viewModelScope.launch(Dispatchers.IO) {
+                                movieRepository.insertFilms(movie)
+                            }
+                            Log.d("RegisterScreenViewModel", "Movie fetched and saved: ${film.title}")
+                            sendUiEvent(UiEvent.Navigate(Routes.MOVIE_LIST_SCREEN))
+                            count++
+                        }
+                    }
+                }
+                is FilmErrorResponse -> {
+                    println("Fetching movies failed: ${response.message}")
+                    Log.e("MoodScreenViewModel", "Fetching movies failed: ${response.message}")
+                }
+                else -> {
+                    println("An unexpected error occurred during fetching movies")
+                    Log.e("MoodScreenViewModel", "An unexpected error occurred during fetching movies")
+                }
+            }
+        }
+
+    }
     private fun generateUniqueRandomNumbers(max: Int): List<Int> {
         val numbers = mutableSetOf<Int>()
         while (numbers.size < 6) {

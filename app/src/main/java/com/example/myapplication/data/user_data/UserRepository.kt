@@ -8,4 +8,6 @@ interface UserRepository {
     suspend fun insertUser(user: User)
 
     suspend fun getUser(): User?
+
+    suspend fun deleteUser()
 }

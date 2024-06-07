@@ -32,7 +32,7 @@ object AppModule {
             app,
             MovieDatabase::class.java,
             "movie_db"
-        ).createFromAsset("database/movie.db").build()
+        ).build()
     }
 
     @Provides
@@ -48,7 +48,7 @@ object AppModule {
             app,
             NewMovieDatabase::class.java,
             "new_movie_db"
-        ).createFromAsset("database/movie.db").build()
+        ).build()
     }
 
     @Provides

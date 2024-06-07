@@ -15,6 +15,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,14 +47,19 @@ fun RegisterScreen(
     viewModel: RegisterScreenViewModel = hiltViewModel(),
     onNavigate: (UiEvent.Navigate) -> Unit
 ) {
-    
+    val snackbarHostState = remember { SnackbarHostState() }
+
     LaunchedEffect(key1 = true) {
-        viewModel.uiEvent.collect{ event ->
-            when(event) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
                 is UiEvent.Navigate -> onNavigate(event)
+                is UiEvent.ShowSnackbar -> {
+                    snackbarHostState.showSnackbar(event.message)
+                }
                 else -> Unit
             }
         }
+
     }
 
     Column(
@@ -194,5 +201,6 @@ fun RegisterScreen(
         )
 
         Spacer(modifier = Modifier.height(60.dp))
+        SnackbarHost(hostState = snackbarHostState)
     }
 }

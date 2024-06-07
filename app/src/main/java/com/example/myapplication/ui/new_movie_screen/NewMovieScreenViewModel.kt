@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.movie_data.Movie
 import com.example.myapplication.data.movie_data.MovieRepository
+import com.example.myapplication.data.new_movie_data.NewMovie
+import com.example.myapplication.data.new_movie_data.NewMovieRepository
 import com.example.myapplication.util.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -19,11 +21,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewMovieScreenViewModel @Inject constructor(
-    private val newMovieRepository: MovieRepository,
+    private val newMovieRepository: NewMovieRepository,
     savedStateHandle: SavedStateHandle
 ): ViewModel(), Parcelable {
 
-    var movie by mutableStateOf<Movie?>(null)
+    var movie by mutableStateOf<NewMovie?>(null)
         private set
 
     var title by mutableStateOf("")

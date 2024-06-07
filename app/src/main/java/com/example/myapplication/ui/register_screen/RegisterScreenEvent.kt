@@ -8,5 +8,4 @@ sealed class RegisterScreenEvent {
     data class OnLoginChange(val login: String): RegisterScreenEvent()
     data class OnPasswordChange(val password: String): RegisterScreenEvent()
     data class OnNameChange(val name: String): RegisterScreenEvent()
-
 }

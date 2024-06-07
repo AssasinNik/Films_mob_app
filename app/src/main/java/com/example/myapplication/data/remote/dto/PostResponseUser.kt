@@ -28,6 +28,6 @@ data class PostResponseUser(
     val username: String?,
     val email: String,
     val parol: String?=null,
-    var token: String?=null,
+    val token: String?=null,
     val image: String?
 )

@@ -18,4 +18,6 @@ interface NewMovieDao {
 
     @Query("SELECT * FROM newMovies")
     fun getMovies(): Flow<List<NewMovie>>
+
+
 }

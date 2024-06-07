@@ -18,4 +18,7 @@ interface MovieDao {
 
     @Query("SELECT * FROM movies")
     fun getMovies(): Flow<List<Movie>>
+
+    @Query("DELETE FROM movies")
+    fun deleteMovies()
 }
